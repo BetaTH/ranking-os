@@ -1,0 +1,16 @@
+.tela{
+    width: 55%;
+    background-color :#35b3da;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    font-size: 100%;
+    align-items: center;
+    justify-content: top;
+}
+
+.divNames{
+    display:flex;
+    flex-direction: column;
+    margin: 5px;
+}
