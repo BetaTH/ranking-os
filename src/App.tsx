@@ -1,8 +1,8 @@
-import { useState , useEffect } from 'react';
-import logo from './logo.svg';  
-import './App.css';
-import axios from 'axios';
-import { Dashboard } from './pages/Dashboard';
+import { useState, useEffect } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import axios from "axios";
+import { Dashboard } from "./pages/dashboard";
 
 function App() {
   // const [dataOS, setDataOS] = useState([])
@@ -28,17 +28,14 @@ function App() {
   //   .then(res => {setDataOS(res)})
   // },[])
 
-  return(
+  return (
     <div>
-        <Dashboard />
+      <Dashboard />
     </div>
-  )
-
-
+  );
 }
 
-export default App
-
+export default App;
 
 // return (
 //   <div className='list'>

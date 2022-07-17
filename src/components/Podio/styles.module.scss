@@ -1,0 +1,80 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1.6rem;
+  padding: 1.6rem;
+  width: 75.2rem;
+  height: 88.2rem;
+  background: rgba(255, 255, 255, 0.5);
+
+  border: 0.1rem solid var(--background);
+  box-shadow: 0px 0.4rem 10.3rem rgba(50, 50, 71, 0.01),
+    0px 0.4rem 5.9rem rgba(50, 50, 71, 0.06);
+  border-radius: 1.6rem;
+
+  .columnContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
+
+    &.rankOne {
+      height: 67.4rem;
+    }
+    &.rankTwo {
+      height: 52.8rem;
+    }
+    &.rankThree {
+      height: 46rem;
+    }
+    &.rankFour {
+      height: 35.7rem;
+    }
+    &.rankFive {
+      height: 27.8rem;
+    }
+
+    .photo {
+      width: 13rem;
+      height: 13rem;
+      border-radius: 0.5rem;
+      background-color: var(--background);
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0.5rem;
+      }
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      border-radius: 0.5rem;
+      background-color: var(--background);
+      width: 13rem;
+      height: 100%;
+      padding: 0.8rem;
+      svg {
+        width: 4rem;
+        height: 4rem;
+        color: var(--title);
+      }
+
+      .equip {
+        font-size: 1.9rem;
+        font-weight: 500;
+        text-align: center;
+      }
+
+      .points {
+        font-size: 1.9rem;
+        font-weight: 500;
+        text-align: center;
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.rankingsContainer {
+  gap: 4rem;
+  display: flex;
+  //height: 100%;
+  align-items: flex-end;
+  padding: 1.6rem;
+
+  .rankingMotoContainer {
+    display: flex;
+    height: 96rem;
+    align-items: flex-start;
+  }
+}
