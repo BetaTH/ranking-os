@@ -18,6 +18,8 @@ body {
   font-family: "Poppins", sans-serif;
   min-width: 1280px;
   background-color: var(--background);
+  -webkit-text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
 }
 
 button {
@@ -25,4 +27,13 @@ button {
   outline: none;
   border: none;
   cursor: pointer;
+  display: inline-block;
+  font-family: "Poppins", sans-serif;
+}
+
+select{
+  outline: none;
+  border: none;
+  display: inline-block;
+  font-family: "Poppins", sans-serif;
 }

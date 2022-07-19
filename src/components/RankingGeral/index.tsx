@@ -1,3 +1,5 @@
+import { Loading } from "../Loading";
+import { SemDados } from "../SemDados";
 import styles from "./styles.module.scss";
 
 interface props {
@@ -7,17 +9,42 @@ interface props {
     classTransporte: string;
     fotoLink: string;
   }[];
+
+  isLoadging: boolean;
 }
 
 export function RankingGeral(props: props) {
-  let removeEquipes = ["Emprestado", "Correção"];
-  const newProps = props.arr.filter(
-    (df) => df.classTransporte != "Moto" && !removeEquipes.includes(df.equipe)
-  );
+  const newProps = props.arr;
   const count = Array.from({ length: 31 }, (_, i) => i + 1);
+
+  if (props.isLoadging) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.textContainer}>
+          <span className={styles.title}>Ranking Geral</span>
+        </div>
+          <Loading/>
+      </div>
+    );
+  }
+
+  if (newProps.length === 0) {
+    return (
+      <div className={styles.rankingMotoContainer}>
+        <div className={styles.container}>
+          <div className={styles.textContainer}>
+            <span className={styles.title}>Ranking Geral</span>
+          </div>
+            <SemDados/>
+        </div>
+      </div>
+
+    );
+  }
+
   return (
-    <div className={styles.conteiner}>
-      <div className={styles.textConteiner}>
+    <div className={styles.container}>
+      <div className={styles.textContainer}>
         <span className={styles.title}>Ranking Geral</span>
       </div>
       <div className={styles.table}>
@@ -63,6 +90,11 @@ export function RankingGeral(props: props) {
 }
 
 //CODIGOS QUE ALTERADOS MAS QUE PODEM SER REUTILIZADOS
+
+// let removeEquipes = ["Emprestado", "Correção"];
+// const newProps = props.arr.filter(
+//   (df) => df.classTransporte != "Moto" && !removeEquipes.includes(df.equipe)
+// );
 
 // newProps?.map((dataROW:propsElement,id) => {
 //     if(id<=30){

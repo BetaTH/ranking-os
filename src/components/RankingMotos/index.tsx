@@ -1,3 +1,5 @@
+import { Loading } from "../Loading";
+import { SemDados } from "../SemDados";
 import styles from "./styles.module.scss";
 
 interface props {
@@ -7,17 +9,46 @@ interface props {
     classTransporte: string;
     fotoLink: string;
   }[];
+
+  isLoadging: boolean;
 }
 
 export function RankingMotos(props: props) {
-  let removeEquipes = ["Emprestado", "Correção"];
-  const newProps = props.arr.filter(
-    (df) => df.classTransporte != "Carro" && !removeEquipes.includes(df.equipe)
-  );
+  const newProps = props.arr
   const count = Array.from({ length: 7 }, (_, i) => i + 1);
+
+  if (props.isLoadging) {
+    return (
+      <div className={styles.rankingMotoContainer}>
+        <div className={styles.container}>
+          <div className={styles.textContainer}>
+            <span className={styles.title}>Ranking Motos</span>
+          </div>
+            <Loading/>
+        </div>
+      </div>
+
+    );
+  }
+
+  if (newProps.length === 0) {
+    return (
+      <div className={styles.rankingMotoContainer}>
+        <div className={styles.container}>
+          <div className={styles.textContainer}>
+            <span className={styles.title}>Ranking Motos</span>
+          </div>
+            <SemDados/>
+        </div>
+      </div>
+
+    );
+  }
+
   return (
-    <div className={styles.conteiner}>
-      <div className={styles.textConteiner}>
+    <div className={styles.rankingMotoContainer}>
+    <div className={styles.container}>
+      <div className={styles.textContainer}>
         <span className={styles.title}>Ranking Motos</span>
       </div>
       <div className={styles.table}>
@@ -41,6 +72,7 @@ export function RankingMotos(props: props) {
           );
         })}
       </div>
+    </div>
     </div>
   );
 }
