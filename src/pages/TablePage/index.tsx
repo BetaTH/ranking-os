@@ -1,12 +1,9 @@
 import styles from "./styles.module.scss";
 import { useState, useEffect } from "react";
 import { Headers } from "../../components/Headers";
-import { Podio } from "../../components/Podio";
-import { RankingGeral } from "../../components/RankingGeral";
-import { RankingMotos } from "../../components/RankingMotos";
-import classNames from "classnames";
+import { Table } from "../../components/Tabela";
 
-export function Dashboard() {
+export function TablePage() {
   const [dataOS, setDataOS] = useState({ rankingMoto: [], rankingGeral: [] });
   const [loadingData, setLoadingData] = useState(true);
   const todayMonth = new Date().getMonth();
@@ -49,9 +46,7 @@ export function Dashboard() {
     <div className={styles.container}>
       <Headers arr={{ setDataOS: setDataOS, setLoadingData: setLoadingData }} />
       <div className={styles.rankingsContainer}>
-        <RankingMotos arr={dataOS.rankingMoto} isLoadging={loadingData} />
-        <Podio arr={dataOS.rankingGeral} isLoadging={loadingData} />
-        <RankingGeral arr={dataOS.rankingGeral} isLoadging={loadingData} />
+      <Table/>
       </div>
     </div>
   );

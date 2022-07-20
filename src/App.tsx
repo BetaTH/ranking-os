@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import axios from "axios";
-import { Dashboard } from "./pages/dashboard";
+import { Dashboard } from "./pages/Dashboard";
+import { TablePage } from "./pages/TablePage";
 
 function App() {
   // const [dataOS, setDataOS] = useState([])
@@ -31,6 +32,7 @@ function App() {
   return (
     <div>
       <Dashboard />
+     {/* <TablePage/> */}
     </div>
   );
 }

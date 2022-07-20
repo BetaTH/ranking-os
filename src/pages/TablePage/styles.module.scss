@@ -4,9 +4,9 @@
 }
 
 .rankingsContainer {
-  gap: 4rem;
+  justify-content: center;
+  gap: 2.8rem;
   display: flex;
   align-items: flex-end;
-  padding: 1.6rem;
-  justify-content: center;
+  padding-top: 2.8rem;
 }
