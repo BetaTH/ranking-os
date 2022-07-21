@@ -10,16 +10,25 @@ body {
   height: 100%;
 }
 
+@media only screen and (max-width: 1280px) {
+  html {
+    font-size: calc(1280px / 1920 * 10);
+  }  
+}
+@media only screen and (min-width: 1280px) {
 html {
   font-size: calc(100vw / 1920 * 10);
 }
+}
+
 
 body {
-  font-family: "Poppins", sans-serif;
   min-width: 1280px;
+  font-family: "Poppins", sans-serif;
   background-color: var(--background);
   -webkit-text-size-adjust: none;
   -webkit-font-smoothing: antialiased;
+  
 }
 
 button {
