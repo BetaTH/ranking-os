@@ -98,11 +98,9 @@ export function Headers(prop: props) {
 
   return (
     <header className={styles.divHeaders}>
-      <div className={styles.divLogo}>
+      <div className={styles.divLogoTitle}>
         <img className={styles.logo} src={Logo} alt="Logo" />
-      </div>
-      <div className={styles.divTitle}>
-        <h1 className={styles.titulo}>RANKING OS EXTERNO</h1>
+        <h1 className={styles.titulo}>Ranking OS Externo</h1>
       </div>
       <div className={styles.divDateFilter}>
         <select

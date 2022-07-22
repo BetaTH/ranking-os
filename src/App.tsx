@@ -5,11 +5,13 @@ import { TablePage } from "./pages/TablePage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
+  
+  // return(<Dashboard />);
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/tabela" element={<TablePage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<TablePage />} />
       </Routes>
     </Router>
   );
