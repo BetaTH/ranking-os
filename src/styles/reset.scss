@@ -48,14 +48,20 @@ select{
   font-family: "Poppins", sans-serif;
 }
 
+input{
+  outline: none;
+  border: none;
+  display: inline-block;
+  font-family: "Poppins", sans-serif;
+}
 
 
 
 
 
-// ::-webkit-scrollbar {
-//   display: none;
-//   }
+
+
+
 
 * {
   scrollbar-width: thin;

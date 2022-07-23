@@ -30,14 +30,12 @@ export function RankingGeral(props: props) {
 
   if (newProps.length === 0) {
     return (
-      <div className={styles.rankingMotoContainer}>
         <div className={styles.container}>
           <div className={styles.textContainer}>
             <span className={styles.title}>Ranking Geral</span>
           </div>
             <SemDados/>
         </div>
-      </div>
 
     );
   }

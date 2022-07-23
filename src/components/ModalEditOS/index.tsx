@@ -28,23 +28,104 @@ export function Modal (props : props){
     const OStoEdit = props.OStoEdit
 
     return (
-        <div onClick={() => props.setIsModalVisibel(false)} className={styles.conteiner}>
+        <div id = "Conteiner" onClick={(e) => (e.target as HTMLDivElement).id=="Conteiner"?props.setIsModalVisibel(false):null} className={styles.conteiner}>
             <div className={styles.modal}>
-                <form >
-                    <div>{OStoEdit.idOS}</div>
-                    <div>{OStoEdit.operador}</div>
-                    <div>{OStoEdit.zona}</div>
-                    <div>{OStoEdit.cliente}</div>
-                    <div>{OStoEdit.tipoOS}</div>
-                    <div>{OStoEdit.equipe}</div>
-                    <div>{OStoEdit.equipe}</div>
-                    <div>{OStoEdit.transporte}</div>
-                    <div>{OStoEdit.dataAbertura}</div>
-                    <div>{OStoEdit.dataFechamento}</div>
-                    <div>{OStoEdit.taxa}</div>
-                    <div>{OStoEdit.correcao}</div>
-                    <div>{OStoEdit.pontos}</div>
-                </form>
+                <div className={styles.formModal}>
+                    <div className={styles.rowTitle}>
+                        <div style = {{borderBottom: "0.1rem solid #2C3639", padding:"0rem 1.5rem"}}><h2 className={styles.title}>Edição de OS</h2></div>
+                    </div>
+                    <div className={styles.row}>
+                        <div className={styles.rowLabel}>
+                            <label className={styles.label}>ID OS: </label>
+                        </div>
+                        <div className={styles.rowInput}>
+                            <input className={styles.input} type="text" defaultValue={OStoEdit.idOS}/>
+                        </div>
+                    </div>
+                    <div className={styles.row}>
+                        <div className={styles.rowLabel}>
+                            <label className={styles.label}>Operador </label>
+                        </div>
+                        <div className={styles.rowInput}>
+                            <input className={styles.input} type="text" defaultValue={OStoEdit.operador}/>
+                        </div>
+                    </div>
+                    <div className={styles.row}>
+                        <div className={styles.rowLabel}>
+                            <label className={styles.label}>Zona: </label>
+                        </div>
+                        <div className={styles.rowInput}>
+                            <input className={styles.input} type="text" defaultValue={OStoEdit.zona}/>
+                        </div>
+                    </div>
+                    <div className={styles.row}>
+                        <div className={styles.rowLabel}>
+                            <label className={styles.label}>ID Cliente: </label>
+                        </div>
+                        <div className={styles.rowInput}>
+                            <input className={styles.input} type="text" defaultValue={OStoEdit.cliente}/>
+                        </div>
+                    </div>
+                    <div className={styles.row}>
+                        <div className={styles.rowLabel}>
+                            <label className={styles.label}>Tipo da OS: </label>
+                        </div>
+                        <div className={styles.rowInput}>
+                            <input className={styles.input} type="text" defaultValue={OStoEdit.tipoOS}/>
+                        </div>
+                    </div>
+                    <div className={styles.row}>
+                        <div className={styles.rowLabel}>
+                            <label className={styles.label}>Equipe: </label>
+                        </div>
+                        <div className={styles.rowInput}>
+                            <input className={styles.input} type="text" defaultValue={OStoEdit.equipe}/>
+                        </div>
+                    </div>
+                    <div className={styles.row}>
+                        <div className={styles.rowLabel}>
+                            <label className={styles.label}>Transporte: </label>
+                        </div>
+                        <div className={styles.rowInput}>
+                            <input className={styles.input} type="text" defaultValue={OStoEdit.transporte}/>
+                        </div>
+                    </div>
+                    <div className={styles.row}>
+                        <div className={styles.rowLabel}>
+                            <label className={styles.label}>Data de Abertura: </label>
+                        </div>
+                        <div className={styles.rowInput}>
+                            <input className={styles.input} type="text" defaultValue={OStoEdit.dataAbertura}/>
+                        </div>
+                    </div>
+                    <div className={styles.row}>
+                        <div className={styles.rowLabel}>
+                            <label className={styles.label}>Data de Fechamento: </label>
+                        </div>
+                        <div className={styles.rowInput}>
+                            <input className={styles.input} type="text" defaultValue={OStoEdit.dataFechamento}/>
+                        </div>
+                    </div>
+                    <div className={styles.row}>
+                        <div className={styles.rowLabel}>
+                            <label className={styles.label}>Taxa: </label>
+                        </div>
+                        <div className={styles.rowInput}>
+                            <input className={styles.input} type="text" defaultValue={OStoEdit.taxa}/>
+                        </div>
+                    </div>
+                    <div className={styles.row}>
+                        <div className={styles.rowLabel}>
+                            <label className={styles.label}>Status Correção: </label>
+                        </div>
+                        <div className={styles.rowInput}>
+                            <input className={styles.input} type="text" defaultValue={OStoEdit.correcao}/>
+                        </div>
+                    </div>
+                    <div className={styles.rowButton}>
+                        <button className={styles.saveButton} onClick={()=> props.setIsModalVisibel(false)}>Salvar</button>
+                    </div>
+                </div>
             </div>
         </div>
     )   
