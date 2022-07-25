@@ -18,7 +18,6 @@ export function AutocompleteModalInputs(props: propsAC) {
   function setACstate(e: HTMLDivElement, value: string) {
     props.inputEl.value = String(value);
     props.setIsACvisible(isACVisible);
-    props.setSearch("");
     props.inputEl.style.border = "0.1rem solid #ffffff";
   }
 
@@ -33,6 +32,13 @@ export function AutocompleteModalInputs(props: propsAC) {
     const { current: wrap } = wrapperRef;
     if (wrap && !wrap.contains(e.target as HTMLDivElement)) {
       props.setIsACvisible(isACVisible);
+      props.validateAutocompleteInputs
+        ? props.validateAutocompleteInputs(
+            props.inputEl.id as string,
+            props.values as string[]
+          )
+        : null;
+      props.setSearch("");
     }
   };
 

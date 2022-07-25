@@ -84,9 +84,6 @@ export function ModalEditAddOS(props: propsModal) {
                 onChange={(e) =>
                   onChanceInput(e.target as HTMLInputElement, "operador")
                 }
-                onBlur={() =>
-                  functions.validateAutocompleteInputs("operador", teste)
-                }
               />
               {isACVisible?.operador ? (
                 <AutocompleteModalInputs
@@ -95,6 +92,9 @@ export function ModalEditAddOS(props: propsModal) {
                   setIsACvisible={setIsACVisible}
                   search={search}
                   setSearch={setSearch}
+                  validateAutocompleteInputs={
+                    functions.validateAutocompleteInputs
+                  }
                 />
               ) : null}
             </div>
@@ -116,9 +116,6 @@ export function ModalEditAddOS(props: propsModal) {
                 onChange={(e) => {
                   onChanceInput(e.target as HTMLInputElement, "zona");
                 }}
-                onBlur={() =>
-                  functions.validateAutocompleteInputs("zona", teste)
-                }
               />
               {isACVisible?.zona ? (
                 <AutocompleteModalInputs
@@ -127,6 +124,9 @@ export function ModalEditAddOS(props: propsModal) {
                   setIsACvisible={setIsACVisible}
                   search={search}
                   setSearch={setSearch}
+                  validateAutocompleteInputs={
+                    functions.validateAutocompleteInputs
+                  }
                 />
               ) : null}
             </div>
@@ -188,9 +188,6 @@ export function ModalEditAddOS(props: propsModal) {
                 onChange={(e) =>
                   onChanceInput(e.target as HTMLInputElement, "tipoOS")
                 }
-                onBlur={() =>
-                  functions.validateAutocompleteInputs("tipoOS", teste)
-                }
               />
               {isACVisible?.tipoOS ? (
                 <AutocompleteModalInputs
@@ -199,6 +196,9 @@ export function ModalEditAddOS(props: propsModal) {
                   setIsACvisible={setIsACVisible}
                   search={search}
                   setSearch={setSearch}
+                  validateAutocompleteInputs={
+                    functions.validateAutocompleteInputs
+                  }
                 />
               ) : null}
             </div>
@@ -220,9 +220,6 @@ export function ModalEditAddOS(props: propsModal) {
                 onChange={(e) =>
                   onChanceInput(e.target as HTMLInputElement, "equipe")
                 }
-                onBlur={() =>
-                  functions.validateAutocompleteInputs("equipe", teste)
-                }
               />
               {isACVisible?.equipe ? (
                 <AutocompleteModalInputs
@@ -231,6 +228,9 @@ export function ModalEditAddOS(props: propsModal) {
                   setIsACvisible={setIsACVisible}
                   search={search}
                   setSearch={setSearch}
+                  validateAutocompleteInputs={
+                    functions.validateAutocompleteInputs
+                  }
                 />
               ) : null}
             </div>
@@ -254,9 +254,6 @@ export function ModalEditAddOS(props: propsModal) {
                 onChange={(e) =>
                   onChanceInput(e.target as HTMLInputElement, "transporte")
                 }
-                onBlur={() =>
-                  functions.validateAutocompleteInputs("transporte", teste)
-                }
               />
               {isACVisible?.transporte ? (
                 <AutocompleteModalInputs
@@ -265,6 +262,9 @@ export function ModalEditAddOS(props: propsModal) {
                   setIsACvisible={setIsACVisible}
                   search={search}
                   setSearch={setSearch}
+                  validateAutocompleteInputs={
+                    functions.validateAutocompleteInputs
+                  }
                 />
               ) : null}
             </div>

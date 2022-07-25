@@ -50,5 +50,5 @@ export interface propsAC {
   setIsACvisible: Function;
   search: string;
   setSearch: Function;
-  ACid?: string;
+  validateAutocompleteInputs?: Function;
 }

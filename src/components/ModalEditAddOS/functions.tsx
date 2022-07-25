@@ -40,10 +40,10 @@ export function validadeClienteOS(id: "cliente" | "idOS") {
 
 export function validateAutocompleteInputs(
   campo: string,
-  listOptions: { [key: string]: string[] }
+  listOptions: string[]
 ) {
   if (formValues[campo]()) {
-    if (listOptions[campo].includes(formValues[campo]())) {
+    if (listOptions.includes(formValues[campo]())) {
       formInputs[campo]().style.border = "0.1rem solid #ffffff";
       return true;
     } else {
