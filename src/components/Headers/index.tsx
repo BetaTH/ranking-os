@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import Logo from "../../img/logo.svg";
+import { propsHeaders } from "../../interfaces/os-interfaces";
 
-interface props {
-  arr: {
-    setDataOS: Function;
-    setLoadingData: Function;
-  };
-}
-export function Headers(prop: props) {
+export function Headers(prop: propsHeaders) {
   const newProps = prop.arr;
   const [monthValue, setMonthValue] = useState(new Date().getMonth());
   const [yearValue, setYearValue] = useState(new Date().getFullYear());
@@ -66,8 +61,8 @@ export function Headers(prop: props) {
       );
       loadNewData();
     }
-    console.log(listSaveStorage)
-    console.log(sessionStorage.length)
+    console.log(listSaveStorage);
+    console.log(sessionStorage.length);
   }
 
   function loadNewData() {

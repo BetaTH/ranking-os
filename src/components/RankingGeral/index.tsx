@@ -1,19 +1,9 @@
+import { propsRanking } from "../../interfaces/os-interfaces";
 import { Loading } from "../Loading";
 import { SemDados } from "../SemDados";
 import styles from "./styles.module.scss";
 
-interface props {
-  arr: {
-    equipe: string;
-    pontos: number;
-    classTransporte: string;
-    fotoLink: string;
-  }[];
-
-  isLoadging: boolean;
-}
-
-export function RankingGeral(props: props) {
+export function RankingGeral(props: propsRanking) {
   const newProps = props.arr;
   const count = Array.from({ length: 31 }, (_, i) => i + 1);
 
@@ -23,20 +13,19 @@ export function RankingGeral(props: props) {
         <div className={styles.textContainer}>
           <span className={styles.title}>Ranking Geral</span>
         </div>
-          <Loading/>
+        <Loading />
       </div>
     );
   }
 
   if (newProps.length === 0) {
     return (
-        <div className={styles.container}>
-          <div className={styles.textContainer}>
-            <span className={styles.title}>Ranking Geral</span>
-          </div>
-            <SemDados/>
+      <div className={styles.container}>
+        <div className={styles.textContainer}>
+          <span className={styles.title}>Ranking Geral</span>
         </div>
-
+        <SemDados />
+      </div>
     );
   }
 

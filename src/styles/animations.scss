@@ -1,0 +1,42 @@
+@keyframes openModal {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes openModalOverlay {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes openAutocomplete {
+  0% {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0rem);
+  }
+}
+
+// @mixin openOverlay {
+//   animation-name: openModalOverlay;
+//   animation-duration: 0.2s;
+//   animation-timing-function: ease-in-out;
+// }
+
+// @mixin openModal {
+//   animation-name: openModal;
+//   animation-duration: 0.2s;
+//   animation-timing-function: ease-in-out;
+// }

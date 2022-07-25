@@ -5,9 +5,9 @@
   background: #b2bebf;
 
   .rankingsContainer {
-    gap: 2.5rem;
+    gap: 1rem;
     display: flex;
-    padding: 2.5rem;
+    padding: 1rem;
     flex-direction: column;
     //padding-top: 2.5rem;
     align-items: center;
@@ -51,6 +51,42 @@
           appearance: none;
           height: 100%;
           padding: 0 0.5rem;
+        }
+      }
+    }
+
+    .addOSContainer {
+      width: 170rem;
+      height: 6rem;
+      display: flex;
+      align-items: center;
+      justify-content: end;
+      gap: 2rem;
+
+      .addOSSpanConteiner {
+        display: flex;
+        align-items: center;
+        .addOSSpan {
+          font-size: 3rem;
+          font-weight: 400;
+          color: #2c3639;
+        }
+      }
+
+      .addOS {
+        width: 4.5rem;
+        height: 4.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.8rem;
+        border: 0.1rem solid #002c24;
+        background: rgba(12, 242, 93, 0.1);
+        color: #002c24;
+        transition: 0.2s;
+
+        &:hover {
+          background: rgba(12, 242, 93, 0.3);
         }
       }
     }

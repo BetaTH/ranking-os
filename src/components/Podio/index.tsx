@@ -1,21 +1,11 @@
 import classNames from "classnames";
 import { Trophy } from "phosphor-react";
+import { propsRanking } from "../../interfaces/os-interfaces";
 import { Loading } from "../Loading";
 import { SemDados } from "../SemDados";
 import styles from "./styles.module.scss";
 
-interface props {
-  arr: {
-    equipe: string;
-    pontos: number;
-    classTransporte: string;
-    fotoLink: string;
-  }[];
-
-  isLoadging: boolean;
-}
-
-export function Podio(props: props) {
+export function Podio(props: propsRanking) {
   const newProps = props.arr;
   const count = [4, 2, 1, 3, 5];
 
@@ -40,8 +30,6 @@ export function Podio(props: props) {
       </div>
     );
   }
-
-  
 
   return (
     <div className={`${styles.container}`}>
