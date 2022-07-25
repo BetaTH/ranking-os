@@ -14,7 +14,7 @@ export function TablePage() {
 
   return (
     <div className={styles.container}>
-      <Headers arr={{ setDataOS: setDataOS, setLoadingData: setLoadingData }} />
+      <Headers titlePage={"tabela"}/>
       <div className={styles.rankingsContainer}>
         <div className={styles.addOSContainer}>
           <div className={styles.addOSSpanConteiner}>

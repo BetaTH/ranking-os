@@ -1,8 +1,9 @@
 import styles from "./styles.module.scss";
 import { propsModal } from "../../interfaces/os-interfaces";
 import { AutocompleteModalInputs } from "../AutocompleteModalInputs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as functions from "../ModalEditAddOS/functions";
+import { CaretDown, Target, X } from "phosphor-react";
 
 export function ModalEditAddOS(props: propsModal) {
   const OStoEdit = props.OStoEdit;
@@ -12,6 +13,14 @@ export function ModalEditAddOS(props: propsModal) {
   const [inputEl, setInputEl] = useState<HTMLInputElement>();
   const [search, setSearch] = useState("");
 
+  
+  useEffect(()=>{
+    document.querySelectorAll('body').forEach((target) => target.classList.add("noScroll"))
+    return ()=>{
+      document.querySelectorAll('body').forEach((target) => target.classList.remove("noScroll"))
+    };
+  })
+  
   function onClickInput(e: HTMLInputElement, InputId: string) {
     const newisACVisible: { [key: string]: boolean } = {
       operador: false,
@@ -27,8 +36,23 @@ export function ModalEditAddOS(props: propsModal) {
     setInputEl(e);
   }
 
-  function onChanceInput(e: HTMLInputElement, InputId: string) {
+  function onChangeInput(e: HTMLInputElement, InputId: string) {
     setSearch(e.value as string);
+    e.style.border = "0.1rem solid #ffffff"
+    if (!isACVisible[InputId]) {
+      const newisACVisible: { [key: string]: boolean } = {
+        operador: false,
+        zona: false,
+        tipoOS: false,
+        equipe: false,
+        transporte: false,
+        taxa: false,
+        correcao: false,
+      };
+      newisACVisible[InputId] = true;
+      setIsACVisible(newisACVisible);
+      setInputEl(e);
+    }
   }
 
   const teste = {
@@ -36,7 +60,7 @@ export function ModalEditAddOS(props: propsModal) {
     zona: ["Norte", "Sul"],
     equipe: ["thielson", "thiago"],
     transporte: ["Carro", "Moto"],
-    tipoOS: ["Nivel 1", "Nivel 2", "Mudança de Local"],
+    tipoOS: ["Nível 1","Nível 2","Mudança de Local","Mudança de Endereço","Conector","Oscilação","Comodato","Migração"],
   };
 
   return (
@@ -44,8 +68,9 @@ export function ModalEditAddOS(props: propsModal) {
       id="Conteiner"
       onClick={(e) =>
         (e.target as HTMLDivElement).id == "Conteiner"
-          ? props.setIsModalVisible(false)
-          : null
+          ? (props.typeModal=="edit") ?
+          props.setIsModalVisible(false)
+          : null : null
       }
       className={styles.conteiner}
     >
@@ -72,6 +97,7 @@ export function ModalEditAddOS(props: propsModal) {
             </div>
             <div className={styles.rowInput}>
               <input
+                placeholder="Selecionar uma opção"
                 className={styles.input}
                 id="operador"
                 type="text"
@@ -82,9 +108,10 @@ export function ModalEditAddOS(props: propsModal) {
                   onClickInput(e.target as HTMLInputElement, "operador")
                 }
                 onChange={(e) =>
-                  onChanceInput(e.target as HTMLInputElement, "operador")
+                  onChangeInput(e.target as HTMLInputElement, "operador")
                 }
               />
+              <CaretDown className={styles.arrowDown} height={"100%"} width={"2rem"}/>
               {isACVisible?.operador ? (
                 <AutocompleteModalInputs
                   values={teste.operador}
@@ -106,6 +133,7 @@ export function ModalEditAddOS(props: propsModal) {
             </div>
             <div className={styles.rowInput}>
               <input
+                placeholder="Selecionar uma opção"
                 id="zona"
                 className={styles.input}
                 type="text"
@@ -114,9 +142,10 @@ export function ModalEditAddOS(props: propsModal) {
                   onClickInput(e.target as HTMLInputElement, "zona")
                 }
                 onChange={(e) => {
-                  onChanceInput(e.target as HTMLInputElement, "zona");
+                  onChangeInput(e.target as HTMLInputElement, "zona");
                 }}
               />
+              <CaretDown className={styles.arrowDown} height={"100%"} width={"2rem"}/>
               {isACVisible?.zona ? (
                 <AutocompleteModalInputs
                   values={teste.zona}
@@ -138,6 +167,7 @@ export function ModalEditAddOS(props: propsModal) {
             </div>
             <div className={styles.rowInput}>
               <input
+                placeholder="Digitar ID da OS"
                 id="idOS"
                 className={styles.input}
                 type="text"
@@ -157,6 +187,7 @@ export function ModalEditAddOS(props: propsModal) {
             </div>
             <div className={styles.rowInput}>
               <input
+                placeholder="Digitar ID do cliente"
                 id="cliente"
                 className={styles.input}
                 type="text"
@@ -178,6 +209,7 @@ export function ModalEditAddOS(props: propsModal) {
             </div>
             <div className={styles.rowInput}>
               <input
+                placeholder="Selecionar uma opção"
                 id="tipoOS"
                 className={styles.input}
                 type="text"
@@ -186,9 +218,10 @@ export function ModalEditAddOS(props: propsModal) {
                   onClickInput(e.target as HTMLInputElement, "tipoOS")
                 }
                 onChange={(e) =>
-                  onChanceInput(e.target as HTMLInputElement, "tipoOS")
+                  onChangeInput(e.target as HTMLInputElement, "tipoOS")
                 }
               />
+              <CaretDown className={styles.arrowDown} height={"100%"} width={"2rem"}/>
               {isACVisible?.tipoOS ? (
                 <AutocompleteModalInputs
                   values={teste.tipoOS}
@@ -210,6 +243,7 @@ export function ModalEditAddOS(props: propsModal) {
             </div>
             <div className={styles.rowInput}>
               <input
+                placeholder="Selecionar uma opção"
                 id="equipe"
                 className={styles.input}
                 type="text"
@@ -218,9 +252,10 @@ export function ModalEditAddOS(props: propsModal) {
                   onClickInput(e.target as HTMLInputElement, "equipe")
                 }
                 onChange={(e) =>
-                  onChanceInput(e.target as HTMLInputElement, "equipe")
+                  onChangeInput(e.target as HTMLInputElement, "equipe")
                 }
               />
+              <CaretDown className={styles.arrowDown} height={"100%"} width={"2rem"}/>
               {isACVisible?.equipe ? (
                 <AutocompleteModalInputs
                   values={teste.equipe}
@@ -242,6 +277,7 @@ export function ModalEditAddOS(props: propsModal) {
             </div>
             <div className={styles.rowInput}>
               <input
+                placeholder="Selecionar uma opção"
                 id="transporte"
                 className={styles.input}
                 type="text"
@@ -252,9 +288,10 @@ export function ModalEditAddOS(props: propsModal) {
                   onClickInput(e.target as HTMLInputElement, "transporte")
                 }
                 onChange={(e) =>
-                  onChanceInput(e.target as HTMLInputElement, "transporte")
+                  onChangeInput(e.target as HTMLInputElement, "transporte")
                 }
               />
+              <CaretDown className={styles.arrowDown} height={"100%"} width={"2rem"}/>
               {isACVisible?.transporte ? (
                 <AutocompleteModalInputs
                   values={teste.transporte}
@@ -266,6 +303,7 @@ export function ModalEditAddOS(props: propsModal) {
                     functions.validateAutocompleteInputs
                   }
                 />
+                
               ) : null}
             </div>
           </div>
@@ -276,6 +314,7 @@ export function ModalEditAddOS(props: propsModal) {
             </div>
             <div className={styles.rowInput}>
               <input
+                placeholder="dd/mm/aaaa hh:mm"
                 id="dataAbertura"
                 className={styles.input}
                 type="text"
@@ -297,6 +336,7 @@ export function ModalEditAddOS(props: propsModal) {
             </div>
             <div className={styles.rowInput}>
               <input
+                placeholder="dd/mm/aaaa hh:mm"
                 id="dataFechamento"
                 className={styles.input}
                 type="text"
@@ -318,6 +358,8 @@ export function ModalEditAddOS(props: propsModal) {
             </div>
             <div className={styles.rowInput}>
               <input
+                placeholder="Selecionar uma opção"
+                id="taxa"
                 className={styles.input}
                 type="text"
                 defaultValue={
@@ -327,9 +369,10 @@ export function ModalEditAddOS(props: propsModal) {
                   onClickInput(e.target as HTMLInputElement, "taxa")
                 }
                 onChange={(e) =>
-                  onChanceInput(e.target as HTMLInputElement, "taxa")
+                  onChangeInput(e.target as HTMLInputElement, "taxa")
                 }
               />
+              <CaretDown className={styles.arrowDown} height={"100%"} width={"2rem"}/>
               {isACVisible?.taxa ? (
                 <AutocompleteModalInputs
                   values={["Sim", "Não"]}
@@ -348,6 +391,8 @@ export function ModalEditAddOS(props: propsModal) {
             </div>
             <div className={styles.rowInput}>
               <input
+                placeholder="Selecionar uma opção"
+                id="correcao"
                 className={styles.input}
                 type="text"
                 defaultValue={
@@ -357,9 +402,10 @@ export function ModalEditAddOS(props: propsModal) {
                   onClickInput(e.target as HTMLInputElement, "correcao")
                 }
                 onChange={(e) =>
-                  onChanceInput(e.target as HTMLInputElement, "correcao")
+                  onChangeInput(e.target as HTMLInputElement, "correcao")
                 }
               />
+              <CaretDown className={styles.arrowDown} height={"100%"} width={"2rem"}/>
               {isACVisible?.correcao ? (
                 <AutocompleteModalInputs
                   values={["Sim", "Não"]}
@@ -377,21 +423,27 @@ export function ModalEditAddOS(props: propsModal) {
               className={styles.saveButton}
               onClick={() =>
                 props.typeModal == "edit"
-                  ? onClickEdit(props)
-                  : onClickAdd(props)
+                  ? onClickEdit(props,teste)
+                  : onClickAdd(props,teste)
               }
             >
               Salvar
             </button>
           </div>
         </div>
+        <X className={styles.close} size={32} onClick={()=>props.setIsModalVisible(false)}/>
       </div>
     </div>
   );
 }
 
-function onClickEdit(props: propsModal) {
-  props.setIsModalVisible(false);
+function onClickEdit(props: propsModal, teste : { [key: string]: string[] }) {
+  functions.getDataToAddOrEdit(teste,"edit",props.setIsModalVisible)
 }
 
-function onClickAdd(props: propsModal) {}
+function onClickAdd(props: propsModal, teste : { [key: string]: string[] }) {
+  functions.getDataToAddOrEdit(teste,"add")
+}
+  
+
+

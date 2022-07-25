@@ -44,10 +44,10 @@ export function Dashboard() {
         });
     }
   }, []);
-
+  
   return (
     <div className={styles.container}>
-      <Headers arr={{ setDataOS: setDataOS, setLoadingData: setLoadingData }} />
+      <Headers setPropsSearchDataDashPage={{ setDataOS: setDataOS, setLoadingData: setLoadingData }} titlePage={"dash"}/>
       <div className={styles.rankingsContainer}>
         <RankingMotos arr={dataOS.rankingMoto} isLoadging={loadingData} />
         <Podio arr={dataOS.rankingGeral} isLoadging={loadingData} />

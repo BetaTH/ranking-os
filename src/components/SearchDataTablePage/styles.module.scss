@@ -1,0 +1,37 @@
+.divDateFilter{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    padding: 0.5rem;
+    gap: 1rem;
+
+    .searchButton {
+      background: var(--background);
+      padding: 0 0.5rem;
+      width: 10rem;
+      height: 3.5rem;
+      font-size: 1.5rem;
+      text-align: center;
+      text-justify: center;
+      border-radius: 0.5rem;
+    }
+
+    .searchButton:hover {
+      background: #f2f6faea;
+    }
+
+    .selectMonth,
+    .selectYear{
+      padding: 0 0.5rem;
+      background: var(--background);
+      height: 100%;
+      border-radius: 0.5rem;
+      height: 3.5rem;
+      width: 10rem;
+      font-size: 1.3rem;
+      -webkit-appearance: none;
+      -moz-appearance:    none;
+      appearance:         none;
+      text-align: center;
+    }
+  }

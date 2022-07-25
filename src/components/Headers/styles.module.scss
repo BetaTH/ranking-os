@@ -1,3 +1,5 @@
+@import "../../styles/animations.scss";
+
 .divHeaders {
   background-color: #2c3639;
   height: 7rem;
@@ -13,7 +15,6 @@
     display: flex;
     align-items: center;
     justify-content: left;
-    //border: var(--background) solid 0.1rem;
   }
   .divLogoTitle{
     display: flex;
@@ -21,7 +22,6 @@
     justify-content: left;
     padding: 0.8rem 0;
     width: 100%;
-    //border: var(--background) solid 0.1rem;
     height: 100%;
     gap: 3rem;
   
@@ -29,10 +29,25 @@
       color: aliceblue;
       text-align: left;
       font-size: 3.5rem;
-      font-weight: 600;
+      font-weight: 500;
+      width: 40rem;
+      animation: showOpacity .8s  ;
     }
     .logo{
       height: 100%;
+    }
+
+    .naviationButton{
+      height: 100%;
+      width: 15rem;
+      color: aliceblue;
+      font-size: 2rem;
+      transition: 0.5s;
+      animation: showOpacity .8s;
+      &:hover{
+        transform:translateY(-0.3rem);
+        //background: rgba(240, 248, 255, 0.199);
+      }
     }
   }
 

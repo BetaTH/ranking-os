@@ -16,7 +16,7 @@
   justify-content: center;
   overflow-y: hidden;
 
-  animation-name: openModalOverlay;
+  animation-name: showOpacity;
   animation-duration: 0.2s;
   animation-timing-function: ease-in-out;
 
@@ -29,6 +29,17 @@
     animation-name: openModal;
     animation-duration: 0.3s;
     animation-timing-function: ease-in-out;
+    position: relative;
+
+    .close{
+      position: absolute;
+      top:1rem;
+      right:1rem;
+      transition: 0.2;
+      &:hover{
+        transform: scale(1.1);
+      }
+    }
 
     .formModal {
       width: 100%;
@@ -79,6 +90,11 @@
           align-items: center;
           justify-content: left;
           position: relative;
+          &:hover{
+            .arrowDown{
+              transform: translateY(0.2rem);
+            }
+          }
           .input {
             width: 100%;
             height: 100%;
@@ -89,6 +105,12 @@
             background: rgba(255, 255, 255, 0.4);
             border: 0.1rem solid #ffffff;
             color: #2c3639;
+          }
+          .arrowDown{
+            position: absolute;
+            right: 0.5rem;
+            z-index: 0;
+            transition: 0.2s;
           }
         }
       }
@@ -113,9 +135,12 @@
         font-weight: 500;
         border-radius: 0.8rem;
         transition: 0.2s;
+        box-shadow:  5px 5px 22px -6px rgba(0,0,0,0.2);
+        transition: 0.3s;
 
         &:hover {
-          background: rgba(12, 242, 93, 0.3);
+          //background: rgba(12, 242, 93, 0.3);
+          transform: scale(1.03);
           //color: #ffffff;
         }
       }

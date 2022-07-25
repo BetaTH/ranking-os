@@ -25,6 +25,19 @@ export interface propsModal {
 
 // Interfaces component Hearders=========
 export interface propsHeaders {
+  setPropsSearchDataDashPage?: {
+    setDataOS: Function;
+    setLoadingData: Function;
+  };
+  titlePage: "tabela" | "dash";
+}
+export interface arr {
+  setDataOS: Function;
+  setLoadingData: Function;
+};
+
+// Interfaces component SearchDataDashPage=========
+export interface propsSearchDataDashPage{
   arr: {
     setDataOS: Function;
     setLoadingData: Function;
