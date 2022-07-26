@@ -13,16 +13,16 @@ export function Dashboard() {
   const todayYear = new Date().getFullYear();
 
   useEffect(() => {
-    if (sessionStorage.getItem(String((100*todayYear+todayMonth)))) {
+    if (sessionStorage.getItem(String(100 * todayYear + todayMonth))) {
       let datStoraged = String(
-        sessionStorage.getItem(String((100*todayYear+todayMonth)))
+        sessionStorage.getItem(String(100 * todayYear + todayMonth))
       );
       setDataOS(JSON.parse(datStoraged));
       setLoadingData(false);
     } else {
       let queryParams = {
         month: String(todayMonth),
-        year: String(todayYear)
+        year: String(todayYear),
       };
       let url = new URL("http://localhost:5000/getRanking");
       let k: keyof typeof queryParams;
@@ -35,7 +35,7 @@ export function Dashboard() {
           setDataOS(res);
           setLoadingData(false);
           sessionStorage.setItem(
-            String((100*todayYear+todayMonth)),
+            String(100 * todayYear + todayMonth),
             JSON.stringify({
               rankingMoto: res.rankingMoto,
               rankingGeral: res.rankingGeral,
@@ -44,10 +44,16 @@ export function Dashboard() {
         });
     }
   }, []);
-  
+
   return (
     <div className={styles.container}>
-      <Headers setPropsSearchDataDashPage={{ setDataOS: setDataOS, setLoadingData: setLoadingData }} titlePage={"dash"}/>
+      <Headers
+        setPropsSearchDataDashPage={{
+          setDataOS: setDataOS,
+          setLoadingData: setLoadingData,
+        }}
+        titlePage={"dash"}
+      />
       <div className={styles.rankingsContainer}>
         <RankingMotos arr={dataOS.rankingMoto} isLoadging={loadingData} />
         <Podio arr={dataOS.rankingGeral} isLoadging={loadingData} />
@@ -56,4 +62,3 @@ export function Dashboard() {
     </div>
   );
 }
-
