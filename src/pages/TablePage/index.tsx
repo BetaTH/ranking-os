@@ -6,12 +6,20 @@ import { CaretDown, Plus } from "phosphor-react";
 import { ModalEditAddOS } from "../../components/ModalEditAddOS";
 
 export function TablePage() {
-  const [dataOS, setDataOS] = useState({ rankingMoto: [], rankingGeral: [] });
+  const [listOptions, setListOptions] = useState<{[key:string]:string[]}>({})
   const [loadingData, setLoadingData] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const todayMonth = new Date().getMonth();
-  const todayYear = new Date().getFullYear();
 
+  useEffect(() =>{
+    const url = "http://localhost:5000/getListOptions"
+    fetch(url)
+    .then((response) => response.json())
+    .then((res)=>{
+      setListOptions(res)
+    })
+  }
+  )
+  
   return (
     <div className={styles.container}>
       <Headers titlePage={"tabela"}/>
@@ -24,27 +32,30 @@ export function TablePage() {
             <Plus height={"100%"} width={"6rem"} />
           </div>
         </div>
-        {/* <div className={styles.titleSearchConteiner}>
-          <h2 className={styles.tableTitle}>Tabela de OS Fechada</h2>
-          <div className={styles.searchConteiner}>
-            <label className={styles.searchLabel}>Pesquisar por: </label>
-            <select
-              className={styles.typeSearch}
-              name="typeSearch"
-              id="typeSearch"
-            >
-              <option value="DataInserção">Data de Inserção</option>
-              <option value="DataAbertura">Data de Abertura</option>
-              <option value="DataFechamento">Data de Fechamento</option>
-            </select>
-            <CaretDown height={"100%"} width={"2rem"} />
-          </div>
-        </div> */}
-        <Table />
+        <Table listOptions = {listOptions}/>
       </div>
       {isModalVisible ? (
-        <ModalEditAddOS typeModal="add" setIsModalVisible={setIsModalVisible} />
+        <ModalEditAddOS listOptions = {listOptions} typeModal="add" setIsModalVisible={setIsModalVisible} />
       ) : null}
     </div>
   );
 }
+
+
+
+{/* <div className={styles.titleSearchConteiner}>
+  <h2 className={styles.tableTitle}>Tabela de OS Fechada</h2>
+  <div className={styles.searchConteiner}>
+    <label className={styles.searchLabel}>Pesquisar por: </label>
+    <select
+      className={styles.typeSearch}
+      name="typeSearch"
+      id="typeSearch"
+    >
+      <option value="DataInserção">Data de Inserção</option>
+      <option value="DataAbertura">Data de Abertura</option>
+      <option value="DataFechamento">Data de Fechamento</option>
+    </select>
+    <CaretDown height={"100%"} width={"2rem"} />
+  </div>
+</div> */}

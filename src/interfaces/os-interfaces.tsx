@@ -15,12 +15,17 @@ export interface OStoEit {
   pontos: number;
 }
 
+export interface PropsTable{
+  listOptions: {[key:string]:string[]}
+}
+
 // Interfaces component ModalEditAddOS=========
 export interface propsModal {
   OStoEdit?: OStoEit;
   setOStoEdit?: Function;
   setIsModalVisible: Function;
   typeModal: "add" | "edit";
+  listOptions: {[key:string]:string[]}
 }
 
 // Interfaces component Hearders=========

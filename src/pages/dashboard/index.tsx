@@ -29,6 +29,7 @@ export function Dashboard() {
       for (k in queryParams) {
         url.searchParams.append(k, queryParams[k]);
       }
+      
       fetch(url)
         .then((response) => response.json())
         .then((res) => {

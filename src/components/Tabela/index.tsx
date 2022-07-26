@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import { useState } from "react";
-import { OStoEit } from "../../interfaces/os-interfaces";
+import { OStoEit, PropsTable } from "../../interfaces/os-interfaces";
 import { ModalEditAddOS } from "../ModalEditAddOS";
 import styles from "./styles.module.scss";
 
-export function Table() {
+export function Table(props : PropsTable) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [OStoEdit, setOStoEdit] = useState<OStoEit>({
     idOS: 0,
@@ -161,6 +161,7 @@ export function Table() {
       </div>
       {isModalVisible ? (
         <ModalEditAddOS
+          listOptions = {props.listOptions}
           OStoEdit={OStoEdit}
           setOStoEdit={setOStoEdit}
           typeModal="edit"

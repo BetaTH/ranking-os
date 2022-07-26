@@ -1,3 +1,6 @@
+import axios from "axios";
+
+
 export const formInputs: { [key: string]: Function } = {
   operador: () => document.getElementById("operador") as HTMLInputElement,
   zona: () => document.getElementById("zona") as HTMLInputElement,
@@ -116,8 +119,8 @@ export function validateDataFechamento() {
   }
 }
 
-export function convertData(dataAbertura: string) {
-  const dataSplit = dataAbertura.split("/");
+export function convertData(date: string) {
+  const dataSplit = date.split("/");
   const dataCorrect = dataSplit[1] + "/" + dataSplit[0] + "/" + dataSplit[2];
   return dataCorrect;
 }
@@ -158,17 +161,7 @@ export function getDataToAddOrEdit(
   typeModal: "add" | "edit",
   hideModal?: Function
 ) {
-  const pontos = {
-    "Nível 1": 1,
-    "Nível 2": 2,
-    "Mudança de Local": 2,
-    "Mudança de Endereço": 2,
-    Conector: 0.5,
-    Oscilação: 1,
-    Comodato: 1,
-    Migração: 1,
-  } as { [key: string]: number };
-
+  
   if (validateFilds(listOptions)) {
     let formDataValues = {} as {
       [key: string]: string | number | Date;
@@ -178,31 +171,17 @@ export function getDataToAddOrEdit(
 
     Object.entries(formValues).forEach((entry) => {
       const [key, value] = entry;
-      formDataValues[key] = value();
+      if(key =="dataAbertura"|| key == "dataFechamento" ){
+        formDataValues[key] = convertData(value())
+      }else{
+        formDataValues[key] = value();
+      }
+      
     });
-    
-    if (formDataValues["correcao"] == "Sim") {
-      formDataValues.pontos = 0;
-    } else {
-      formDataValues.pontos = pontos[formDataValues.tipoOS];
-    }
-
-    formDataValues.dataAbertura = convertData(
-      formDataValues.dataAbertura as string
-    );
-    formDataValues.dataFechamento = convertData(
-      formDataValues.dataFechamento as string
-    );
-
-    formDataValues["trs"] = dateDiff(
-      new Date(convertData(formDataValues.dataAbertura as string)),
-      new Date(convertData(formDataValues.dataFechamento as string))
-    );
 
     if (typeModal == "add") {
-      formDataValues["dataEdicao"] = "";
-      formDataValues["dataInsercao"] = getNewDateAsString(new Date());
-
+      axios.post("http://localhost:5000/postNewOS",formDataValues)
+      console.log(formDataValues);
       formInputs.idOS().value = "";
       formInputs.cliente().value = "";
       formInputs.tipoOS().value = "";
@@ -212,31 +191,10 @@ export function getDataToAddOrEdit(
       formInputs.dataFechamento().value = "";
       formInputs.taxa().value = "Não";
       formInputs.correcao().value = "Não";
-      console.log(formDataValues);
     } else {
-      formDataValues["dataEdicao"] = getNewDateAsString(new Date());
-      console.log(formDataValues);
       hideModal ? hideModal(false) : null;
     }
   } else {
     alert("Preencha os campos obrigatórios (*) corretamente");
   }
-}
-
-function getNewDateAsString(date: Date) {
-  return (
-    String(date.getMonth() + 1).padStart(2, "0") +
-    "/" +
-    String(date.getDate()).padStart(2, "0") +
-    "/" +
-    String(date.getFullYear()).padStart(2, "0") +
-    " " +
-    String(date.getHours()).padStart(2, "0") +
-    ":" +
-    String(date.getMinutes()).padStart(2, "0")
-  );
-}
-
-function dateDiff(dateIni: Date, dateFim: Date) {
-  return "text";
 }

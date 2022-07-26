@@ -55,14 +55,6 @@ export function ModalEditAddOS(props: propsModal) {
     }
   }
 
-  const teste = {
-    operador: ["thielson", "thercio", "will", "aline", "laice", "Erica"],
-    zona: ["Norte", "Sul"],
-    equipe: ["thielson", "thiago"],
-    transporte: ["Carro", "Moto"],
-    tipoOS: ["Nível 1","Nível 2","Mudança de Local","Mudança de Endereço","Conector","Oscilação","Comodato","Migração"],
-  };
-
   return (
     <div
       id="Conteiner"
@@ -114,7 +106,7 @@ export function ModalEditAddOS(props: propsModal) {
               <CaretDown className={styles.arrowDown} height={"100%"} width={"2rem"}/>
               {isACVisible?.operador ? (
                 <AutocompleteModalInputs
-                  values={teste.operador}
+                  values={props.listOptions.operador}
                   inputEl={inputEl as HTMLInputElement}
                   setIsACvisible={setIsACVisible}
                   search={search}
@@ -148,7 +140,7 @@ export function ModalEditAddOS(props: propsModal) {
               <CaretDown className={styles.arrowDown} height={"100%"} width={"2rem"}/>
               {isACVisible?.zona ? (
                 <AutocompleteModalInputs
-                  values={teste.zona}
+                  values={props.listOptions.zona}
                   inputEl={inputEl as HTMLInputElement}
                   setIsACvisible={setIsACVisible}
                   search={search}
@@ -224,7 +216,7 @@ export function ModalEditAddOS(props: propsModal) {
               <CaretDown className={styles.arrowDown} height={"100%"} width={"2rem"}/>
               {isACVisible?.tipoOS ? (
                 <AutocompleteModalInputs
-                  values={teste.tipoOS}
+                  values={props.listOptions.tipoOS}
                   inputEl={inputEl as HTMLInputElement}
                   setIsACvisible={setIsACVisible}
                   search={search}
@@ -258,7 +250,7 @@ export function ModalEditAddOS(props: propsModal) {
               <CaretDown className={styles.arrowDown} height={"100%"} width={"2rem"}/>
               {isACVisible?.equipe ? (
                 <AutocompleteModalInputs
-                  values={teste.equipe}
+                  values={props.listOptions.equipe}
                   inputEl={inputEl as HTMLInputElement}
                   setIsACvisible={setIsACVisible}
                   search={search}
@@ -294,7 +286,7 @@ export function ModalEditAddOS(props: propsModal) {
               <CaretDown className={styles.arrowDown} height={"100%"} width={"2rem"}/>
               {isACVisible?.transporte ? (
                 <AutocompleteModalInputs
-                  values={teste.transporte}
+                  values={props.listOptions.transporte}
                   inputEl={inputEl as HTMLInputElement}
                   setIsACvisible={setIsACVisible}
                   search={search}
@@ -375,7 +367,7 @@ export function ModalEditAddOS(props: propsModal) {
               <CaretDown className={styles.arrowDown} height={"100%"} width={"2rem"}/>
               {isACVisible?.taxa ? (
                 <AutocompleteModalInputs
-                  values={["Sim", "Não"]}
+                  values={props.listOptions.taxa}
                   inputEl={inputEl as HTMLInputElement}
                   setIsACvisible={setIsACVisible}
                   search={search}
@@ -423,8 +415,8 @@ export function ModalEditAddOS(props: propsModal) {
               className={styles.saveButton}
               onClick={() =>
                 props.typeModal == "edit"
-                  ? onClickEdit(props,teste)
-                  : onClickAdd(props,teste)
+                  ? onClickEdit(props)
+                  : onClickAdd(props)
               }
             >
               Salvar
@@ -437,12 +429,12 @@ export function ModalEditAddOS(props: propsModal) {
   );
 }
 
-function onClickEdit(props: propsModal, teste : { [key: string]: string[] }) {
-  functions.getDataToAddOrEdit(teste,"edit",props.setIsModalVisible)
+function onClickEdit(props: propsModal) {
+  functions.getDataToAddOrEdit(props.listOptions,"edit",props.setIsModalVisible)
 }
 
-function onClickAdd(props: propsModal, teste : { [key: string]: string[] }) {
-  functions.getDataToAddOrEdit(teste,"add")
+function onClickAdd(props: propsModal) {
+  functions.getDataToAddOrEdit(props.listOptions,"add")
 }
   
 
