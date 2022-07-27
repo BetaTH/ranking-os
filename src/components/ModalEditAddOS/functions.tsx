@@ -172,7 +172,7 @@ export function getDataToAddOrEdit(
     Object.entries(formValues).forEach((entry) => {
       const [key, value] = entry;
       if(key =="dataAbertura"|| key == "dataFechamento" ){
-        formDataValues[key] = convertData(value())
+        formDataValues[key] = new Date(convertData(value()))
       }else{
         formDataValues[key] = value();
       }
@@ -180,8 +180,7 @@ export function getDataToAddOrEdit(
     });
 
     if (typeModal == "add") {
-      axios.post("http://localhost:5000/postNewOS",formDataValues)
-      console.log(formDataValues);
+      axios.post("https://ranking-os-backend-production.up.railway.app/postNewOS",formDataValues).then((res)=>console.log(res.data))
       formInputs.idOS().value = "";
       formInputs.cliente().value = "";
       formInputs.tipoOS().value = "";

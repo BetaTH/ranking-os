@@ -11,7 +11,7 @@ export function TablePage() {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() =>{
-    const url = "http://localhost:5000/getListOptions"
+    const url = "http://ranking-os-backend-production.up.railway.app/getListOptions"
     fetch(url)
     .then((response) => response.json())
     .then((res)=>{
