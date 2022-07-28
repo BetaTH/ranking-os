@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import equipeSemFoto from "../../img/equipeSemFoto.svg";
 import { Trophy } from "phosphor-react";
 import { propsRanking } from "../../interfaces/os-interfaces";
 import { Loading } from "../Loading";
@@ -47,7 +48,15 @@ export function Podio(props: propsRanking) {
                 })}
               >
                 <div className={styles.photo}>
-                  <img src={newProps[prop - 1].fotoLink} alt="" />
+                  {}
+                  <img
+                    src={
+                      newProps[prop - 1].fotoLink
+                        ? newProps[prop - 1].fotoLink
+                        : equipeSemFoto
+                    }
+                    alt=""
+                  />
                 </div>
                 <div className={styles.column}>
                   <Trophy weight="fill" />
@@ -73,7 +82,14 @@ export function Podio(props: propsRanking) {
                 })}
               >
                 <div className={styles.photo}>
-                  <img src={newProps[prop - 1].fotoLink} alt="" />
+                  <img
+                    src={
+                      newProps[prop - 1].fotoLink
+                        ? newProps[prop - 1].fotoLink
+                        : equipeSemFoto
+                    }
+                    alt=""
+                  />
                 </div>
                 <div className={styles.column}>
                   <span className={styles.equip}>

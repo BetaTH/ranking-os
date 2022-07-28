@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./styles.module.scss";
 import { propsSearchDataDashPage } from "../../interfaces/os-interfaces";
+import axios from "axios";
 
 export function SearchDataDashPage(prop: propsSearchDataDashPage) {
   const newProps = prop.arr;
@@ -35,7 +36,6 @@ export function SearchDataDashPage(prop: propsSearchDataDashPage) {
   yearList.push(todayYear);
   yearList.reverse();
 
-  
   function setNewDataOS() {
     if (sessionStorage.getItem(String(100 * yearValue + monthValue))) {
       const dataStoraged = String(
@@ -59,72 +59,80 @@ export function SearchDataDashPage(prop: propsSearchDataDashPage) {
       );
       loadNewData();
     }
-    console.log(listSaveStorage);
-    console.log(sessionStorage.length);
   }
-  
-  
+
   function loadNewData() {
     newProps.setLoadingData(true);
     let queryParams = {
       month: String(monthValue),
       year: String(yearValue),
     };
-    let url = new URL("http://localhost:5000/getRanking");
-    let k: keyof typeof queryParams;
-    for (k in queryParams) {
-      url.searchParams.append(k, queryParams[k]);
-    }
-    fetch(url)
-      .then((response) => response.json())
-      .then((res) => {
-        newProps.setDataOS(res);
-        newProps.setLoadingData(false);
-        sessionStorage.setItem(
-          String(100 * yearValue + monthValue),
-          JSON.stringify({
-            rankingMoto: res.rankingMoto,
-            rankingGeral: res.rankingGeral,
-          })
-        );
-      });
+    // let url = new URL("http://localhost:5000/getRanking");
+    // let k: keyof typeof queryParams;
+    // for (k in queryParams) {
+    //   url.searchParams.append(k, queryParams[k]);
+    // }
+    // fetch(url)
+    //   .then((response) => response.json())
+    //   .then((res) => {
+    //     newProps.setDataOS(res);
+    //     newProps.setLoadingData(false);
+    //     sessionStorage.setItem(
+    //       String(100 * yearValue + monthValue),
+    //       JSON.stringify({
+    //         rankingMoto: res.rankingMoto,
+    //         rankingGeral: res.rankingGeral,
+    //       })
+    //     );
+    //   });
+    axios.get("http://localhost:5000/getDashData").then((res) => {
+      newProps.setDataOS(res.data);
+      newProps.setLoadingData(false);
+      sessionStorage.setItem(
+        String(100 * yearValue + monthValue),
+        JSON.stringify({
+          rankingMoto: res.data.rankingMoto,
+          rankingGeral: res.data.rankingGeral,
+        })
+      );
+    });
   }
 
   return (
     <div className={styles.divDateFilter}>
-    <select
-      className={styles.selectMonth}
-      name="Mês"
-      id="month"
-      defaultValue={todayMonth}
-      onChange={(e) => setMonthValue(Number(e.target.value))}
-    >
-      {monthList.map((item, id) => {
-        return (
-          <option key={item} value={id}>
-            {item}
-          </option>
-        );
-      })}
-    </select>
-    <select
-      className={styles.selectYear}
-      name="Ano"
-      id="year"
-      defaultValue={todayYear}
-      onChange={(e) => setYearValue(Number(e.target.value))}
-    >
-      {yearList.map((item) => {
-        return (
-          <option key={item} value={item}>
-            {item}
-          </option>
-        );
-      })}
-    </select>
-    <button className={styles.searchButton} onClick={setNewDataOS}>
-      BUSCAR
-    </button>
-  </div>
+      <select
+        className={styles.selectMonth}
+        name="Mês"
+        id="month"
+        defaultValue={todayMonth}
+        onChange={(e) => setMonthValue(Number(e.target.value))}
+      >
+        {monthList.map((item, id) => {
+          return (
+            <option key={item} value={id}>
+              {item}
+            </option>
+          );
+        })}
+      </select>
+      <select
+        className={styles.selectYear}
+        name="Ano"
+        id="year"
+        defaultValue={todayYear}
+        onChange={(e) => setYearValue(Number(e.target.value))}
+      >
+        {yearList.map((item) => {
+          return (
+            <option key={item} value={item}>
+              {item}
+            </option>
+          );
+        })}
+      </select>
+      <button className={styles.searchButton} onClick={setNewDataOS}>
+        BUSCAR
+      </button>
+    </div>
   );
 }

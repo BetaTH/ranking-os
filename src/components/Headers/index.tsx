@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import Logo from "../../img/logo.svg";
 import { arr, propsHeaders } from "../../interfaces/os-interfaces";

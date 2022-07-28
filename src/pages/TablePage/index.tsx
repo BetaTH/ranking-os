@@ -4,21 +4,18 @@ import { Headers } from "../../components/Headers";
 import { Table } from "../../components/Tabela";
 import { CaretDown, Plus } from "phosphor-react";
 import { ModalEditAddOS } from "../../components/ModalEditAddOS";
+import axios from "axios";
 
 export function TablePage() {
   const [listOptions, setListOptions] = useState<{[key:string]:string[]}>({})
   const [loadingData, setLoadingData] = useState(true);
+  const [dataTable, setDataTable] = useState<{[key:string]:string}[]>([])
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() =>{
-    const url = "http://ranking-os-backend-production.up.railway.app/getListOptions"
-    fetch(url)
-    .then((response) => response.json())
-    .then((res)=>{
-      setListOptions(res)
-    })
-  }
-  )
+    axios.get("http://ranking-os-backend-production.up.railway.app/getListOptions").then((res) => setListOptions(res.data))
+    axios.get("http://localhost:5000/getTableData").then((res) => setDataTable(res.data))//ainda está no localhost
+  },[])
   
   return (
     <div className={styles.container}>
@@ -32,7 +29,7 @@ export function TablePage() {
             <Plus height={"100%"} width={"6rem"} />
           </div>
         </div>
-        <Table listOptions = {listOptions}/>
+        <Table listOptions = {listOptions} dataTable = {dataTable}/>
       </div>
       {isModalVisible ? (
         <ModalEditAddOS listOptions = {listOptions} typeModal="add" setIsModalVisible={setIsModalVisible} />

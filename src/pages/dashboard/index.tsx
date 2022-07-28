@@ -5,6 +5,7 @@ import { Podio } from "../../components/Podio";
 import { RankingGeral } from "../../components/RankingGeral";
 import { RankingMotos } from "../../components/RankingMotos";
 import classNames from "classnames";
+import axios from "axios";
 
 export function Dashboard() {
   const [dataOS, setDataOS] = useState({ rankingMoto: [], rankingGeral: [] });
@@ -13,6 +14,47 @@ export function Dashboard() {
   const todayYear = new Date().getFullYear();
 
   useEffect(() => {
+    // if (sessionStorage.getItem(String(100 * todayYear + todayMonth))) {
+    //   let datStoraged = String(
+    //     sessionStorage.getItem(String(100 * todayYear + todayMonth))
+    //   );
+    //   setDataOS(JSON.parse(datStoraged));
+    //   setLoadingData(false);
+    // } else {
+    //   let queryParams = {
+    //     month: String(todayMonth),
+    //     year: String(todayYear),
+    //   };
+    //   let url = new URL("http://localhost:5000/getRanking"); //ainda está no localhost;
+    //   let k: keyof typeof queryParams;
+    //   for (k in queryParams) {
+    //     url.searchParams.append(k, queryParams[k]);
+    //   }
+    //   fetch(url)
+    //     .then((response) => response.json())
+    //     .then((res) => {
+    //       setDataOS(res);
+    //       setLoadingData(false);
+    //       sessionStorage.setItem(
+    //         String(100 * todayYear + todayMonth),
+    //         JSON.stringify({
+    //           rankingMoto: res.rankingMoto,
+    //           rankingGeral: res.rankingGeral,
+    //         })
+    //       );
+    //     });
+    //   axios.get("http://localhost:5000/getDashData").then((res) => {
+    //     setDataOS(res.data);
+    //     setLoadingData(false);
+    //     sessionStorage.setItem(
+    //       String(100 * todayYear + todayMonth),
+    //       JSON.stringify({
+    //         rankingMoto: res.data.rankingMoto,
+    //         rankingGeral: res.data.rankingGeral,
+    //       })
+    //     );
+    //   });
+    // }
     if (sessionStorage.getItem(String(100 * todayYear + todayMonth))) {
       let datStoraged = String(
         sessionStorage.getItem(String(100 * todayYear + todayMonth))
@@ -24,25 +66,17 @@ export function Dashboard() {
         month: String(todayMonth),
         year: String(todayYear),
       };
-      let url = new URL("http://localhost:5000/getRanking");
-      let k: keyof typeof queryParams;
-      for (k in queryParams) {
-        url.searchParams.append(k, queryParams[k]);
-      }
-      
-      fetch(url)
-        .then((response) => response.json())
-        .then((res) => {
-          setDataOS(res);
-          setLoadingData(false);
-          sessionStorage.setItem(
-            String(100 * todayYear + todayMonth),
-            JSON.stringify({
-              rankingMoto: res.rankingMoto,
-              rankingGeral: res.rankingGeral,
-            })
-          );
-        });
+      axios.get("http://localhost:5000/getDashData").then((res) => {
+        setDataOS(res.data);
+        setLoadingData(false);
+        sessionStorage.setItem(
+          String(100 * todayYear + todayMonth),
+          JSON.stringify({
+            rankingMoto: res.data.rankingMoto,
+            rankingGeral: res.data.rankingGeral,
+          })
+        );
+      });
     }
   }, []);
 

@@ -46,14 +46,15 @@ export function AutocompleteModalInputs(props: propsAC) {
     <div ref={wrapperRef} className={styles.conteiner}>
       {props.values
         ?.filter(
-          (name: string) => name.indexOf(props.search.toLowerCase()) > -1
+          (name: string) =>
+            name.toLocaleLowerCase().indexOf(props.search.toLowerCase()) > -1
         )
         .map((value: string, id: number) => {
           return (
             <div
               id={value as string}
               key={id}
-              tabIndex={0}
+              //tabIndex={0}
               className={styles.row}
               onClick={(e) => {
                 setACstate(e.target as HTMLDivElement, value as string);

@@ -1,7 +1,6 @@
 import axios from "axios";
 
-
-export const formInputs: { [key: string]: Function } = {
+const formInputs: { [key: string]: Function } = {
   operador: () => document.getElementById("operador") as HTMLInputElement,
   zona: () => document.getElementById("zona") as HTMLInputElement,
   idOS: () => document.getElementById("idOS") as HTMLInputElement,
@@ -17,7 +16,7 @@ export const formInputs: { [key: string]: Function } = {
   correcao: () => document.getElementById("correcao") as HTMLInputElement,
 };
 
-export const formValues: { [key: string]: Function } = {
+const formValues: { [key: string]: Function } = {
   operador: () => formInputs.operador().value as string,
   zona: () => formInputs.zona().value as string,
   idOS: () => formInputs.idOS().value as string,
@@ -70,9 +69,11 @@ export function validateDataAbertura() {
       if (dataFechamento.length == 16 && dataFechamentoFinal) {
         if (dataAberturaFinal < dataFechamentoFinal) {
           formInputs.dataAbertura().style.border = "0.1rem solid #ffffff";
+          formInputs.dataFechamento().style.border = "0.1rem solid #ffffff";
           return true;
         } else {
           formInputs.dataAbertura().style.border = "0.1rem solid #ff0000";
+          formInputs.dataFechamento().style.border = "0.1rem solid #ff0000";
           return false;
         }
       } else {
@@ -99,9 +100,11 @@ export function validateDataFechamento() {
     if (dataAbertura) {
       if (dataAbertura.length == 16 && dataAberturaFinal) {
         if (dataAberturaFinal < dataFechamentoFinal) {
+          formInputs.dataAbertura().style.border = "0.1rem solid #ffffff";
           formInputs.dataFechamento().style.border = "0.1rem solid #ffffff";
           return true;
         } else {
+          formInputs.dataAbertura().style.border = "0.1rem solid #ff0000";
           formInputs.dataFechamento().style.border = "0.1rem solid #ff0000";
           return false;
         }
@@ -119,7 +122,7 @@ export function validateDataFechamento() {
   }
 }
 
-export function convertData(date: string) {
+function convertData(date: string) {
   const dataSplit = date.split("/");
   const dataCorrect = dataSplit[1] + "/" + dataSplit[0] + "/" + dataSplit[2];
   return dataCorrect;
@@ -161,7 +164,6 @@ export function getDataToAddOrEdit(
   typeModal: "add" | "edit",
   hideModal?: Function
 ) {
-  
   if (validateFilds(listOptions)) {
     let formDataValues = {} as {
       [key: string]: string | number | Date;
@@ -171,16 +173,20 @@ export function getDataToAddOrEdit(
 
     Object.entries(formValues).forEach((entry) => {
       const [key, value] = entry;
-      if(key =="dataAbertura"|| key == "dataFechamento" ){
-        formDataValues[key] = new Date(convertData(value()))
-      }else{
+      if (key == "dataAbertura" || key == "dataFechamento") {
+        formDataValues[key] = new Date(convertData(value()));
+      } else {
         formDataValues[key] = value();
       }
-      
     });
 
     if (typeModal == "add") {
-      axios.post("https://ranking-os-backend-production.up.railway.app/postNewOS",formDataValues).then((res)=>console.log(res.data))
+      axios
+        .post(
+          "https://ranking-os-backend-production.up.railway.app/postNewOS",
+          formDataValues
+        )
+        .then((res) => console.log(res.data));
       formInputs.idOS().value = "";
       formInputs.cliente().value = "";
       formInputs.tipoOS().value = "";
@@ -191,9 +197,26 @@ export function getDataToAddOrEdit(
       formInputs.taxa().value = "Não";
       formInputs.correcao().value = "Não";
     } else {
-      hideModal ? hideModal(false) : null;
+      axios
+        .put("http://localhost:5000/updateOS", formDataValues)
+        .then((res) => console.log(res.data))
+        .then(() => {
+          hideModal ? hideModal(false) : null;
+        }); // com localhost
     }
   } else {
     alert("Preencha os campos obrigatórios (*) corretamente");
   }
+}
+
+export function deleteData(hideModal?: Function) {
+  const idToDelete = formValues.idOS();
+  axios
+    .delete("http://localhost:5000/deleteOS", {
+      data: { idOS: idToDelete },
+    })
+    .then((res) => console.log(res.data))
+    .then(() => {
+      hideModal ? hideModal(false) : null;
+    });
 }

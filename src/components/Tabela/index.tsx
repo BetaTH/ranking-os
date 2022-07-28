@@ -1,4 +1,6 @@
 import classNames from "classnames";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { useState } from "react";
 import { OStoEit, PropsTable } from "../../interfaces/os-interfaces";
 import { ModalEditAddOS } from "../ModalEditAddOS";
@@ -6,76 +8,12 @@ import styles from "./styles.module.scss";
 
 export function Table(props : PropsTable) {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [OStoEdit, setOStoEdit] = useState<OStoEit>({
-    idOS: 0,
-    operador: "",
-    zona: "",
-    cliente: "",
-    tipoOS: "",
-    equipe: "",
-    transporte: "",
-    dataAbertura: "",
-    dataFechamento: "",
-    trs: "",
-    taxa: "",
-    correcao: "",
-    pontos: 0,
-  });
+  const [OStoEdit, setOStoEdit] = useState<OStoEit>({});
 
   function showModal(item: OStoEit) {
     setOStoEdit(item);
     setIsModalVisible(true);
   }
-
-  const OSData = [
-    {
-      idOS: 0,
-      operador: "thielson",
-      zona: "Norte",
-      cliente: "01154",
-      tipoOS: "Nivel 1",
-      equipe: "Aglailton",
-      transporte: "Carro",
-      dataAbertura: "21/07/2022 00:00",
-      dataFechamento: "22/07/2022 12:00",
-      trs: "12 horas",
-      taxa: "",
-      correcao: "",
-      pontos: 2,
-    },
-
-    {
-      idOS: 1,
-      operador: "thiago",
-      zona: "Norte",
-      cliente: "01154",
-      tipoOS: "Nivel 1",
-      equipe: "Aglailton",
-      transporte: "Carro",
-      dataAbertura: "21/07/2022 12:00",
-      dataFechamento: "22/07/2022 12:00",
-      trs: "24 horas",
-      taxa: "",
-      correcao: "",
-      pontos: 2,
-    },
-
-    {
-      idOS: 2,
-      operador: "jefferson",
-      zona: "Norte",
-      cliente: "01154",
-      tipoOS: "Nivel 1",
-      equipe: "Aglailton",
-      transporte: "Carro",
-      dataAbertura: "20/07/2022 12:00",
-      dataFechamento: "22/07/2022 12:00",
-      trs: "48 horas",
-      taxa: "sim",
-      correcao: "Não",
-      pontos: 2,
-    },
-  ];
 
   return (
     <div id="table" className={styles.conteiner}>
@@ -109,7 +47,7 @@ export function Table(props : PropsTable) {
         <div className={classNames(styles.colHeader, styles.col12)}>Pontos</div>
       </header>
       <div className={styles.rowsConteiner}>
-        {OSData?.map((item, id) => {
+        {props.dataTable?.map((item, id) => {
           return (
             <div
               className={styles.rowTable}
@@ -138,10 +76,10 @@ export function Table(props : PropsTable) {
                 {item.transporte}
               </div>
               <div className={classNames(styles.colRows, styles.col7)}>
-                {item.dataAbertura}
+                {format(new Date(item.dataAbertura),"dd/MM/yyyy HH:mm",{locale:ptBR})}
               </div>
               <div className={classNames(styles.colRows, styles.col8)}>
-                {item.dataFechamento}
+                {format(new Date(item.dataFechamento),"dd/MM/yyyy HH:mm",{locale:ptBR})}
               </div>
               <div className={classNames(styles.colRows, styles.col9)}>
                 {item.trs}

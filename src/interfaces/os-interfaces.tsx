@@ -1,22 +1,11 @@
 // Interfaces component Tabela=========
 export interface OStoEit {
-  idOS: number;
-  operador: string;
-  zona: string;
-  cliente: string;
-  tipoOS: string;
-  equipe: string;
-  transporte: string;
-  dataAbertura: string;
-  dataFechamento: string;
-  trs: string;
-  taxa: string;
-  correcao: string;
-  pontos: number;
+  [key:string]:string|number;
 }
 
 export interface PropsTable{
   listOptions: {[key:string]:string[]}
+  dataTable: {[key:string]:string}[]
 }
 
 // Interfaces component ModalEditAddOS=========
