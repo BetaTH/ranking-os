@@ -92,6 +92,7 @@
     flex-direction: column;
     overflow-y: scroll;
     cursor: pointer;
+    box-shadow: inset 0rem -0.4rem 0.4rem rgba(0,0,0,0.15);
 
     .rowTable {
       transition: all 0.2s;
