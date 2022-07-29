@@ -1,12 +1,14 @@
 import classNames from "classnames";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { PlusCircle } from "phosphor-react";
 import { useState } from "react";
 import { OStoEit, PropsTable } from "../../interfaces/os-interfaces";
+import { Loading } from "../Loading";
 import { ModalEditAddOS } from "../ModalEditAddOS";
 import styles from "./styles.module.scss";
 
-export function Table(props : PropsTable) {
+export function Table(props: PropsTable) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [OStoEdit, setOStoEdit] = useState<OStoEit>({});
 
@@ -76,10 +78,14 @@ export function Table(props : PropsTable) {
                 {item.transporte}
               </div>
               <div className={classNames(styles.colRows, styles.col7)}>
-                {format(new Date(item.dataAbertura),"dd/MM/yyyy HH:mm",{locale:ptBR})}
+                {format(new Date(item.dataAbertura), "dd/MM/yyyy HH:mm", {
+                  locale: ptBR,
+                })}
               </div>
               <div className={classNames(styles.colRows, styles.col8)}>
-                {format(new Date(item.dataFechamento),"dd/MM/yyyy HH:mm",{locale:ptBR})}
+                {format(new Date(item.dataFechamento), "dd/MM/yyyy HH:mm", {
+                  locale: ptBR,
+                })}
               </div>
               <div className={classNames(styles.colRows, styles.col9)}>
                 {item.trs}
@@ -96,10 +102,29 @@ export function Table(props : PropsTable) {
             </div>
           );
         })}
+
+        {props.dataTable.length < 20 + (props.numPage - 2) * 10 ? null : (
+          <div className={styles.rowLoadMoreData}>
+            {!props.isLoadingMoreData ? (
+              <PlusCircle
+                onClick={() => {
+                  props.setIsLoadingMoreData(true);
+                  props.loadMoreData();
+                }}
+                className={styles.loadMoreData}
+                width={"5rem"}
+                height={"5rem"}
+              />
+            ) : (
+              <Loading />
+            )}
+          </div>
+        )}
       </div>
       {isModalVisible ? (
         <ModalEditAddOS
-          listOptions = {props.listOptions}
+          socket={props.socket}
+          listOptions={props.listOptions}
           OStoEdit={OStoEdit}
           setOStoEdit={setOStoEdit}
           typeModal="edit"

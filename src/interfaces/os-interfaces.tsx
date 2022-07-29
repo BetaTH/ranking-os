@@ -1,20 +1,37 @@
-// Interfaces component Tabela=========
-export interface OStoEit {
-  [key:string]:string|number;
+import { Socket } from "socket.io-client";
+
+//Interface TablePage &&  DashPage =============
+export interface PropsTablePage {
+  socket?: Socket;
+}
+export interface PropsDashPage {
+  socket?: Socket;
 }
 
-export interface PropsTable{
-  listOptions: {[key:string]:string[]}
-  dataTable: {[key:string]:string}[]
+// Interfaces component Tabela=========
+export interface OStoEit {
+  [key: string]: string | number;
+}
+
+export interface PropsTable {
+  listOptions: { [key: string]: string[] };
+  dataTable: { [key: string]: string }[];
+  socket?: Socket;
+  numPage: number;
+  isLoadingMoreData: boolean;
+  setIsLoadingMoreData: Function;
+  setNumPage: Function;
+  loadMoreData: Function;
 }
 
 // Interfaces component ModalEditAddOS=========
 export interface propsModal {
+  socket?: Socket;
   OStoEdit?: OStoEit;
   setOStoEdit?: Function;
   setIsModalVisible: Function;
   typeModal: "add" | "edit";
-  listOptions: {[key:string]:string[]}
+  listOptions: { [key: string]: string[] };
 }
 
 // Interfaces component Hearders=========
@@ -22,19 +39,21 @@ export interface propsHeaders {
   setPropsSearchDataDashPage?: {
     setDataOS: Function;
     setLoadingData: Function;
+    socket?: Socket;
   };
   titlePage: "tabela" | "dash";
 }
 export interface arr {
   setDataOS: Function;
   setLoadingData: Function;
-};
+}
 
 // Interfaces component SearchDataDashPage=========
-export interface propsSearchDataDashPage{
+export interface propsSearchDataDashPage {
   arr: {
     setDataOS: Function;
     setLoadingData: Function;
+    socket?: Socket;
   };
 }
 

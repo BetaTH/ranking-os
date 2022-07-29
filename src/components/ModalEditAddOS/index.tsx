@@ -6,6 +6,7 @@ import * as functions from "../ModalEditAddOS/functions";
 import { CaretDown, Target, X } from "phosphor-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { CrudLoadingModal } from "../crudLoadingModal";
 
 export function ModalEditAddOS(props: propsModal) {
   const OStoEdit = props.OStoEdit;
@@ -14,6 +15,7 @@ export function ModalEditAddOS(props: propsModal) {
   );
   const [inputEl, setInputEl] = useState<HTMLInputElement>();
   const [search, setSearch] = useState("");
+  const [isCrudLoading, setIsCrudLoading] = useState(false);
 
   useEffect(() => {
     document
@@ -77,7 +79,7 @@ export function ModalEditAddOS(props: propsModal) {
     <div
       id="Conteiner"
       onClick={(e) =>
-        (e.target as HTMLDivElement).id == "Conteiner"
+        (e.target as HTMLDivElement).id == "Conteiner" && !isCrudLoading
           ? props.typeModal == "edit"
             ? props.setIsModalVisible(false)
             : null
@@ -510,24 +512,40 @@ export function ModalEditAddOS(props: propsModal) {
                 tabIndex={0}
                 className={styles.deleteButton}
                 onFocus={() => hideACInput()}
-                onClick={() => functions.deleteData(props.setIsModalVisible)}
+                onClick={() => {
+                  setIsCrudLoading(true);
+                  functions.deleteData({
+                    hideModal: props.setIsModalVisible,
+                    socket: props.socket,
+                    setIsCrudLoading: setIsCrudLoading,
+                  });
+                }}
               >
                 Deletar
               </button>
             ) : null}
+
             <button
               tabIndex={0}
               className={styles.saveButton}
               onFocus={() => hideACInput()}
-              onClick={() =>
+              onClick={() => {
+                setIsCrudLoading(true);
                 props.typeModal == "edit"
-                  ? functions.getDataToAddOrEdit(
-                      props.listOptions,
-                      "edit",
-                      props.setIsModalVisible
-                    )
-                  : functions.getDataToAddOrEdit(props.listOptions, "add")
-              }
+                  ? functions.getDataToAddOrEdit({
+                      listOptions: props.listOptions,
+                      typeModal: "edit",
+                      hideModal: props.setIsModalVisible,
+                      socket: props.socket,
+                      setIsCrudLoading: setIsCrudLoading,
+                    })
+                  : functions.getDataToAddOrEdit({
+                      listOptions: props.listOptions,
+                      typeModal: "add",
+                      socket: props.socket,
+                      setIsCrudLoading: setIsCrudLoading,
+                    });
+              }}
             >
               Salvar
             </button>
@@ -538,6 +556,8 @@ export function ModalEditAddOS(props: propsModal) {
           size={32}
           onClick={() => props.setIsModalVisible(false)}
         />
+
+        {isCrudLoading ? <CrudLoadingModal /> : null}
       </div>
     </div>
   );

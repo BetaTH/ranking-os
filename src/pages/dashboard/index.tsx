@@ -4,10 +4,10 @@ import { Headers } from "../../components/Headers";
 import { Podio } from "../../components/Podio";
 import { RankingGeral } from "../../components/RankingGeral";
 import { RankingMotos } from "../../components/RankingMotos";
-import classNames from "classnames";
 import axios from "axios";
+import { PropsDashPage } from "../../interfaces/os-interfaces";
 
-export function Dashboard() {
+export function Dashboard(props: PropsDashPage) {
   const [dataOS, setDataOS] = useState({ rankingMoto: [], rankingGeral: [] });
   const [loadingData, setLoadingData] = useState(true);
   const todayMonth = new Date().getMonth();
@@ -43,17 +43,6 @@ export function Dashboard() {
     //         })
     //       );
     //     });
-    //   axios.get("http://localhost:5000/getDashData").then((res) => {
-    //     setDataOS(res.data);
-    //     setLoadingData(false);
-    //     sessionStorage.setItem(
-    //       String(100 * todayYear + todayMonth),
-    //       JSON.stringify({
-    //         rankingMoto: res.data.rankingMoto,
-    //         rankingGeral: res.data.rankingGeral,
-    //       })
-    //     );
-    //   });
     // }
     if (sessionStorage.getItem(String(100 * todayYear + todayMonth))) {
       let datStoraged = String(
@@ -63,20 +52,22 @@ export function Dashboard() {
       setLoadingData(false);
     } else {
       let queryParams = {
-        month: String(todayMonth),
-        year: String(todayYear),
+        dateMin: new Date(todayYear, todayMonth, 1),
+        dateMax: new Date(todayYear, todayMonth + 1, 0, 23, 59, 59),
       };
-      axios.get("http://localhost:5000/getDashData").then((res) => {
-        setDataOS(res.data);
-        setLoadingData(false);
-        sessionStorage.setItem(
-          String(100 * todayYear + todayMonth),
-          JSON.stringify({
-            rankingMoto: res.data.rankingMoto,
-            rankingGeral: res.data.rankingGeral,
-          })
-        );
-      });
+      axios
+        .get("http://localhost:5000/getDashData", { params: queryParams })
+        .then((res) => {
+          setDataOS(res.data);
+          setLoadingData(false);
+          sessionStorage.setItem(
+            String(100 * todayYear + todayMonth),
+            JSON.stringify({
+              rankingMoto: res.data.rankingMoto,
+              rankingGeral: res.data.rankingGeral,
+            })
+          );
+        });
     }
   }, []);
 
@@ -86,6 +77,7 @@ export function Dashboard() {
         setPropsSearchDataDashPage={{
           setDataOS: setDataOS,
           setLoadingData: setLoadingData,
+          socket: props.socket,
         }}
         titlePage={"dash"}
       />

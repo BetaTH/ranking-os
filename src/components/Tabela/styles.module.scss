@@ -33,7 +33,7 @@
     background: #5d8a66;
     border-radius: 0.8rem 0.8rem 0px 0px;
     justify-content: left;
-    box-shadow: 0rem 0.4rem 0.4rem rgba(0, 0, 0, 0.15);
+    
 
     .colHeader {
       height: 100%;
@@ -92,7 +92,7 @@
     flex-direction: column;
     overflow-y: scroll;
     cursor: pointer;
-    box-shadow: inset 0rem -0.4rem 0.4rem rgba(0,0,0,0.15);
+    box-shadow: inset 0rem -0.4rem 0.4rem rgba(0,0,0,0.15), inset 0rem 0.4rem 0.4rem rgba(0, 0, 0, 0.15);;
 
     .rowTable {
       transition: all 0.2s;
@@ -152,6 +152,28 @@
       }
       .col12 {
         width: 7.9rem;
+      }
+    }
+
+
+    .rowLoadMoreData{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 6rem;
+      padding: 1rem 0;
+
+      .loadMoreData{
+        transition: 0.2s;
+        color: #2c3639;
+      }
+      :hover{
+          width: 5.5rem;
+          height: 5.5rem;
+        .rowLoadMoreData{
+          background: #c5c5c5;
+        }
       }
     }
   }

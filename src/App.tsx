@@ -1,18 +1,27 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-
 import { TablePage } from "./pages/TablePage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Dashboard } from "./pages/dashboard";
+import { Dashboard } from "./pages/Dashboard";
 import "./styles/index.scss";
+import io, { Socket } from "socket.io-client";
 
 function App() {
   // return(<Dashboard />);
+  const [socket, setSocket] = useState<Socket>();
+
+  useEffect(() => {
+    setSocket(
+      io("http://localhost:5000", {
+        withCredentials: true,
+      })
+    );
+  }, []);
+
   return (
     <Router>
       <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/" element={<TablePage />} />
+        <Route path="/dashboard" element={<Dashboard socket={socket} />} />
+        <Route path="/" element={<TablePage socket={socket} />} />
       </Routes>
     </Router>
   );

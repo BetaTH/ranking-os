@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Socket } from "socket.io-client";
 
 const formInputs: { [key: string]: Function } = {
   operador: () => document.getElementById("operador") as HTMLInputElement,
@@ -159,12 +160,14 @@ function validateFilds(listOptions: { [key: string]: string[] }) {
   }
 }
 
-export function getDataToAddOrEdit(
-  listOptions: { [key: string]: string[] },
-  typeModal: "add" | "edit",
-  hideModal?: Function
-) {
-  if (validateFilds(listOptions)) {
+export function getDataToAddOrEdit(props: {
+  listOptions: { [key: string]: string[] };
+  typeModal: "add" | "edit";
+  hideModal?: Function;
+  socket?: Socket;
+  setIsCrudLoading: Function;
+}) {
+  if (validateFilds(props.listOptions)) {
     let formDataValues = {} as {
       [key: string]: string | number | Date;
       tipoOS: string;
@@ -180,43 +183,51 @@ export function getDataToAddOrEdit(
       }
     });
 
-    if (typeModal == "add") {
+    if (props.typeModal == "add") {
       axios
         .post(
           "https://ranking-os-backend-production.up.railway.app/postNewOS",
           formDataValues
         )
-        .then((res) => console.log(res.data));
-      formInputs.idOS().value = "";
-      formInputs.cliente().value = "";
-      formInputs.tipoOS().value = "";
-      formInputs.equipe().value = "";
-      formInputs.transporte().value = "";
-      formInputs.dataAbertura().value = "";
-      formInputs.dataFechamento().value = "";
-      formInputs.taxa().value = "Não";
-      formInputs.correcao().value = "Não";
-    } else {
-      axios
-        .put("http://localhost:5000/updateOS", formDataValues)
-        .then((res) => console.log(res.data))
         .then(() => {
-          hideModal ? hideModal(false) : null;
-        }); // com localhost
+          props.setIsCrudLoading(false);
+          props.socket?.emit("dbAttServer");
+
+          formInputs.idOS().value = "";
+          formInputs.cliente().value = "";
+          formInputs.tipoOS().value = "";
+          formInputs.equipe().value = "";
+          formInputs.transporte().value = "";
+          formInputs.dataAbertura().value = "";
+          formInputs.dataFechamento().value = "";
+          formInputs.taxa().value = "Não";
+          formInputs.correcao().value = "Não";
+        });
+    } else {
+      axios.put("http://localhost:5000/updateOS", formDataValues).then(() => {
+        props.setIsCrudLoading(false);
+        props.hideModal ? props.hideModal(false) : null;
+        props.socket?.emit("dbAttServer");
+      }); // com localhost
     }
   } else {
     alert("Preencha os campos obrigatórios (*) corretamente");
   }
 }
 
-export function deleteData(hideModal?: Function) {
+export function deleteData(props: {
+  hideModal?: Function;
+  socket?: Socket;
+  setIsCrudLoading: Function;
+}) {
   const idToDelete = formValues.idOS();
   axios
     .delete("http://localhost:5000/deleteOS", {
       data: { idOS: idToDelete },
     })
-    .then((res) => console.log(res.data))
     .then(() => {
-      hideModal ? hideModal(false) : null;
+      props.setIsCrudLoading(false);
+      props.hideModal ? props.hideModal(false) : null;
+      props.socket?.emit("dbAttServer");
     });
 }

@@ -5,21 +5,61 @@ import { Table } from "../../components/Tabela";
 import { CaretDown, Plus } from "phosphor-react";
 import { ModalEditAddOS } from "../../components/ModalEditAddOS";
 import axios from "axios";
+import { PropsTablePage } from "../../interfaces/os-interfaces";
 
-export function TablePage() {
-  const [listOptions, setListOptions] = useState<{[key:string]:string[]}>({})
+export function TablePage(props: PropsTablePage) {
+  const [listOptions, setListOptions] = useState<{ [key: string]: string[] }>(
+    {}
+  );
   const [loadingData, setLoadingData] = useState(true);
-  const [dataTable, setDataTable] = useState<{[key:string]:string}[]>([])
+  const [dataTable, setDataTable] = useState<{ [key: string]: string }[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [numPage, setNumPage] = useState(1);
+  const [isLoadingMoreData, setIsLoadingMoreData] = useState(false);
 
-  useEffect(() =>{
-    axios.get("http://ranking-os-backend-production.up.railway.app/getListOptions").then((res) => setListOptions(res.data))
-    axios.get("http://localhost:5000/getTableData").then((res) => setDataTable(res.data))//ainda está no localhost
-  },[])
-  
+  useEffect(() => {
+    axios
+      .get("http://ranking-os-backend-production.up.railway.app/getListOptions")
+      .then((res) => setListOptions(res.data));
+    axios
+      .get("http://localhost:5000/getTableData", {
+        params: { numPage: 1 },
+      })
+      .then((res) => {
+        setDataTable(res.data);
+        setNumPage(numPage + 1);
+      }); //ainda está no localhost
+  }, []);
+
+  props.socket?.on("dbAttFront", () => {
+    axios
+      .get("http://ranking-os-backend-production.up.railway.app/getListOptions")
+      .then((res) => setListOptions(res.data));
+    axios
+      .get("http://localhost:5000/getTableData", {
+        params: { numPage: numPage, justAtt: "True" },
+      })
+      .then((res) => setDataTable(res.data));
+  });
+
+  function loadMoreData() {
+    axios
+      .get("http://ranking-os-backend-production.up.railway.app/getListOptions")
+      .then((res) => setListOptions(res.data));
+    axios
+      .get("http://localhost:5000/getTableData", {
+        params: { numPage: numPage },
+      })
+      .then((res) => {
+        setDataTable([...dataTable, ...res.data]);
+        setIsLoadingMoreData(false);
+        setNumPage(numPage + 1);
+      }); //ainda está no localhost
+  }
+  console.log(dataTable);
   return (
     <div className={styles.container}>
-      <Headers titlePage={"tabela"}/>
+      <Headers titlePage={"tabela"} />
       <div className={styles.rankingsContainer}>
         <div className={styles.addOSContainer}>
           <div className={styles.addOSSpanConteiner}>
@@ -29,18 +69,31 @@ export function TablePage() {
             <Plus height={"100%"} width={"6rem"} />
           </div>
         </div>
-        <Table listOptions = {listOptions} dataTable = {dataTable}/>
+        <Table
+          socket={props.socket}
+          listOptions={listOptions}
+          dataTable={dataTable}
+          numPage={numPage}
+          setIsLoadingMoreData={setIsLoadingMoreData}
+          isLoadingMoreData={isLoadingMoreData}
+          setNumPage={setNumPage}
+          loadMoreData={loadMoreData}
+        />
       </div>
       {isModalVisible ? (
-        <ModalEditAddOS listOptions = {listOptions} typeModal="add" setIsModalVisible={setIsModalVisible} />
+        <ModalEditAddOS
+          socket={props.socket}
+          listOptions={listOptions}
+          typeModal="add"
+          setIsModalVisible={setIsModalVisible}
+        />
       ) : null}
     </div>
   );
 }
 
-
-
-{/* <div className={styles.titleSearchConteiner}>
+{
+  /* <div className={styles.titleSearchConteiner}>
   <h2 className={styles.tableTitle}>Tabela de OS Fechada</h2>
   <div className={styles.searchConteiner}>
     <label className={styles.searchLabel}>Pesquisar por: </label>
@@ -55,4 +108,5 @@ export function TablePage() {
     </select>
     <CaretDown height={"100%"} width={"2rem"} />
   </div>
-</div> */}
+</div> */
+}

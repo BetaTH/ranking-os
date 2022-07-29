@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import { propsSearchDataDashPage } from "../../interfaces/os-interfaces";
 import axios from "axios";
@@ -36,6 +36,26 @@ export function SearchDataDashPage(prop: propsSearchDataDashPage) {
   yearList.push(todayYear);
   yearList.reverse();
 
+  newProps.socket?.on("dbAttFront", () => {
+    let queryParams = {
+      dateMin: new Date(yearValue, monthValue, 1),
+      dateMax: new Date(yearValue, monthValue + 1, 0, 23, 59, 59),
+    };
+    axios
+      .get("http://localhost:5000/getDashData", { params: queryParams })
+      .then((res) => {
+        newProps.setDataOS(res.data);
+        newProps.setLoadingData(false);
+        sessionStorage.setItem(
+          String(100 * yearValue + monthValue),
+          JSON.stringify({
+            rankingMoto: res.data.rankingMoto,
+            rankingGeral: res.data.rankingGeral,
+          })
+        );
+      });
+  });
+
   function setNewDataOS() {
     if (sessionStorage.getItem(String(100 * yearValue + monthValue))) {
       const dataStoraged = String(
@@ -64,8 +84,8 @@ export function SearchDataDashPage(prop: propsSearchDataDashPage) {
   function loadNewData() {
     newProps.setLoadingData(true);
     let queryParams = {
-      month: String(monthValue),
-      year: String(yearValue),
+      dateMin: new Date(yearValue, monthValue, 1),
+      dateMax: new Date(yearValue, monthValue + 1, 0, 23, 59, 59),
     };
     // let url = new URL("http://localhost:5000/getRanking");
     // let k: keyof typeof queryParams;
@@ -85,18 +105,28 @@ export function SearchDataDashPage(prop: propsSearchDataDashPage) {
     //       })
     //     );
     //   });
-    axios.get("http://localhost:5000/getDashData").then((res) => {
-      newProps.setDataOS(res.data);
-      newProps.setLoadingData(false);
-      sessionStorage.setItem(
-        String(100 * yearValue + monthValue),
-        JSON.stringify({
-          rankingMoto: res.data.rankingMoto,
-          rankingGeral: res.data.rankingGeral,
-        })
-      );
-    });
+    axios
+      .get("http://localhost:5000/getDashData", { params: queryParams })
+      .then((res) => {
+        newProps.setDataOS(res.data);
+        newProps.setLoadingData(false);
+        sessionStorage.setItem(
+          String(100 * yearValue + monthValue),
+          JSON.stringify({
+            rankingMoto: res.data.rankingMoto,
+            rankingGeral: res.data.rankingGeral,
+          })
+        );
+      });
   }
+  // useEffect(() => {
+  //   const setdateMin = String(new Date(yearValue, monthValue, 1));
+  //   const setdateMax = String(
+  //     new Date(yearValue, monthValue + 1, 0, 23, 59, 59)
+  //   );
+
+  //   console.log(setdateMin, setdateMax);
+  // }, [yearValue, monthValue]);
 
   return (
     <div className={styles.divDateFilter}>
