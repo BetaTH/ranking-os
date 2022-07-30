@@ -119,14 +119,14 @@ export function SearchDataDashPage(prop: propsSearchDataDashPage) {
         );
       });
   }
-  // useEffect(() => {
-  //   const setdateMin = String(new Date(yearValue, monthValue, 1));
-  //   const setdateMax = String(
-  //     new Date(yearValue, monthValue + 1, 0, 23, 59, 59)
-  //   );
+  useEffect(() => {
+    const setdateMin = String(new Date(yearValue, monthValue, 1));
+    const setdateMax = String(
+      new Date(yearValue, monthValue + 1, 0, 23, 59, 59)
+    );
 
-  //   console.log(setdateMin, setdateMax);
-  // }, [yearValue, monthValue]);
+    console.log(setdateMin, setdateMax);
+  }, [yearValue, monthValue]);
 
   return (
     <div className={styles.divDateFilter}>

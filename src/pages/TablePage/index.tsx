@@ -19,7 +19,7 @@ export function TablePage(props: PropsTablePage) {
 
   useEffect(() => {
     axios
-      .get("http://ranking-os-backend-production.up.railway.app/getListOptions")
+      .get("http://localhost:5000/getListOptions")
       .then((res) => setListOptions(res.data));
     axios
       .get("http://localhost:5000/getTableData", {
@@ -33,7 +33,7 @@ export function TablePage(props: PropsTablePage) {
 
   props.socket?.on("dbAttFront", () => {
     axios
-      .get("http://ranking-os-backend-production.up.railway.app/getListOptions")
+      .get("http://localhost:5000/getListOptions")
       .then((res) => setListOptions(res.data));
     axios
       .get("http://localhost:5000/getTableData", {
@@ -44,7 +44,7 @@ export function TablePage(props: PropsTablePage) {
 
   function loadMoreData() {
     axios
-      .get("http://ranking-os-backend-production.up.railway.app/getListOptions")
+      .get("http://localhost:5000/getListOptions")
       .then((res) => setListOptions(res.data));
     axios
       .get("http://localhost:5000/getTableData", {

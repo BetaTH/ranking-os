@@ -34,8 +34,8 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
-
     // gap: 1.2rem;
+    
     .row {
       display: flex;
       width: 100%;
@@ -48,21 +48,18 @@
         align-items: center;
         justify-content: center;
         display: flex;
-        padding: 0.8rem;
-        // border: var(--background) solid 0.1rem;
+        height: 100%;
         width: 100%; //22.8rem;;
-        // height: 3rem;
         gap: 0.8rem;
+        // border: var(--background) solid 0.1rem;
         // border-radius: 0.8rem;
 
         .cardPos {
           width: 3rem;
           height: 100%;
-          padding: 0.8rem;
           display: flex;
-          flex-direction: column;
-          align-items: left;
-          justify-content: center;
+          align-items: center;
+          justify-content: left;
           // border: var(--background) solid 0.1rem;
           // border-radius: 0.4rem;
           // background: var(--background);
@@ -73,15 +70,12 @@
           }
         }
         .cardEquip {
-          padding: 0.8rem;
           display: flex;
-          flex-direction: column;
-          align-items: left;
-          justify-content: center;
+          align-items: center;
+          justify-content: left;
           width: 22rem;
           height: 100%;
-
-          
+          //padding: 0.8rem;
 
           .equip {
             font-size: 1.7rem;
@@ -92,13 +86,13 @@
         }
 
         .cardPoint {
-          padding: 0.8rem;
+         
           display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          justify-content: center;
+          align-items: center;
+          justify-content: right;
           width: 4rem;
           height: 100%;
+          //padding: 0.8rem;
 
           .point {
             font-size: 1.7rem;
@@ -109,42 +103,3 @@
     }
   }
 }
-
-// .tela {
-//   width: 30%;
-//   background-color: #76fcb2;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: top;
-// }
-// .tela2 {
-//   height: 100%;
-//   display: flex;
-//   background-color: #7f76fc;
-//   overflow: auto;
-//   margin: 10px 10px;
-//   border-radius: 5px 5px;
-//   box-shadow: 0px 10px 40px #00000056;
-// }
-
-// .tables {
-//   display: block;
-//   table-layout: fixed;
-//   font-size: 0.8rem;
-//   max-width: 100%;
-//   border-collapse: collapse;
-//   width: 100%;
-//   max-height: 100%;
-//   overflow: hidden;
-// }
-
-// .tables thead tr {
-//   color: #ffffff;
-//   text-align: left;
-// }
-
-/* .tables th,
-.tables td {
-  padding: 12px 15px;
-} */

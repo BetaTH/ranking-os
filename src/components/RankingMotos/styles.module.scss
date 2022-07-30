@@ -49,41 +49,34 @@
         .cardPos {
           width: 3rem;
           height: 100%;
-          padding: 0.8rem;
           display: flex;
-          flex-direction: column;
-          align-items: left;
-          justify-content: center;
+          align-items: center;
+          justify-content: left;
 
           .pos {
-            // text-align: left;
             font-size: 1.7rem;
             font-weight: 600;
           }
         }
         .cardEquip {
-          padding: 0.8rem;
           display: flex;
-          flex-direction: column;
-          align-items: left;
-          justify-content: center;
+          align-items: center;
+          justify-content: left;
           width: 100%;
           height: 100%;
 
           .equip {
-            // text-align: left;
             font-size: 1.7rem;
             font-weight: 600;
             white-space: nowrap;
             text-overflow: ellipsis;
           }
+
         }
         .cardPoint {
-          padding: 0.8rem;
           display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          justify-content: center;
+          align-items: center;
+          justify-content: left;
           width: 4rem;
           height: 100%;
 

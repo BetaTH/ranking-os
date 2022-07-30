@@ -166,13 +166,10 @@
 
       .loadMoreData{
         transition: 0.2s;
-        color: #2c3639;
-      }
-      :hover{
-          width: 5.5rem;
-          height: 5.5rem;
-        .rowLoadMoreData{
-          background: #c5c5c5;
+        color: #5d8a66;
+        &:hover{
+          width: 5.2rem;
+          height: 5.2rem;
         }
       }
     }
