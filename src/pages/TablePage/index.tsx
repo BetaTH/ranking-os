@@ -56,7 +56,6 @@ export function TablePage(props: PropsTablePage) {
         setNumPage(numPage + 1);
       }); //ainda está no localhost
   }
-  console.log(dataTable);
   return (
     <div className={styles.container}>
       <Headers titlePage={"tabela"} />

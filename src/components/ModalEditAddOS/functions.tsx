@@ -130,8 +130,6 @@ function convertData(date: string) {
 }
 
 function validateFilds(listOptions: { [key: string]: string[] }) {
-  console.log();
-
   let ruturnValidates = [
     validateAutocompleteInputs("operador", listOptions["operador"]),
     validateAutocompleteInputs("zona", listOptions["zona"]),
@@ -186,7 +184,7 @@ export function getDataToAddOrEdit(props: {
     if (props.typeModal == "add") {
       axios
         .post(
-          "https://ranking-os-backend-production.up.railway.app/postNewOS",
+          "http://localhost:5000/postNewOS", //https://ranking-os-backend-production.up.railway.app
           formDataValues
         )
         .then(() => {
@@ -195,9 +193,6 @@ export function getDataToAddOrEdit(props: {
 
           formInputs.idOS().value = "";
           formInputs.cliente().value = "";
-          formInputs.tipoOS().value = "";
-          formInputs.equipe().value = "";
-          formInputs.transporte().value = "";
           formInputs.dataAbertura().value = "";
           formInputs.dataFechamento().value = "";
           formInputs.taxa().value = "Não";
