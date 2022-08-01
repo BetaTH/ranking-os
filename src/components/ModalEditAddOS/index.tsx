@@ -195,20 +195,29 @@ export function ModalEditAddOS(props: propsModal) {
               <label className={styles.label}>ID OS: </label>
             </div>
             <div className={styles.rowInput}>
-              <input
-                autoComplete="off"
-                placeholder="Digitar ID da OS"
-                id="idOS"
-                className={styles.input}
-                type="text"
-                defaultValue={props.typeModal == "edit" ? OStoEdit?.idOS : ""}
-                onFocus={() => hideACInput()}
-                onBlur={() => functions.validadeClienteOS("idOS")}
-                onChange={(e) =>
-                  ((e.target as HTMLInputElement).style.border =
-                    "0.1rem solid #ffffff")
-                }
-              />
+              {props.typeModal == "edit" ? (
+                <input
+                  id="idOS"
+                  type="text"
+                  className={styles.input}
+                  defaultValue={OStoEdit?.idOS}
+                  disabled
+                />
+              ) : (
+                <input
+                  autoComplete="off"
+                  placeholder="Digitar ID da OS"
+                  id="idOS"
+                  className={styles.input}
+                  type="text"
+                  onFocus={() => hideACInput()}
+                  onBlur={() => functions.validadeClienteOS("idOS")}
+                  onChange={(e) =>
+                    ((e.target as HTMLInputElement).style.border =
+                      "0.1rem solid #ffffff")
+                  }
+                />
+              )}
             </div>
           </div>
 
@@ -217,22 +226,29 @@ export function ModalEditAddOS(props: propsModal) {
               <label className={styles.label}>ID Cliente: </label>
             </div>
             <div className={styles.rowInput}>
-              <input
-                autoComplete="off"
-                placeholder="Digitar ID do cliente"
-                id="cliente"
-                className={styles.input}
-                type="text"
-                defaultValue={
-                  props.typeModal == "edit" ? OStoEdit?.cliente : ""
-                }
-                onFocus={() => hideACInput()}
-                onBlur={() => functions.validadeClienteOS("cliente")}
-                onChange={(e) =>
-                  ((e.target as HTMLInputElement).style.border =
-                    "0.1rem solid #ffffff")
-                }
-              />
+              {props.typeModal == "edit" ? (
+                <input
+                  id="cliente"
+                  type="text"
+                  className={styles.input}
+                  defaultValue={OStoEdit?.cliente}
+                  disabled
+                />
+              ) : (
+                <input
+                  id="cliente"
+                  autoComplete="off"
+                  placeholder="Digitar ID do cliente"
+                  className={styles.input}
+                  type="text"
+                  onFocus={() => hideACInput()}
+                  onBlur={() => functions.validadeClienteOS("cliente")}
+                  onChange={(e) =>
+                    ((e.target as HTMLInputElement).style.border =
+                      "0.1rem solid #ffffff")
+                  }
+                />
+              )}
             </div>
           </div>
 
@@ -530,7 +546,6 @@ export function ModalEditAddOS(props: propsModal) {
               className={styles.saveButton}
               onFocus={() => hideACInput()}
               onClick={() => {
-                setIsCrudLoading(true);
                 props.typeModal == "edit"
                   ? functions.getDataToAddOrEdit({
                       listOptions: props.listOptions,

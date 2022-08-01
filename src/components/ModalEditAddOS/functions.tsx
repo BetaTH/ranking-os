@@ -171,6 +171,7 @@ export function getDataToAddOrEdit(props: {
       tipoOS: string;
       trs: string;
     };
+    props.setIsCrudLoading(true);
 
     Object.entries(formValues).forEach((entry) => {
       const [key, value] = entry;
@@ -188,8 +189,8 @@ export function getDataToAddOrEdit(props: {
           formDataValues
         )
         .then(() => {
-          props.setIsCrudLoading(false);
           props.socket?.emit("dbAttServer");
+          props.setIsCrudLoading(false);
 
           formInputs.idOS().value = "";
           formInputs.cliente().value = "";
@@ -197,16 +198,18 @@ export function getDataToAddOrEdit(props: {
           formInputs.dataFechamento().value = "";
           formInputs.taxa().value = "Não";
           formInputs.correcao().value = "Não";
+        })
+        .catch((err) => {
+          props.setIsCrudLoading(false);
+          alert("OS Já Cadastrada");
         });
     } else {
       axios.put("http://localhost:5000/updateOS", formDataValues).then(() => {
+        props.socket?.emit("dbAttServer");
         props.setIsCrudLoading(false);
         props.hideModal ? props.hideModal(false) : null;
-        props.socket?.emit("dbAttServer");
       }); // com localhost
     }
-  } else {
-    alert("Preencha os campos obrigatórios (*) corretamente");
   }
 }
 
@@ -221,8 +224,13 @@ export function deleteData(props: {
       data: { idOS: idToDelete },
     })
     .then(() => {
+      props.socket?.emit("dbAttServer");
       props.setIsCrudLoading(false);
       props.hideModal ? props.hideModal(false) : null;
-      props.socket?.emit("dbAttServer");
+    })
+    .catch((err) => {
+      props.setIsCrudLoading(false);
+      props.hideModal ? props.hideModal(false) : null;
+      alert("OS Já excluida");
     });
 }

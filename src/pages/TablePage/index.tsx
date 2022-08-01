@@ -1,8 +1,8 @@
 import styles from "./styles.module.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo, useCallback } from "react";
 import { Headers } from "../../components/Headers";
 import { Table } from "../../components/Tabela";
-import { CaretDown, Plus } from "phosphor-react";
+import { CaretDown, CodesandboxLogo, Plus } from "phosphor-react";
 import { ModalEditAddOS } from "../../components/ModalEditAddOS";
 import axios from "axios";
 import { PropsTablePage } from "../../interfaces/os-interfaces";
@@ -14,24 +14,23 @@ export function TablePage(props: PropsTablePage) {
   const [loadingData, setLoadingData] = useState(true);
   const [dataTable, setDataTable] = useState<{ [key: string]: string }[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [numPage, setNumPage] = useState(1);
+  const [numPage, setNumPage] = useState(0);
   const [isLoadingMoreData, setIsLoadingMoreData] = useState(false);
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/getListOptions")
       .then((res) => setListOptions(res.data));
-    axios
-      .get("http://localhost:5000/getTableData", {
-        params: { numPage: 1 },
-      })
-      .then((res) => {
-        setDataTable(res.data);
-        setNumPage(numPage + 1);
-      }); //ainda está no localhost
+    axios.get("http://localhost:5000/getTableData").then((res) => {
+      setDataTable(res.data);
+    }); //ainda está no localhost
   }, []);
 
   props.socket?.on("dbAttFront", () => {
+    attTableData();
+  });
+
+  const attTableData = useCallback(() => {
     axios
       .get("http://localhost:5000/getListOptions")
       .then((res) => setListOptions(res.data));
@@ -40,7 +39,7 @@ export function TablePage(props: PropsTablePage) {
         params: { numPage: numPage, justAtt: "True" },
       })
       .then((res) => setDataTable(res.data));
-  });
+  }, []);
 
   function loadMoreData() {
     axios
@@ -89,23 +88,4 @@ export function TablePage(props: PropsTablePage) {
       ) : null}
     </div>
   );
-}
-
-{
-  /* <div className={styles.titleSearchConteiner}>
-  <h2 className={styles.tableTitle}>Tabela de OS Fechada</h2>
-  <div className={styles.searchConteiner}>
-    <label className={styles.searchLabel}>Pesquisar por: </label>
-    <select
-      className={styles.typeSearch}
-      name="typeSearch"
-      id="typeSearch"
-    >
-      <option value="DataInserção">Data de Inserção</option>
-      <option value="DataAbertura">Data de Abertura</option>
-      <option value="DataFechamento">Data de Fechamento</option>
-    </select>
-    <CaretDown height={"100%"} width={"2rem"} />
-  </div>
-</div> */
 }

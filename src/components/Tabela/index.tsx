@@ -103,7 +103,7 @@ export function Table(props: PropsTable) {
           );
         })}
 
-        {props.dataTable.length < 20 + (props.numPage - 2) * 10 ? null : (
+        {props.dataTable.length < 20 + props.numPage * 10 ? null : (
           <div className={styles.rowLoadMoreData}>
             {!props.isLoadingMoreData ? (
               <PlusCircle
