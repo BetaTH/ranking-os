@@ -26,20 +26,25 @@ export function TablePage(props: PropsTablePage) {
     }); //ainda está no localhost
   }, []);
 
-  props.socket?.on("dbAttFront", () => {
-    attTableData();
-  });
+  useEffect(() => {
+    const getNewData = () => {
+      axios
+        .get("http://localhost:5000/getListOptions")
+        .then((res) => setListOptions(res.data));
+      axios
+        .get("http://localhost:5000/getTableData", {
+          params: { numPage: numPage, justAtt: "True" },
+        })
+        .then((res) => setDataTable(res.data));
+      console.log("teste");
+    };
 
-  const attTableData = useCallback(() => {
-    axios
-      .get("http://localhost:5000/getListOptions")
-      .then((res) => setListOptions(res.data));
-    axios
-      .get("http://localhost:5000/getTableData", {
-        params: { numPage: numPage, justAtt: "True" },
-      })
-      .then((res) => setDataTable(res.data));
-  }, []);
+    props.socket?.on("dbAttFront", getNewData);
+
+    return function () {
+      props.socket?.off("dbAttFront", getNewData);
+    };
+  }, [numPage, setDataTable, props.socket]);
 
   function loadMoreData() {
     axios

@@ -36,25 +36,39 @@ export function SearchDataDashPage(prop: propsSearchDataDashPage) {
   yearList.push(todayYear);
   yearList.reverse();
 
-  newProps.socket?.on("dbAttFront", () => {
-    let queryParams = {
-      dateMin: new Date(yearValue, monthValue, 1),
-      dateMax: new Date(yearValue, monthValue + 1, 0, 23, 59, 59),
+  useEffect(() => {
+    const getNewData = () => {
+      let queryParams = {
+        dateMin: new Date(yearValue, monthValue, 1),
+        dateMax: new Date(yearValue, monthValue + 1, 0, 23, 59, 59),
+      };
+      axios
+        .get("http://localhost:5000/getDashData", { params: queryParams })
+        .then((res) => {
+          newProps.setDataOS(res.data);
+          newProps.setLoadingData(false);
+          sessionStorage.setItem(
+            String(100 * yearValue + monthValue),
+            JSON.stringify({
+              rankingMoto: res.data.rankingMoto,
+              rankingGeral: res.data.rankingGeral,
+            })
+          );
+        });
+      console.log("teste");
     };
-    axios
-      .get("http://localhost:5000/getDashData", { params: queryParams })
-      .then((res) => {
-        newProps.setDataOS(res.data);
-        newProps.setLoadingData(false);
-        sessionStorage.setItem(
-          String(100 * yearValue + monthValue),
-          JSON.stringify({
-            rankingMoto: res.data.rankingMoto,
-            rankingGeral: res.data.rankingGeral,
-          })
-        );
-      });
-  });
+
+    newProps.socket?.on("dbAttFront", getNewData);
+    return function () {
+      newProps.socket?.off("dbAttFront", getNewData);
+    };
+  }, [
+    monthValue,
+    yearValue,
+    newProps.setDataOS,
+    newProps.setLoadingData,
+    newProps.socket,
+  ]);
 
   function setNewDataOS() {
     if (sessionStorage.getItem(String(100 * yearValue + monthValue))) {

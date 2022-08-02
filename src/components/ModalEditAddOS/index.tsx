@@ -17,16 +17,16 @@ export function ModalEditAddOS(props: propsModal) {
   const [search, setSearch] = useState("");
   const [isCrudLoading, setIsCrudLoading] = useState(false);
 
-  useEffect(() => {
-    document
-      .querySelectorAll("body")
-      .forEach((target) => target.classList.add("noScroll"));
-    return () => {
-      document
-        .querySelectorAll("body")
-        .forEach((target) => target.classList.remove("noScroll"));
-    };
-  });
+  // useEffect(() => {
+  //   document
+  //     .querySelectorAll("body")
+  //     .forEach((target) => target.classList.add("noScroll"));
+  //   return () => {
+  //     document
+  //       .querySelectorAll("body")
+  //       .forEach((target) => target.classList.remove("noScroll"));
+  //   };
+  // });
 
   function hideACInput() {
     const newisACVisible: { [key: string]: boolean } = {
