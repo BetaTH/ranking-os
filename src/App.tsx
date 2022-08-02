@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     setSocket(
-      io("http://localhost:5000", {
+      io("https://ranking-os-backend-production.up.railway.app", {
         withCredentials: true,
       })
     );
