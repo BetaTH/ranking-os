@@ -19,22 +19,33 @@ export function TablePage(props: PropsTablePage) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/getListOptions")
+      .get(
+        "http://ranking-os-backend-production.up.railway.app/getDashData/getListOptions"
+      )
       .then((res) => setListOptions(res.data));
-    axios.get("http://localhost:5000/getTableData").then((res) => {
-      setDataTable(res.data);
-    }); //ainda está no localhost
+    axios
+      .get(
+        "https://ranking-os-backend-production.up.railway.app/getDashData/getTableData"
+      )
+      .then((res) => {
+        setDataTable(res.data);
+      }); //ainda está no localhost
   }, []);
 
   useEffect(() => {
     const getNewData = () => {
       axios
-        .get("http://localhost:5000/getListOptions")
+        .get(
+          "http://ranking-os-backend-production.up.railway.app/getListOptions"
+        )
         .then((res) => setListOptions(res.data));
       axios
-        .get("http://localhost:5000/getTableData", {
-          params: { numPage: numPage, justAtt: "True" },
-        })
+        .get(
+          "https://ranking-os-backend-production.up.railway.app/getTableData",
+          {
+            params: { numPage: numPage, justAtt: "True" },
+          }
+        )
         .then((res) => setDataTable(res.data));
       console.log("teste");
     };
@@ -48,12 +59,15 @@ export function TablePage(props: PropsTablePage) {
 
   function loadMoreData() {
     axios
-      .get("http://localhost:5000/getListOptions")
+      .get("http://ranking-os-backend-production.up.railway.app/getListOptions")
       .then((res) => setListOptions(res.data));
     axios
-      .get("http://localhost:5000/getTableData", {
-        params: { numPage: numPage },
-      })
+      .get(
+        "https://ranking-os-backend-production.up.railway.app/getTableData",
+        {
+          params: { numPage: numPage },
+        }
+      )
       .then((res) => {
         setDataTable([...dataTable, ...res.data]);
         setIsLoadingMoreData(false);

@@ -43,7 +43,10 @@ export function SearchDataDashPage(prop: propsSearchDataDashPage) {
         dateMax: new Date(yearValue, monthValue + 1, 0, 23, 59, 59),
       };
       axios
-        .get("http://localhost:5000/getDashData", { params: queryParams })
+        .get(
+          "https://ranking-os-backend-production.up.railway.app/getDashData",
+          { params: queryParams }
+        )
         .then((res) => {
           newProps.setDataOS(res.data);
           newProps.setLoadingData(false);
@@ -120,7 +123,9 @@ export function SearchDataDashPage(prop: propsSearchDataDashPage) {
     //     );
     //   });
     axios
-      .get("http://localhost:5000/getDashData", { params: queryParams })
+      .get("https://ranking-os-backend-production.up.railway.app/getDashData", {
+        params: queryParams,
+      })
       .then((res) => {
         newProps.setDataOS(res.data);
         newProps.setLoadingData(false);

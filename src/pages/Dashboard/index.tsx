@@ -26,7 +26,10 @@ export function Dashboard(props: PropsDashPage) {
         dateMax: new Date(todayYear, todayMonth + 1, 0, 23, 59, 59),
       };
       axios
-        .get("http://localhost:5000/getDashData", { params: queryParams })
+        .get(
+          "https://ranking-os-backend-production.up.railway.app/getDashData",
+          { params: queryParams }
+        )
         .then((res) => {
           setDataOS(res.data);
           setLoadingData(false);
