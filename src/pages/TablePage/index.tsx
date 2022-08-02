@@ -20,13 +20,11 @@ export function TablePage(props: PropsTablePage) {
   useEffect(() => {
     axios
       .get(
-        "https://ranking-os-backend-production.up.railway.app/getDashData/getListOptions"
+        "https://ranking-os-backend-production.up.railway.app/getListOptions"
       )
       .then((res) => setListOptions(res.data));
     axios
-      .get(
-        "https://ranking-os-backend-production.up.railway.app/getDashData/getTableData"
-      )
+      .get("https://ranking-os-backend-production.up.railway.app/getTableData")
       .then((res) => {
         setDataTable(res.data);
       }); //ainda está no localhost

@@ -11,9 +11,9 @@ function App() {
 
   useEffect(() => {
     setSocket(
-      io("https://ranking-os-backend-production.up.railway.app", {
-        withCredentials: true,
-      })
+      io("https://ranking-os-backend-production.up.railway.app") //, {
+      // withCredentials: true,
+      //})
     );
   }, []);
 
