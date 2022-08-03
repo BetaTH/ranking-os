@@ -239,3 +239,24 @@ export function deleteData(props: {
       alert("OS Já excluida");
     });
 }
+
+export function dateMask(
+  mask: string,
+  e: React.KeyboardEvent<HTMLInputElement>
+) {
+  if (!isNaN(Number(e.key))) {
+    const i = e.target.value.length;
+    const output = mask.substring(0, 1);
+    const text = mask.substring(i);
+    if (text.substring(0, 1) != output) {
+      e.target.value = e.target.value + text.substring(0, 1);
+    }
+  }
+}
+
+export function verifyDateInputType(e: HTMLInputElement) {
+  let text = e.value.charAt(e.value.length - 1);
+  if (isNaN(Number(text))) {
+    e.value = e.value.replace(/.$/, "");
+  }
+}

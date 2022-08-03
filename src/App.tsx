@@ -6,7 +6,6 @@ import "./styles/index.scss";
 import io, { Socket } from "socket.io-client";
 
 function App() {
-  // return(<Dashboard />);
   const [socket, setSocket] = useState<Socket>();
 
   useEffect(() => {

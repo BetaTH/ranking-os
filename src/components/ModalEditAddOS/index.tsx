@@ -386,6 +386,7 @@ export function ModalEditAddOS(props: propsModal) {
             </div>
             <div className={styles.rowInput}>
               <input
+                maxLength={16}
                 autoComplete="off"
                 placeholder="dd/mm/aaaa hh:mm"
                 id="dataAbertura"
@@ -402,10 +403,14 @@ export function ModalEditAddOS(props: propsModal) {
                 }
                 onFocus={() => hideACInput()}
                 onBlur={() => functions.validateDataAbertura()}
-                onChange={(e) =>
-                  ((e.target as HTMLInputElement).style.border =
-                    "0.1rem solid #ffffff")
-                }
+                onChange={(e) => {
+                  (e.target as HTMLInputElement).style.border =
+                    "0.1rem solid #ffffff";
+                  functions.verifyDateInputType(e.target as HTMLInputElement);
+                }}
+                onKeyDown={(e) => {
+                  functions.dateMask("##/##/#### ##:##", e);
+                }}
               />
             </div>
           </div>
@@ -416,6 +421,7 @@ export function ModalEditAddOS(props: propsModal) {
             </div>
             <div className={styles.rowInput}>
               <input
+                maxLength={16}
                 autoComplete="off"
                 placeholder="dd/mm/aaaa hh:mm"
                 id="dataFechamento"
@@ -432,10 +438,14 @@ export function ModalEditAddOS(props: propsModal) {
                 }
                 onFocus={() => hideACInput()}
                 onBlur={() => functions.validateDataFechamento()}
-                onChange={(e) =>
-                  ((e.target as HTMLInputElement).style.border =
-                    "0.1rem solid #ffffff")
-                }
+                onChange={(e) => {
+                  (e.target as HTMLInputElement).style.border =
+                    "0.1rem solid #ffffff";
+                  functions.verifyDateInputType(e.target as HTMLInputElement);
+                }}
+                onKeyDown={(e) => {
+                  functions.dateMask("##/##/#### ##:##", e);
+                }}
               />
             </div>
           </div>
