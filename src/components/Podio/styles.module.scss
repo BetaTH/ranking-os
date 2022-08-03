@@ -123,15 +123,14 @@
 
 
 
-@media only screen  and (max-width: 400px) {
+@media only screen  and (max-width: 450px) {
   .container{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 2rem;
-    padding-top:1.5rem;
-    padding: 0rem;
+    padding:1.25rem;
     min-width: 40rem;
     width: 40rem;
     height: 51.8rem;
