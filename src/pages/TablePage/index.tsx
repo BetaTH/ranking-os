@@ -1,33 +1,45 @@
 import styles from "./styles.module.scss";
-import { useState, useEffect, memo, useCallback } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { Headers } from "../../components/Headers";
 import { Table } from "../../components/Tabela";
-import { CaretDown, CodesandboxLogo, Plus } from "phosphor-react";
+import { Plus } from "phosphor-react";
 import { ModalEditAddOS } from "../../components/ModalEditAddOS";
 import axios from "axios";
 import { PropsTablePage } from "../../interfaces/os-interfaces";
+import StateContext from "../../Teste/Context/StateContext";
 
 export function TablePage(props: PropsTablePage) {
+  const effecOnlyRun = useRef(false);
+  const { dispatch } = useContext(StateContext);
+
   const [listOptions, setListOptions] = useState<{ [key: string]: string[] }>(
     {}
   );
-  const [loadingData, setLoadingData] = useState(true);
   const [dataTable, setDataTable] = useState<{ [key: string]: string }[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [numPage, setNumPage] = useState(0);
   const [isLoadingMoreData, setIsLoadingMoreData] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(
-        "https://ranking-os-backend-production.up.railway.app/getListOptions"
-      )
-      .then((res) => setListOptions(res.data));
-    axios
-      .get("https://ranking-os-backend-production.up.railway.app/getTableData")
-      .then((res) => {
-        setDataTable(res.data);
-      }); //ainda está no localhost
+    if (effecOnlyRun.current === false) {
+      dispatch({ type: "incrementNumPage" });
+      axios
+        .get(
+          "https://ranking-os-backend-production.up.railway.app/getListOptions"
+        )
+        .then((res) => setListOptions(res.data));
+      axios
+        .get(
+          "https://ranking-os-backend-production.up.railway.app/getTableData"
+        )
+        .then((res) => {
+          setDataTable(res.data);
+        }); //ainda está no localhost
+    }
+
+    return () => {
+      effecOnlyRun.current = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -45,7 +57,6 @@ export function TablePage(props: PropsTablePage) {
           }
         )
         .then((res) => setDataTable(res.data));
-      console.log("teste");
     };
 
     props.socket?.on("dbAttFront", getNewData);

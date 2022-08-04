@@ -58,7 +58,6 @@ export function SearchDataDashPage(prop: propsSearchDataDashPage) {
             })
           );
         });
-      console.log("teste");
     };
 
     newProps.socket?.on("dbAttFront", getNewData);
@@ -104,24 +103,6 @@ export function SearchDataDashPage(prop: propsSearchDataDashPage) {
       dateMin: new Date(yearValue, monthValue, 1),
       dateMax: new Date(yearValue, monthValue + 1, 0, 23, 59, 59),
     };
-    // let url = new URL("http://localhost:5000/getRanking");
-    // let k: keyof typeof queryParams;
-    // for (k in queryParams) {
-    //   url.searchParams.append(k, queryParams[k]);
-    // }
-    // fetch(url)
-    //   .then((response) => response.json())
-    //   .then((res) => {
-    //     newProps.setDataOS(res);
-    //     newProps.setLoadingData(false);
-    //     sessionStorage.setItem(
-    //       String(100 * yearValue + monthValue),
-    //       JSON.stringify({
-    //         rankingMoto: res.rankingMoto,
-    //         rankingGeral: res.rankingGeral,
-    //       })
-    //     );
-    //   });
     axios
       .get("https://ranking-os-backend-production.up.railway.app/getDashData", {
         params: queryParams,
