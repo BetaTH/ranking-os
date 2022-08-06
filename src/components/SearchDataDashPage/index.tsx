@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import { propsSearchDataDashPage } from "../../interfaces/os-interfaces";
-import axios from "axios";
+import { api } from "../../api";
 
 export function SearchDataDashPage(prop: propsSearchDataDashPage) {
   const newProps = prop.arr;
@@ -42,7 +42,7 @@ export function SearchDataDashPage(prop: propsSearchDataDashPage) {
         dateMin: new Date(yearValue, monthValue, 1),
         dateMax: new Date(yearValue, monthValue + 1, 0, 23, 59, 59),
       };
-      axios
+      api
         .get(
           "https://ranking-os-backend-production.up.railway.app/getDashData",
           { params: queryParams }
@@ -103,7 +103,7 @@ export function SearchDataDashPage(prop: propsSearchDataDashPage) {
       dateMin: new Date(yearValue, monthValue, 1),
       dateMax: new Date(yearValue, monthValue + 1, 0, 23, 59, 59),
     };
-    axios
+    api
       .get("https://ranking-os-backend-production.up.railway.app/getDashData", {
         params: queryParams,
       })

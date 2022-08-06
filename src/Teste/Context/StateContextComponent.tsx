@@ -1,10 +1,10 @@
-import axios from "axios";
 import React, {
   PropsWithChildren,
   useEffect,
   useReducer,
   useState,
 } from "react";
+import { api } from "../../api";
 import { useSocket } from "../hooks/useSocket";
 import {
   defaultStateContextState,
@@ -38,12 +38,12 @@ const StateContextComponent: React.FunctionComponent<
 
   useEffect(() => {
     const getNewData = () => {
-      axios
+      api
         .get(
           "https://ranking-os-backend-production.up.railway.app/getListOptions"
         )
         .then((res) => dispatch({ type: "setListOptions", payload: res.data }));
-      axios
+      api
         .get(
           "https://ranking-os-backend-production.up.railway.app/getTableData",
           {

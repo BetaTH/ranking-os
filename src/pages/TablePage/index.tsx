@@ -4,9 +4,9 @@ import { Headers } from "../../components/Headers";
 import { Table } from "../../components/Tabela";
 import { Plus } from "phosphor-react";
 import { ModalEditAddOS } from "../../components/ModalEditAddOS";
-import axios from "axios";
 import { PropsTablePage } from "../../interfaces/os-interfaces";
 import StateContext from "../../Teste/Context/StateContext";
+import { api } from "../../api";
 
 export function TablePage(props: PropsTablePage) {
   const effecOnlyRun = useRef(false);
@@ -23,18 +23,10 @@ export function TablePage(props: PropsTablePage) {
   useEffect(() => {
     if (effecOnlyRun.current === false) {
       dispatch({ type: "incrementNumPage" });
-      axios
-        .get(
-          "https://ranking-os-backend-production.up.railway.app/getListOptions"
-        )
-        .then((res) => setListOptions(res.data));
-      axios
-        .get(
-          "https://ranking-os-backend-production.up.railway.app/getTableData"
-        )
-        .then((res) => {
-          setDataTable(res.data);
-        }); //ainda está no localhost
+      api.get("/getListOptions").then((res) => setListOptions(res.data));
+      api.get("/getTableData").then((res) => {
+        setDataTable(res.data);
+      }); //ainda está no localhost
     }
 
     return () => {
@@ -44,18 +36,11 @@ export function TablePage(props: PropsTablePage) {
 
   useEffect(() => {
     const getNewData = () => {
-      axios
-        .get(
-          "https://ranking-os-backend-production.up.railway.app/getListOptions"
-        )
-        .then((res) => setListOptions(res.data));
-      axios
-        .get(
-          "https://ranking-os-backend-production.up.railway.app/getTableData",
-          {
-            params: { numPage: numPage, justAtt: "True" },
-          }
-        )
+      api.get("/getListOptions").then((res) => setListOptions(res.data));
+      api
+        .get("/getTableData", {
+          params: { numPage: numPage, justAtt: "True" },
+        })
         .then((res) => setDataTable(res.data));
     };
 
@@ -67,18 +52,11 @@ export function TablePage(props: PropsTablePage) {
   }, [numPage, setDataTable, props.socket]);
 
   function loadMoreData() {
-    axios
-      .get(
-        "https://ranking-os-backend-production.up.railway.app/getListOptions"
-      )
-      .then((res) => setListOptions(res.data));
-    axios
-      .get(
-        "https://ranking-os-backend-production.up.railway.app/getTableData",
-        {
-          params: { numPage: numPage },
-        }
-      )
+    api.get("/getListOptions").then((res) => setListOptions(res.data));
+    api
+      .get("/getTableData", {
+        params: { numPage: numPage },
+      })
       .then((res) => {
         setDataTable([...dataTable, ...res.data]);
         setIsLoadingMoreData(false);

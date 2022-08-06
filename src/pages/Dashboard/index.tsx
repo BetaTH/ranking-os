@@ -4,8 +4,8 @@ import { Headers } from "../../components/Headers";
 import { Podio } from "../../components/Podio";
 import { RankingGeral } from "../../components/RankingGeral";
 import { RankingMotos } from "../../components/RankingMotos";
-import axios from "axios";
 import { PropsDashPage } from "../../interfaces/os-interfaces";
+import { api } from "../../api";
 
 export function Dashboard(props: PropsDashPage) {
   const [dataOS, setDataOS] = useState({ rankingMoto: [], rankingGeral: [] });
@@ -25,22 +25,17 @@ export function Dashboard(props: PropsDashPage) {
         dateMin: new Date(todayYear, todayMonth, 1),
         dateMax: new Date(todayYear, todayMonth + 1, 0, 23, 59, 59),
       };
-      axios
-        .get(
-          "https://ranking-os-backend-production.up.railway.app/getDashData",
-          { params: queryParams }
-        )
-        .then((res) => {
-          setDataOS(res.data);
-          setLoadingData(false);
-          sessionStorage.setItem(
-            String(100 * todayYear + todayMonth),
-            JSON.stringify({
-              rankingMoto: res.data.rankingMoto,
-              rankingGeral: res.data.rankingGeral,
-            })
-          );
-        });
+      api.get("/getDashData", { params: queryParams }).then((res) => {
+        setDataOS(res.data);
+        setLoadingData(false);
+        sessionStorage.setItem(
+          String(100 * todayYear + todayMonth),
+          JSON.stringify({
+            rankingMoto: res.data.rankingMoto,
+            rankingGeral: res.data.rankingGeral,
+          })
+        );
+      });
     }
   }, []);
 

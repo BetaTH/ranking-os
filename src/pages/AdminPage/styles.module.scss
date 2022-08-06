@@ -1,0 +1,330 @@
+@import "../../styles/animations.scss";
+
+.pageConteiner{
+  height: 100vh;
+  width: 100%;
+}
+  .adminConteiner{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 7rem);
+  background: #b2bebf;
+
+  .slectedOptionConteiner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    height: 100%;
+    width: 30%;
+    .divButtons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 5rem;
+      width: 15rem;
+      font-size: 1.3rem;
+      font-weight: 500;
+      background: #5d8a66d3;
+      color: #ffffff;
+      border-radius: 0.8rem 0.8rem 0.8rem 0.8rem;
+      padding: 0.5rem;
+      box-shadow: 5px 7px 22px 0px rgba(0, 0, 0, 0.15);
+      transition: 0.2s;
+      position: relative;
+      left: 10rem;
+      &:hover {
+        background: #5d8a66fa;
+      }
+    }
+  }
+
+  .tableConteirner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+
+    .table {
+      min-width: 36.8rem;
+      max-width: 92rem;
+      min-height: 70rem;
+      max-height: 70rem;
+      background: #d9d9d9;
+      border-radius: 0.8rem 0.8rem 0rem 0rem;
+      box-shadow: 5px 7px 22px 0px rgba(0, 0, 0, 0.25);
+      position: absolute;
+      left: 15rem;
+
+      .tableHeader {
+        display: flex;
+        width: 100%;
+        height: 5rem;
+        background: #5d8a66;
+        border-radius: 0.8rem 0.8rem 0px 0px;
+        justify-content: left;
+        .colHeader {
+          height: 100%;
+          font-size: 1.3rem;
+          font-weight: 500;
+          color: #ffffff;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 0.5rem;
+        }
+        .col0 {
+          min-width: 36rem;
+        }
+        .col1 {
+          min-width: 22rem;
+        }
+        .col2 {
+          min-width: 14rem;
+        }
+        .col3 {
+          width: 50rem;
+        }
+      }
+
+      .tableRows {
+        width: 100%;
+        height: 60rem;
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        cursor: pointer;
+        box-shadow: inset 0rem 0.4rem 0.4rem rgba(0, 0, 0, 0.15); //inset 0rem -0.4rem 0.4rem rgba(0,0,0,0.15), inset 0rem 0.4rem 0.4rem rgba(0, 0, 0, 0.15);
+        .tableRow {
+          transition: all 0.2s;
+          display: flex;
+          width: 100%;
+          height: 4rem;
+          min-height: 4rem;
+          border-bottom: 0.1rem solid var(--background);
+          &:hover {
+            background: #c5c5c5;
+          }
+          .colRow {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #2c3639;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+          }
+          .col0 {
+            min-width: 36rem;
+          }
+          .col1 {
+            width: 22rem;
+          }
+          .col2 {
+            width: 14rem;
+          }
+          .col3 {
+            width: 50rem;
+          }
+        }
+      }
+
+      .buttonConteiner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 5rem;
+        padding: 0.5;
+
+        .buttonAdd {
+          width: 10rem;
+          height: 4rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.3rem;
+          font-weight: 500;
+          border-radius: 0.8rem 0.8rem 0.8rem 0.8rem;
+          color: #ffffff;
+          background: #5d8a66d3;
+          transition: 0.2s;
+
+          &:hover {
+            background: #5d8a66f1;
+          }
+        }
+      }
+    }
+  }
+}
+
+.overlay{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: hidden;
+
+  animation-name: showOpacity;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+
+  .modal {
+    background: #d9d9d9;
+    width: 60rem;
+    border-radius: 0.8rem;
+    overflow-y: auto;
+    animation-name: openModal;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in-out;
+    position: relative;
+    .close{
+      position: absolute;
+      top:1rem;
+      right:1rem;
+      transition: 0.2;
+      &:hover{
+        transform: scale(1.1);
+      }
+    }
+
+    .formModal {
+      width: 100%;
+      height: 100%;
+      padding: 1.5rem 3.5rem;
+
+      .rowTitle {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 3rem;
+        z-index: 130;
+        .title {
+          font-size: 2.3rem;
+          font-weight: 600;
+          text-align: center;
+          color: #2c3639;
+        }
+      }
+
+      .row {
+        width: 100%;
+        height: 5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0rem;
+        margin-bottom: 1.5rem;
+        gap: 2rem;
+        .rowLabel {
+          width: 30%;
+          display: flex;
+          align-items: center;
+          justify-content: right;
+
+          .label {
+            font-size: 1.5rem;
+            font-weight: 500;
+            text-align: right;
+            color: #2c3639;
+          }
+        }
+
+        .rowInput {
+          width: 70%;
+          height: 100%;
+          display: inline-block;
+          align-items: center;
+          justify-content: left;
+          position: relative;
+          &:hover{
+            .arrowDown{
+              transform: translateY(0.2rem);
+            }
+          }
+          .input {
+            width: 100%;
+            height: 100%;
+            padding: 0.5rem 1rem;
+            font-size: 1.5rem;
+            font-weight: 500;
+            border-radius: 0.8rem;
+            background: rgba(255, 255, 255, 0.4);
+            border: 0.1rem solid #ffffff;
+            color: #2c3639;
+          }
+        }
+      }
+
+      .rowButton {
+        width: 100%;
+        height: 5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0rem;
+        margin-top: 3rem;
+        gap: 5rem
+      }
+
+      .saveButton {
+        width: 14rem;
+        height: 4rem;
+        border: 0.1rem solid #015c4b;
+        background: rgba(12, 242, 93, 0.1);
+        color: #015c4b;
+        font-size: 2rem;
+        font-weight: 500;
+        border-radius: 0.8rem;
+        transition: 0.2s;
+        box-shadow:  5px 5px 22px -6px rgba(0,0,0,0.2);
+        transition: 0.3s;
+
+        &:hover {
+          //background: rgba(12, 242, 93, 0.3);
+          transform: scale(1.03);
+          //color: #ffffff;
+        }
+        &:focus{
+          transform: scale(1.03);
+        }
+      }
+
+      .deleteButton {
+        width: 14rem;
+        height: 4rem;
+        border: 0.1rem solid #5c0101;
+        background: rgba(255, 40, 40, 0.1);
+        color: #5c0101;
+        font-size: 2rem;
+        font-weight: 500;
+        border-radius: 0.8rem;
+        transition: 0.2s;
+        box-shadow:  5px 5px 22px -6px rgba(0,0,0,0.2);
+        transition: 0.3s;
+
+        &:hover {
+          //background: rgba(12, 242, 93, 0.3);
+          transform: scale(1.03);
+          //color: #ffffff;
+        }
+        &:focus{
+          transform: scale(1.03);
+        }
+      }
+    }
+  }
+}

@@ -41,7 +41,7 @@ export interface propsHeaders {
     setLoadingData: Function;
     socket?: Socket;
   };
-  titlePage: "tabela" | "dash";
+  titlePage: "tabela" | "dash" | "admin";
 }
 export interface arr {
   setDataOS: Function;

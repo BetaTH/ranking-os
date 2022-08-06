@@ -2,7 +2,7 @@ import styles from "./styles.module.scss";
 import { propsModal } from "../../interfaces/os-interfaces";
 import { AutocompleteModalInputs } from "../AutocompleteModalInputs";
 import { useEffect, useState } from "react";
-import * as functions from "../ModalEditAddOS/functions";
+import * as functions from "./functions";
 import { CaretDown, Target, X } from "phosphor-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -17,16 +17,16 @@ export function ModalEditAddOS(props: propsModal) {
   const [search, setSearch] = useState("");
   const [isCrudLoading, setIsCrudLoading] = useState(false);
 
-  // useEffect(() => {
-  //   document
-  //     .querySelectorAll("body")
-  //     .forEach((target) => target.classList.add("noScroll"));
-  //   return () => {
-  //     document
-  //       .querySelectorAll("body")
-  //       .forEach((target) => target.classList.remove("noScroll"));
-  //   };
-  // });
+  useEffect(() => {
+    document
+      .querySelectorAll("body")
+      .forEach((target) => target.classList.add("noScroll"));
+    return () => {
+      document
+        .querySelectorAll("body")
+        .forEach((target) => target.classList.remove("noScroll"));
+    };
+  });
 
   function hideACInput() {
     const newisACVisible: { [key: string]: boolean } = {

@@ -8,16 +8,20 @@
 html,
 body {
   width: 100vw;
-  height: 100%;
+  height: 100vh;
 }
 
 body {
   min-width: 1280px;
   font-family: "Poppins", sans-serif;
-  background-color: var(--background);
+  //background-color: var(--background);
   -webkit-text-size-adjust: none;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
   
+  #root{
+    height: 100%
+  }
 }
 
 button {
@@ -45,7 +49,6 @@ input{
 
 .noScroll{
   overflow-y: hidden;
-  padding-right: .8rem;
 }
 
 
@@ -99,6 +102,9 @@ input{
 @media only screen and (min-width: 450px) and (max-width: 1280px) {
   html {
     font-size: calc(1280px / 1920 * 10);
+  }
+  body{
+    overflow-x: scroll;
   }  
 }
 @media only screen and (min-width: 1280px) {

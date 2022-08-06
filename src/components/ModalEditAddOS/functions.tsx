@@ -1,5 +1,5 @@
-import axios from "axios";
 import { Socket } from "socket.io-client";
+import { api } from "../../api";
 
 const formInputs: { [key: string]: Function } = {
   operador: () => document.getElementById("operador") as HTMLInputElement,
@@ -183,7 +183,7 @@ export function getDataToAddOrEdit(props: {
     });
 
     if (props.typeModal == "add") {
-      axios
+      api
         .post(
           "https://ranking-os-backend-production.up.railway.app/postNewOS", //https://ranking-os-backend-production.up.railway.app
           formDataValues
@@ -204,7 +204,7 @@ export function getDataToAddOrEdit(props: {
           alert("OS Já Cadastrada");
         });
     } else {
-      axios
+      api
         .put(
           "https://ranking-os-backend-production.up.railway.app/updateOS",
           formDataValues
@@ -224,7 +224,7 @@ export function deleteData(props: {
   setIsCrudLoading: Function;
 }) {
   const idToDelete = formValues.idOS();
-  axios
+  api
     .delete("https://ranking-os-backend-production.up.railway.app/deleteOS", {
       data: { idOS: idToDelete },
     })

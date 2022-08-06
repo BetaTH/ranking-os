@@ -1,7 +1,7 @@
 @import "../../styles/animations.scss";
-.showConteiner {
-  display: flex;
-}
+// .showConteiner {
+//   display: flex;
+// }
 
 .conteiner {
   width: 100%;
@@ -23,7 +23,6 @@
   .modal {
     background: #d9d9d9;
     width: 60rem;
-    //height: 85rem;
     border-radius: 0.8rem;
     overflow-y: auto;
     animation-name: openModal;

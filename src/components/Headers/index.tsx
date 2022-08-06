@@ -20,6 +20,8 @@ export function Headers(prop: propsHeaders) {
         <img className={styles.logo} src={Logo} alt="Logo" />
         {prop.titlePage === "dash" ? (
           <h1 className={styles.titulo}>Ranking OS Externo</h1>
+        ) : prop.titlePage === "admin" ? (
+          <h1 className={styles.titulo}>Admin</h1>
         ) : (
           <h1 className={styles.titulo}>Tabela de OS Fechada</h1>
         )}
