@@ -7,7 +7,7 @@ export const useSocket = (url: string, options?: Partial<ManagerOptions & Socket
     useEffect(() => {
         return () => {
             if (socket) {
-                socket.close();
+                //socket.close();
             }
         };
     }, [socket]);

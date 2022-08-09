@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./styles.module.scss";
-import { propsSearchDataDashPage } from "../../interfaces/os-interfaces";
-import { api } from "../../api";
+import { api } from "../../api/api";
+import { SocketContext } from "../../contexts/SocketContext/SocketContext";
+import { DashPageContext } from "../../contexts/DashPageContext/DashPageContext";
 
-export function SearchDataDashPage(prop: propsSearchDataDashPage) {
-  const newProps = prop.arr;
+export function SearchDataDashPage() {
+  const { setDashData, setLoadingDashData } = useContext(DashPageContext);
+
   const [monthValue, setMonthValue] = useState(new Date().getMonth());
   const [yearValue, setYearValue] = useState(new Date().getFullYear());
   const todayMonth = new Date().getMonth();
   const initYear = 2022;
   const todayYear = new Date().getFullYear();
+  const { socket } = useContext(SocketContext);
 
   const [listSaveStorage, setlistSaveStorage] = useState([
     100 * todayYear + todayMonth,
@@ -42,74 +45,9 @@ export function SearchDataDashPage(prop: propsSearchDataDashPage) {
         dateMin: new Date(yearValue, monthValue, 1),
         dateMax: new Date(yearValue, monthValue + 1, 0, 23, 59, 59),
       };
-      api
-        .get(
-          "https://ranking-os-backend-production.up.railway.app/getDashData",
-          { params: queryParams }
-        )
-        .then((res) => {
-          newProps.setDataOS(res.data);
-          newProps.setLoadingData(false);
-          sessionStorage.setItem(
-            String(100 * yearValue + monthValue),
-            JSON.stringify({
-              rankingMoto: res.data.rankingMoto,
-              rankingGeral: res.data.rankingGeral,
-            })
-          );
-        });
-    };
-
-    newProps.socket?.on("dbAttFront", getNewData);
-    return function () {
-      newProps.socket?.off("dbAttFront", getNewData);
-    };
-  }, [
-    monthValue,
-    yearValue,
-    newProps.setDataOS,
-    newProps.setLoadingData,
-    newProps.socket,
-  ]);
-
-  function setNewDataOS() {
-    if (sessionStorage.getItem(String(100 * yearValue + monthValue))) {
-      const dataStoraged = String(
-        sessionStorage.getItem(String(100 * yearValue + monthValue))
-      );
-      newProps.setDataOS(JSON.parse(dataStoraged));
-      newProps.setLoadingData(false);
-    } else if (sessionStorage.length >= 3) {
-      sessionStorage.removeItem(String(listSaveStorage[0]));
-      setlistSaveStorage(
-        new Array<number>()
-          .concat([listSaveStorage[1], listSaveStorage[2]])
-          .concat([100 * yearValue + monthValue])
-      );
-      loadNewData();
-    } else {
-      setlistSaveStorage(
-        new Array<number>()
-          .concat(listSaveStorage)
-          .concat([100 * yearValue + monthValue])
-      );
-      loadNewData();
-    }
-  }
-
-  function loadNewData() {
-    newProps.setLoadingData(true);
-    let queryParams = {
-      dateMin: new Date(yearValue, monthValue, 1),
-      dateMax: new Date(yearValue, monthValue + 1, 0, 23, 59, 59),
-    };
-    api
-      .get("https://ranking-os-backend-production.up.railway.app/getDashData", {
-        params: queryParams,
-      })
-      .then((res) => {
-        newProps.setDataOS(res.data);
-        newProps.setLoadingData(false);
+      api.get("/getDashData", { params: queryParams }).then((res) => {
+        setDashData(res.data);
+        setLoadingDashData(false);
         sessionStorage.setItem(
           String(100 * yearValue + monthValue),
           JSON.stringify({
@@ -117,6 +55,62 @@ export function SearchDataDashPage(prop: propsSearchDataDashPage) {
             rankingGeral: res.data.rankingGeral,
           })
         );
+      });
+    };
+
+    socket?.on("dbAttFront", getNewData);
+    return function () {
+      socket?.off("dbAttFront", getNewData);
+    };
+  }, [monthValue, yearValue, setDashData, setLoadingDashData, socket]);
+
+  function setNewDataOS() {
+    loadNewData();
+
+    // if (sessionStorage.getItem(String(100 * yearValue + monthValue))) {
+    //   const dataStoraged = String(
+    //     sessionStorage.getItem(String(100 * yearValue + monthValue))
+    //   );
+    //   setDashData(JSON.parse(dataStoraged));
+    //   setLoadingDashData(false);
+    // } else if (sessionStorage.length >= 3) {
+    //   sessionStorage.removeItem(String(listSaveStorage[0]));
+    //   setlistSaveStorage(
+    //     new Array<number>()
+    //       .concat([listSaveStorage[1], listSaveStorage[2]])
+    //       .concat([100 * yearValue + monthValue])
+    //   );
+    //   loadNewData();
+    // } else {
+    //   setlistSaveStorage(
+    //     new Array<number>()
+    //       .concat(listSaveStorage)
+    //       .concat([100 * yearValue + monthValue])
+    //   );
+    //   loadNewData();
+    // }
+  }
+
+  function loadNewData() {
+    setLoadingDashData(true);
+    let queryParams = {
+      dateMin: new Date(yearValue, monthValue, 1),
+      dateMax: new Date(yearValue, monthValue + 1, 0, 23, 59, 59),
+    };
+    api
+      .get("/getDashData", {
+        params: queryParams,
+      })
+      .then((res) => {
+        setDashData(res.data);
+        setLoadingDashData(false);
+        // sessionStorage.setItem(
+        //   String(100 * yearValue + monthValue),
+        //   JSON.stringify({
+        //     rankingMoto: res.data.rankingMoto,
+        //     rankingGeral: res.data.rankingGeral,
+        //   })
+        // );
       });
   }
 

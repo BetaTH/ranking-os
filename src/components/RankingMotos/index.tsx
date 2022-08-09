@@ -1,13 +1,15 @@
-import { propsRanking } from "../../interfaces/os-interfaces";
+import { useContext } from "react";
+import { DashPageContext } from "../../contexts/DashPageContext/DashPageContext";
 import { Loading } from "../Loading";
 import { SemDados } from "../SemDados";
 import styles from "./styles.module.scss";
 
-export function RankingMotos(props: propsRanking) {
-  const newProps = props.arr;
+export function RankingMotos() {
+  const { dashData, loadingDashData } = useContext(DashPageContext);
+  const dashMotoData = dashData.rankingMoto;
   const count = Array.from({ length: 7 }, (_, i) => i + 1);
 
-  if (props.isLoadging) {
+  if (loadingDashData) {
     return (
       <div className={styles.rankingMotoContainer}>
         <div className={styles.container}>
@@ -20,7 +22,7 @@ export function RankingMotos(props: propsRanking) {
     );
   }
 
-  if (newProps.length === 0) {
+  if (dashMotoData.length === 0) {
     return (
       <div className={styles.rankingMotoContainer}>
         <div className={styles.container}>
@@ -48,12 +50,12 @@ export function RankingMotos(props: propsRanking) {
                 </div>
                 <div className={styles.cardEquip}>
                   <span className={styles.equip}>
-                    {newProps[id] ? newProps[id].equipe : ""}
+                    {dashMotoData[id] ? dashMotoData[id].equipe : ""}
                   </span>
                 </div>
                 <div className={styles.cardPoint}>
                   <span className={styles.point}>
-                    {newProps[id] ? newProps[id].pontos : ""}
+                    {dashMotoData[id] ? dashMotoData[id].pontos : ""}
                   </span>
                 </div>
               </div>

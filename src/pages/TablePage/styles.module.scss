@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #b2bebf;
+  background: var(--backgroundAll);
 
   .rankingsContainer {
     gap: 1rem;
@@ -11,7 +11,7 @@
     flex-direction: column;
     //padding-top: 2.5rem;
     align-items: center;
-    background: #b2bebf;
+    //background: var(--backgroundAll);
 
     .addOSContainer {
       width: 170rem;

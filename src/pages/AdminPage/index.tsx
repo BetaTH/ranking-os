@@ -3,11 +3,14 @@ import { X } from "phosphor-react";
 import { useEffect, useRef, useState } from "react";
 import styles from "./styles.module.scss";
 import * as functions from "./functions";
-import { api } from "../../api";
+import { api } from "../../api/api";
 import { CrudLoadingModal } from "../../components/crudLoadingModal";
 import { Headers } from "../../components/Headers";
+import AuthService from "../../services/AuthService";
+import { useNavigate } from "react-router-dom";
 
 export function AdminPage() {
+  const navigate = useNavigate();
   const [campo, setCampo] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [rowtoEdit, setRowToEdit] = useState<{
@@ -23,6 +26,7 @@ export function AdminPage() {
   const input2Ref = useRef<HTMLInputElement>(null);
   const input3Ref = useRef<HTMLInputElement>(null);
   const effecOnlyRun = useRef(false);
+  const authService = new AuthService();
 
   useEffect(() => {
     if (effecOnlyRun.current === false) {
@@ -30,7 +34,6 @@ export function AdminPage() {
         setData(res.data);
       });
     }
-
     return () => {
       effecOnlyRun.current = true;
     };

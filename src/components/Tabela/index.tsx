@@ -2,15 +2,24 @@ import classNames from "classnames";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { PlusCircle } from "phosphor-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { TablePageContext } from "../../contexts/TablePageContext/TablePageContext";
 import { OStoEit, PropsTable } from "../../interfaces/os-interfaces";
 import { Loading } from "../Loading";
 import { ModalEditAddOS } from "../ModalEditAddOS";
 import styles from "./styles.module.scss";
 
 export function Table(props: PropsTable) {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const {
+    tableData,
+    numPage,
+    isLoadingMoreTableData,
+    setIsLoadingMoreTableData,
+  } = useContext(TablePageContext);
+
   const [OStoEdit, setOStoEdit] = useState<OStoEit>({});
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   function showModal(item: OStoEit) {
     setOStoEdit(item);
@@ -49,7 +58,7 @@ export function Table(props: PropsTable) {
         <div className={classNames(styles.colHeader, styles.col12)}>Pontos</div>
       </header>
       <div className={styles.rowsConteiner}>
-        {props.dataTable?.map((item, id) => {
+        {tableData?.map((item, id) => {
           return (
             <div
               className={styles.rowTable}
@@ -103,12 +112,12 @@ export function Table(props: PropsTable) {
           );
         })}
 
-        {props.dataTable.length < 20 + props.numPage * 10 ? null : (
+        {tableData.length < 20 + numPage * 10 ? null : (
           <div className={styles.rowLoadMoreData}>
-            {!props.isLoadingMoreData ? (
+            {!isLoadingMoreTableData ? (
               <PlusCircle
                 onClick={() => {
-                  props.setIsLoadingMoreData(true);
+                  setIsLoadingMoreTableData(true);
                   props.loadMoreData();
                 }}
                 className={styles.loadMoreData}
@@ -123,12 +132,10 @@ export function Table(props: PropsTable) {
       </div>
       {isModalVisible ? (
         <ModalEditAddOS
-          socket={props.socket}
-          listOptions={props.listOptions}
           OStoEdit={OStoEdit}
           setOStoEdit={setOStoEdit}
-          typeModal="edit"
           setIsModalVisible={setIsModalVisible}
+          typeModal="edit"
         />
       ) : null}
     </div>

@@ -1,21 +1,59 @@
 @import "../../styles/animations.scss";
-.divDateFilter{
+.divDateFilter {
+  display: flex;
+  flex-direction: column;
+  width: 10rem;
+  height: 96rem;
+  align-items: flex-start;
+  justify-content: right;
+  gap: 1rem;
+  animation: showOpacity 0.8s;
+
+  .searchButton {
+    background: var(--background);
+    padding: 0 0.5rem;
+    width: 10rem;
+    height: 3.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+    text-justify: center;
+    border-radius: 0.5rem;
+  }
+
+  .searchButton:hover {
+    background: #f2f6faea;
+  }
+
+  .selectMonth,
+  .selectYear {
+    padding: 0 0.5rem;
+    background: var(--background);
+    height: 100%;
+    border-radius: 0.5rem;
+    height: 3.5rem;
+    width: 10rem;
+    font-size: 1.3rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .divDateFilter {
     display: flex;
+    flex-direction: row;
+    width: 40rem;
+    height: 4rem;
+    padding: 0 1.3rem;
+    justify-content: space-between;
     align-items: center;
-    justify-content: right;
-    padding: 0.5rem;
-    gap: 1rem;
-    animation: showOpacity .8s;
+    animation: showOpacity 0.8s;
 
     .searchButton {
-      background: var(--background);
-      padding: 0 0.5rem;
-      width: 10rem;
-      height: 3.5rem;
-      font-size: 1.5rem;
-      text-align: center;
-      text-justify: center;
-      border-radius: 0.5rem;
+      height: 4rem;
+      width: 12rem;
     }
 
     .searchButton:hover {
@@ -23,23 +61,9 @@
     }
 
     .selectMonth,
-    .selectYear{
-      padding: 0 0.5rem;
-      background: var(--background);
-      height: 100%;
-      border-radius: 0.5rem;
-      height: 3.5rem;
-      width: 10rem;
-      font-size: 1.3rem;
-      -webkit-appearance: none;
-      -moz-appearance:    none;
-      appearance:         none;
-      text-align: center;
+    .selectYear {
+      height: 4rem;
+      width: 12rem;
     }
   }
-
-  @media only screen  and (max-width: 450px) {
-    .divDateFilter{
-      display: none;
-    }
-  }
+}

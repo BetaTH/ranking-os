@@ -14,14 +14,9 @@ body {
 body {
   min-width: 1280px;
   font-family: "Poppins", sans-serif;
-  //background-color: var(--background);
   -webkit-text-size-adjust: none;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  
-  #root{
-    height: 100%
-  }
 }
 
 button {
@@ -73,11 +68,10 @@ input{
   scrollbar-color: #8a8a9977 rgba(255, 255, 255, 0);
 }
 
-/* Works on Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: .8rem;
-    height: 1.3rem;
-  }
+*::-webkit-scrollbar {
+  width: .8rem;
+  height: 1.3rem;
+}
 
 *::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0);
@@ -93,10 +87,13 @@ input{
 
 @media only screen  and (max-width: 450px) {
   html {
+    width:100%;
     font-size: calc(100vw / 450 * 10);
   }
   body{
+    width:100%;
     min-width: 300px;
+    overflow-x: hidden;
   }
 }
 @media only screen and (min-width: 450px) and (max-width: 1280px) {

@@ -4,35 +4,22 @@ import { Headers } from "../../components/Headers";
 import { Table } from "../../components/Tabela";
 import { Plus } from "phosphor-react";
 import { ModalEditAddOS } from "../../components/ModalEditAddOS";
-import { PropsTablePage } from "../../interfaces/os-interfaces";
-import StateContext from "../../Teste/Context/StateContext";
-import { api } from "../../api";
+import { api } from "../../api/api";
+import { SocketContext } from "../../contexts/SocketContext/SocketContext";
+import { TablePageContext } from "../../contexts/TablePageContext/TablePageContext";
 
-export function TablePage(props: PropsTablePage) {
-  const effecOnlyRun = useRef(false);
-  const { dispatch } = useContext(StateContext);
+export function TablePage() {
+  const {
+    tableData,
+    numPage,
 
-  const [listOptions, setListOptions] = useState<{ [key: string]: string[] }>(
-    {}
-  );
-  const [dataTable, setDataTable] = useState<{ [key: string]: string }[]>([]);
+    setListOptions,
+    setNumPage,
+    setTableData,
+    setIsLoadingMoreTableData,
+  } = useContext(TablePageContext);
+  const { socket } = useContext(SocketContext);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [numPage, setNumPage] = useState(0);
-  const [isLoadingMoreData, setIsLoadingMoreData] = useState(false);
-
-  useEffect(() => {
-    if (effecOnlyRun.current === false) {
-      dispatch({ type: "incrementNumPage" });
-      api.get("/getListOptions").then((res) => setListOptions(res.data));
-      api.get("/getTableData").then((res) => {
-        setDataTable(res.data);
-      }); //ainda está no localhost
-    }
-
-    return () => {
-      effecOnlyRun.current = true;
-    };
-  }, []);
 
   useEffect(() => {
     const getNewData = () => {
@@ -41,15 +28,15 @@ export function TablePage(props: PropsTablePage) {
         .get("/getTableData", {
           params: { numPage: numPage, justAtt: "True" },
         })
-        .then((res) => setDataTable(res.data));
+        .then((res) => setTableData(res.data));
     };
 
-    props.socket?.on("dbAttFront", getNewData);
+    socket?.on("dbAttFront", getNewData);
 
     return function () {
-      props.socket?.off("dbAttFront", getNewData);
+      socket?.off("dbAttFront", getNewData);
     };
-  }, [numPage, setDataTable, props.socket]);
+  }, [numPage, setTableData, socket]);
 
   function loadMoreData() {
     api.get("/getListOptions").then((res) => setListOptions(res.data));
@@ -58,10 +45,10 @@ export function TablePage(props: PropsTablePage) {
         params: { numPage: numPage },
       })
       .then((res) => {
-        setDataTable([...dataTable, ...res.data]);
-        setIsLoadingMoreData(false);
+        setTableData([...tableData, ...res.data]);
+        setIsLoadingMoreTableData(false);
         setNumPage(numPage + 1);
-      }); //ainda está no localhost
+      });
   }
   return (
     <div className={styles.container}>
@@ -75,24 +62,10 @@ export function TablePage(props: PropsTablePage) {
             <Plus height={"100%"} width={"6rem"} />
           </div>
         </div>
-        <Table
-          socket={props.socket}
-          listOptions={listOptions}
-          dataTable={dataTable}
-          numPage={numPage}
-          setIsLoadingMoreData={setIsLoadingMoreData}
-          isLoadingMoreData={isLoadingMoreData}
-          setNumPage={setNumPage}
-          loadMoreData={loadMoreData}
-        />
+        <Table loadMoreData={loadMoreData} />
       </div>
       {isModalVisible ? (
-        <ModalEditAddOS
-          socket={props.socket}
-          listOptions={listOptions}
-          typeModal="add"
-          setIsModalVisible={setIsModalVisible}
-        />
+        <ModalEditAddOS setIsModalVisible={setIsModalVisible} typeModal="add" />
       ) : null}
     </div>
   );

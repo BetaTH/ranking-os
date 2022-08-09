@@ -1,19 +1,32 @@
 import styles from "./styles.module.scss";
 import Logo from "../../img/logo.svg";
-import { arr, propsHeaders } from "../../interfaces/os-interfaces";
-import { SearchDataDashPage } from "../SearchDataDashPage";
+import { propsHeaders } from "../../interfaces/os-interfaces";
 import { useNavigate } from "react-router-dom";
+import AuthService from "../../services/AuthService";
+import { NavigationArrow } from "phosphor-react";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext/AuthContex";
 
 export function Headers(prop: propsHeaders) {
+  const { user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  const authService = new AuthService();
 
   const goToTablePage = () => {
-    navigate("/");
+    navigate("/tabela");
   };
 
   const goToDashPage = () => {
     navigate("/dashboard");
   };
+
+  const singOut = () => {
+    authService.signOut().then(() => {
+      setUser(null);
+      navigate("/");
+    });
+  };
+
   return (
     <header className={styles.divHeaders}>
       <div className={styles.divLogoTitle}>
@@ -25,7 +38,8 @@ export function Headers(prop: propsHeaders) {
         ) : (
           <h1 className={styles.titulo}>Tabela de OS Fechada</h1>
         )}
-        {prop.titlePage === "dash" ? (
+        {user.email == "tecnicosuporte.g3@gmail.com" ? null : prop.titlePage ===
+          "dash" ? (
           <button
             className={styles.naviationButton}
             onClick={() => goToTablePage()}
@@ -41,9 +55,9 @@ export function Headers(prop: propsHeaders) {
           </button>
         )}
       </div>
-      {prop.titlePage === "dash" ? (
-        <SearchDataDashPage arr={prop.setPropsSearchDataDashPage as arr} />
-      ) : null}
+      <button className={styles.logoutButton} onClick={singOut}>
+        Sair
+      </button>
     </header>
   );
 }

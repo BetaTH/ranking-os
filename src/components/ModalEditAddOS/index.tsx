@@ -1,15 +1,19 @@
 import styles from "./styles.module.scss";
 import { propsModal } from "../../interfaces/os-interfaces";
 import { AutocompleteModalInputs } from "../AutocompleteModalInputs";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import * as functions from "./functions";
-import { CaretDown, Target, X } from "phosphor-react";
+import { CaretDown, X } from "phosphor-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { CrudLoadingModal } from "../crudLoadingModal";
+import { SocketContext } from "../../contexts/SocketContext/SocketContext";
+import { TablePageContext } from "../../contexts/TablePageContext/TablePageContext";
 
 export function ModalEditAddOS(props: propsModal) {
   const OStoEdit = props.OStoEdit;
+  const { socket } = useContext(SocketContext);
+  const { listOptions } = useContext(TablePageContext);
   const [isACVisible, setIsACVisible] = useState<{ [key: string]: boolean }>(
     {}
   );
@@ -135,7 +139,7 @@ export function ModalEditAddOS(props: propsModal) {
               />
               {isACVisible?.operador ? (
                 <AutocompleteModalInputs
-                  values={props.listOptions.operador}
+                  values={listOptions.operador}
                   inputEl={inputEl as HTMLInputElement}
                   setIsACvisible={setIsACVisible}
                   search={search}
@@ -177,7 +181,7 @@ export function ModalEditAddOS(props: propsModal) {
               />
               {isACVisible?.zona ? (
                 <AutocompleteModalInputs
-                  values={props.listOptions.zona}
+                  values={listOptions.zona}
                   inputEl={inputEl as HTMLInputElement}
                   setIsACvisible={setIsACVisible}
                   search={search}
@@ -281,7 +285,7 @@ export function ModalEditAddOS(props: propsModal) {
               />
               {isACVisible?.tipoOS ? (
                 <AutocompleteModalInputs
-                  values={props.listOptions.tipoOS}
+                  values={listOptions.tipoOS}
                   inputEl={inputEl as HTMLInputElement}
                   setIsACvisible={setIsACVisible}
                   search={search}
@@ -323,7 +327,7 @@ export function ModalEditAddOS(props: propsModal) {
               />
               {isACVisible?.equipe ? (
                 <AutocompleteModalInputs
-                  values={props.listOptions.equipe}
+                  values={listOptions.equipe}
                   inputEl={inputEl as HTMLInputElement}
                   setIsACvisible={setIsACVisible}
                   search={search}
@@ -367,7 +371,7 @@ export function ModalEditAddOS(props: propsModal) {
               />
               {isACVisible?.transporte ? (
                 <AutocompleteModalInputs
-                  values={props.listOptions.transporte}
+                  values={listOptions.transporte}
                   inputEl={inputEl as HTMLInputElement}
                   setIsACvisible={setIsACVisible}
                   search={search}
@@ -481,7 +485,7 @@ export function ModalEditAddOS(props: propsModal) {
               />
               {isACVisible?.taxa ? (
                 <AutocompleteModalInputs
-                  values={props.listOptions.taxa}
+                  values={listOptions.taxa}
                   inputEl={inputEl as HTMLInputElement}
                   setIsACvisible={setIsACVisible}
                   search={search}
@@ -542,7 +546,7 @@ export function ModalEditAddOS(props: propsModal) {
                   setIsCrudLoading(true);
                   functions.deleteData({
                     hideModal: props.setIsModalVisible,
-                    socket: props.socket,
+                    socket: socket,
                     setIsCrudLoading: setIsCrudLoading,
                   });
                 }}
@@ -558,16 +562,16 @@ export function ModalEditAddOS(props: propsModal) {
               onClick={() => {
                 props.typeModal == "edit"
                   ? functions.getDataToAddOrEdit({
-                      listOptions: props.listOptions,
+                      listOptions: listOptions,
                       typeModal: "edit",
                       hideModal: props.setIsModalVisible,
-                      socket: props.socket,
+                      socket: socket,
                       setIsCrudLoading: setIsCrudLoading,
                     })
                   : functions.getDataToAddOrEdit({
-                      listOptions: props.listOptions,
+                      listOptions: listOptions,
                       typeModal: "add",
-                      socket: props.socket,
+                      socket: socket,
                       setIsCrudLoading: setIsCrudLoading,
                     });
               }}

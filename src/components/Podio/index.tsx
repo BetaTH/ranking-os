@@ -1,16 +1,18 @@
 import classNames from "classnames";
 import equipeSemFoto from "../../img/equipeSemFoto.svg";
 import { Trophy } from "phosphor-react";
-import { propsRanking } from "../../interfaces/os-interfaces";
 import { Loading } from "../Loading";
 import { SemDados } from "../SemDados";
 import styles from "./styles.module.scss";
+import { useContext } from "react";
+import { DashPageContext } from "../../contexts/DashPageContext/DashPageContext";
 
-export function Podio(props: propsRanking) {
-  const newProps = props.arr;
+export function Podio() {
+  const { dashData, loadingDashData } = useContext(DashPageContext);
+  const dashGeralData = dashData.rankingGeral;
   const count = [4, 2, 1, 3, 5];
 
-  if (props.isLoadging) {
+  if (loadingDashData) {
     return (
       <div className={styles.container}>
         <div className={styles.textContainer}>
@@ -21,7 +23,7 @@ export function Podio(props: propsRanking) {
     );
   }
 
-  if (newProps.length === 0) {
+  if (dashGeralData.length === 0) {
     return (
       <div className={styles.container}>
         <div className={styles.textContainer}>
@@ -39,7 +41,7 @@ export function Podio(props: propsRanking) {
       </div>
       <div className={styles.podioContainer}>
         {count.map((prop) => {
-          if (prop == 1 && newProps[prop - 1]) {
+          if (prop == 1 && dashGeralData[prop - 1]) {
             return (
               <div
                 key={prop}
@@ -51,8 +53,8 @@ export function Podio(props: propsRanking) {
                   {}
                   <img
                     src={
-                      newProps[prop - 1].fotoLink
-                        ? newProps[prop - 1].fotoLink
+                      dashGeralData[prop - 1].fotoLink
+                        ? dashGeralData[prop - 1].fotoLink
                         : equipeSemFoto
                     }
                     alt=""
@@ -61,15 +63,15 @@ export function Podio(props: propsRanking) {
                 <div className={styles.column}>
                   <Trophy weight="fill" />
                   <span className={styles.equip}>
-                    {newProps[prop - 1].equipe}
+                    {dashGeralData[prop - 1].equipe}
                   </span>
                   <span className={styles.points}>
-                    {newProps[prop - 1].pontos}
+                    {dashGeralData[prop - 1].pontos}
                   </span>
                 </div>
               </div>
             );
-          } else if (newProps[prop - 1]) {
+          } else if (dashGeralData[prop - 1]) {
             return (
               <div
                 key={prop}
@@ -84,8 +86,8 @@ export function Podio(props: propsRanking) {
                 <div className={styles.photo}>
                   <img
                     src={
-                      newProps[prop - 1].fotoLink
-                        ? newProps[prop - 1].fotoLink
+                      dashGeralData[prop - 1].fotoLink
+                        ? dashGeralData[prop - 1].fotoLink
                         : equipeSemFoto
                     }
                     alt=""
@@ -93,10 +95,10 @@ export function Podio(props: propsRanking) {
                 </div>
                 <div className={styles.column}>
                   <span className={styles.equip}>
-                    {newProps[prop - 1].equipe}
+                    {dashGeralData[prop - 1].equipe}
                   </span>
                   <span className={styles.points}>
-                    {newProps[prop - 1].pontos}
+                    {dashGeralData[prop - 1].pontos}
                   </span>
                 </div>
               </div>

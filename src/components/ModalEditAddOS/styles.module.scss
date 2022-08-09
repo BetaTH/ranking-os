@@ -21,7 +21,7 @@
   animation-timing-function: ease-in-out;
 
   .modal {
-    background: #d9d9d9;
+    background: var(--modalBack);
     width: 60rem;
     border-radius: 0.8rem;
     overflow-y: auto;

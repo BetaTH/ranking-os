@@ -4,8 +4,8 @@ import React, {
   useReducer,
   useState,
 } from "react";
-import { api } from "../../api";
-import { useSocket } from "../hooks/useSocket";
+import { api } from "../../api/api";
+import { useSocket } from "../../hooks/useSocket";
 import {
   defaultStateContextState,
   StateContextProvider,

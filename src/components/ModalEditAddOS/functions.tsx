@@ -1,5 +1,5 @@
 import { Socket } from "socket.io-client";
-import { api } from "../../api";
+import { api } from "../../api/api";
 
 const formInputs: { [key: string]: Function } = {
   operador: () => document.getElementById("operador") as HTMLInputElement,
