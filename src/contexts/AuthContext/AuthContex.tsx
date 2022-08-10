@@ -44,9 +44,11 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
       .getLoggedUser()
       .then((user) => {
         setUser(user);
-        setIsLoadingUser(false);
       })
-      .catch((error) => {});
+      .catch((error) => {})
+      .finally(() => {
+        setIsLoadingUser(false);
+      });
   }, []);
 
   const value = {

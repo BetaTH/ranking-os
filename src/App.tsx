@@ -11,15 +11,12 @@ import "./styles/index.scss";
 import StateContextComponent from "./Teste/Context/StateContextComponent";
 import { AdminPage } from "./pages/AdminPage";
 import { LoginPage } from "./pages/LoginPage";
-import { CrudLoadingModal } from "./components/crudLoadingModal";
 import { SocketContextProvider } from "./contexts/SocketContext/SocketContext";
 import { DashPageContextProvider } from "./contexts/DashPageContext/DashPageContext";
 import { TablePageContextProvider } from "./contexts/TablePageContext/TablePageContext";
-import { AuthContext } from "./contexts/AuthContext/AuthContex";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
-  const { user, isLoadingUser } = useContext(AuthContext);
-
   return (
     <StateContextComponent>
       <SocketContextProvider>
@@ -28,63 +25,37 @@ function App() {
             <Route
               path="/"
               element={
-                !user ? (
-                  <LoginPage />
-                ) : (
-                  <Navigate
-                    to={
-                      user.email == "tecnicosuporte.g3@gmail.com"
-                        ? "/dashboard"
-                        : user.email == "operadorexterno.g3@gmail.com"
-                        ? "tabela"
-                        : "/"
-                    }
-                  />
-                )
+                <ProtectedRoute>
+                  <LoginPage />;
+                </ProtectedRoute>
               }
             />
             <Route
               path="/dashboard"
               element={
-                isLoadingUser ? (
-                  <CrudLoadingModal />
-                ) : !user ? (
-                  <Navigate to={"/"} />
-                ) : (
+                <ProtectedRoute>
                   <DashPageContextProvider>
                     <Dashboard />
                   </DashPageContextProvider>
-                )
+                </ProtectedRoute>
               }
             />
             <Route
               path="/tabela"
               element={
-                isLoadingUser ? (
-                  <CrudLoadingModal />
-                ) : !user ? (
-                  <Navigate to={"/"} />
-                ) : user.email == "tecnicosuporte.g3@gmail.com" ? (
-                  <Navigate to={"/dashboard"} />
-                ) : (
+                <ProtectedRoute>
                   <TablePageContextProvider>
                     <TablePage />
                   </TablePageContextProvider>
-                )
+                </ProtectedRoute>
               }
             />
             <Route
               path="/admin"
               element={
-                isLoadingUser ? (
-                  <CrudLoadingModal />
-                ) : !user ? (
-                  <Navigate to={"/"} />
-                ) : user.email !== "adminexterno.g3@gmail.com" ? (
-                  <Navigate to={"/dashboard"} />
-                ) : (
+                <ProtectedRoute>
                   <AdminPage />
-                )
+                </ProtectedRoute>
               }
             />
           </Routes>
