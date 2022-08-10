@@ -36,21 +36,26 @@ export function LoginPage() {
   return (
     <div className={styles.conteiner}>
       <div className={styles.loginConteiner}>
-        <div className={styles.row}>
-          <label>Usuário:</label>
-          <input ref={userRef} type="text" placeholder="Usuário" />
+        <div className={styles.textContainer}>
+          <span className={styles.title}>Login</span>
         </div>
-        <div className={styles.row}>
-          <label>Senha:</label>
-          <input ref={passRef} type="password" placeholder="Senha" />
+        <div className={styles.form}>
+          <div className={styles.row}>
+            <label>Usuário:</label>
+            <input ref={userRef} type="text" placeholder="Usuário" />
+          </div>
+          <div className={styles.row}>
+            <label>Senha:</label>
+            <input ref={passRef} type="password" placeholder="Senha" />
+          </div>
+          <button
+            onClick={() => {
+              login();
+            }}
+          >
+            Login
+          </button>
         </div>
-        <button
-          onClick={() => {
-            login();
-          }}
-        >
-          Login
-        </button>
       </div>
       {isLoadingLogin ? <LoadingModal /> : null}
     </div>
