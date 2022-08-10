@@ -12,11 +12,13 @@ interface ITablePageContext {
   numPage: number;
   isModalVisible: boolean;
   isLoadingMoreTableData: boolean;
+  isLoadingData: boolean;
   setListOptions: (newState: { [key: string]: string[] }) => void;
   setTableData: (newState: { [key: string]: string }[]) => void;
   setNumPage: (newState: number) => void;
   setIsModalVisible: (newState: boolean) => void;
   setIsLoadingMoreTableData: (newState: boolean) => void;
+  setIsLoadingData: (newState: boolean) => void;
 }
 const initialValues = {
   listOptions: {},
@@ -24,11 +26,13 @@ const initialValues = {
   numPage: 0,
   isModalVisible: false,
   isLoadingMoreTableData: false,
+  isLoadingData: true,
   setListOptions: () => {},
   setTableData: () => {},
   setNumPage: () => {},
   setIsModalVisible: () => {},
   setIsLoadingMoreTableData: () => {},
+  setIsLoadingData: () => {},
 };
 
 export const TablePageContext = createContext<ITablePageContext>(initialValues);
@@ -37,6 +41,10 @@ export const TablePageContextProvider = ({
   children,
 }: ITablePageContextProps) => {
   const effecOnlyRun = useRef(false);
+
+  const [isLoadingData, setIsLoadingData] = useState(
+    initialValues.isLoadingData
+  );
 
   const [listOptions, setListOptions] = useState<{ [key: string]: string[] }>(
     initialValues.listOptions
@@ -58,6 +66,7 @@ export const TablePageContextProvider = ({
       api.get("/getListOptions").then((res) => setListOptions(res.data));
       api.get("/getTableData").then((res) => {
         setTableData(res.data);
+        setIsLoadingData(false);
       });
     }
     return () => {
@@ -71,11 +80,13 @@ export const TablePageContextProvider = ({
     numPage,
     isModalVisible,
     isLoadingMoreTableData,
+    isLoadingData,
     setListOptions,
     setTableData,
     setNumPage,
     setIsModalVisible,
     setIsLoadingMoreTableData,
+    setIsLoadingData,
   };
 
   return (

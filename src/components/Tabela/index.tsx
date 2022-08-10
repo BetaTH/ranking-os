@@ -14,6 +14,7 @@ export function Table(props: PropsTable) {
     tableData,
     numPage,
     isLoadingMoreTableData,
+    isLoadingData,
     setIsLoadingMoreTableData,
   } = useContext(TablePageContext);
 
@@ -58,59 +59,63 @@ export function Table(props: PropsTable) {
         <div className={classNames(styles.colHeader, styles.col12)}>Pontos</div>
       </header>
       <div className={styles.rowsConteiner}>
-        {tableData?.map((item, id) => {
-          return (
-            <div
-              className={styles.rowTable}
-              key={item.idOS}
-              onClick={() => showModal(item)}
-            >
-              <div className={classNames(styles.colRows, styles.col1)}>
-                {item.operador}
+        {isLoadingData ? (
+          <Loading />
+        ) : (
+          tableData?.map((item, id) => {
+            return (
+              <div
+                className={styles.rowTable}
+                key={item.idOS}
+                onClick={() => showModal(item)}
+              >
+                <div className={classNames(styles.colRows, styles.col1)}>
+                  {item.operador}
+                </div>
+                <div className={classNames(styles.colRows, styles.col2)}>
+                  {item.zona}
+                </div>
+                <div className={classNames(styles.colRows, styles.col0)}>
+                  {item.idOS}
+                </div>
+                <div className={classNames(styles.colRows, styles.col3)}>
+                  {item.cliente}
+                </div>
+                <div className={classNames(styles.colRows, styles.col4)}>
+                  {item.tipoOS}
+                </div>
+                <div className={classNames(styles.colRows, styles.col5)}>
+                  {item.equipe}
+                </div>
+                <div className={classNames(styles.colRows, styles.col6)}>
+                  {item.transporte}
+                </div>
+                <div className={classNames(styles.colRows, styles.col7)}>
+                  {format(new Date(item.dataAbertura), "dd/MM/yyyy HH:mm", {
+                    locale: ptBR,
+                  })}
+                </div>
+                <div className={classNames(styles.colRows, styles.col8)}>
+                  {format(new Date(item.dataFechamento), "dd/MM/yyyy HH:mm", {
+                    locale: ptBR,
+                  })}
+                </div>
+                <div className={classNames(styles.colRows, styles.col9)}>
+                  {item.trs}
+                </div>
+                <div className={classNames(styles.colRows, styles.col10)}>
+                  {item.taxa}
+                </div>
+                <div className={classNames(styles.colRows, styles.col11)}>
+                  {item.correcao}
+                </div>
+                <div className={classNames(styles.colRows, styles.col12)}>
+                  {item.pontos}
+                </div>
               </div>
-              <div className={classNames(styles.colRows, styles.col2)}>
-                {item.zona}
-              </div>
-              <div className={classNames(styles.colRows, styles.col0)}>
-                {item.idOS}
-              </div>
-              <div className={classNames(styles.colRows, styles.col3)}>
-                {item.cliente}
-              </div>
-              <div className={classNames(styles.colRows, styles.col4)}>
-                {item.tipoOS}
-              </div>
-              <div className={classNames(styles.colRows, styles.col5)}>
-                {item.equipe}
-              </div>
-              <div className={classNames(styles.colRows, styles.col6)}>
-                {item.transporte}
-              </div>
-              <div className={classNames(styles.colRows, styles.col7)}>
-                {format(new Date(item.dataAbertura), "dd/MM/yyyy HH:mm", {
-                  locale: ptBR,
-                })}
-              </div>
-              <div className={classNames(styles.colRows, styles.col8)}>
-                {format(new Date(item.dataFechamento), "dd/MM/yyyy HH:mm", {
-                  locale: ptBR,
-                })}
-              </div>
-              <div className={classNames(styles.colRows, styles.col9)}>
-                {item.trs}
-              </div>
-              <div className={classNames(styles.colRows, styles.col10)}>
-                {item.taxa}
-              </div>
-              <div className={classNames(styles.colRows, styles.col11)}>
-                {item.correcao}
-              </div>
-              <div className={classNames(styles.colRows, styles.col12)}>
-                {item.pontos}
-              </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
 
         {tableData.length < 20 + numPage * 10 ? null : (
           <div className={styles.rowLoadMoreData}>

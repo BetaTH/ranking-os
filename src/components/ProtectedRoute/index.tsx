@@ -28,7 +28,9 @@ export function ProtectedRoute({ children }: IProtectedRouteProps) {
 
   switch (user.email) {
     case Rules.admin: {
-      return <>{children}</>;
+      if (pathname !== "/") return <>{children}</>;
+      navigate("/admin");
+      return null;
     }
     case Rules.tecnico: {
       if (pathname === "/dashboard") return <>{children}</>;
@@ -36,7 +38,7 @@ export function ProtectedRoute({ children }: IProtectedRouteProps) {
       return null;
     }
     case Rules.operador: {
-      if (pathname !== "/admin") return <>{children}</>;
+      if (pathname !== "/admin" && pathname !== "/") return <>{children}</>;
       navigate("/tabela");
       return null;
     }
