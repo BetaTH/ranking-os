@@ -6,7 +6,7 @@ import * as functions from "./functions";
 import { CaretDown, X } from "phosphor-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { CrudLoadingModal } from "../crudLoadingModal";
+import { LoadingModal } from "../LoadingModal";
 import { SocketContext } from "../../contexts/SocketContext/SocketContext";
 import { TablePageContext } from "../../contexts/TablePageContext/TablePageContext";
 
@@ -30,7 +30,7 @@ export function ModalEditAddOS(props: propsModal) {
         .querySelectorAll("body")
         .forEach((target) => target.classList.remove("noScroll"));
     };
-  });
+  }, []);
 
   function hideACInput() {
     const newisACVisible: { [key: string]: boolean } = {
@@ -586,7 +586,7 @@ export function ModalEditAddOS(props: propsModal) {
           onClick={() => props.setIsModalVisible(false)}
         />
 
-        {isCrudLoading ? <CrudLoadingModal /> : null}
+        {isCrudLoading ? <LoadingModal /> : null}
       </div>
     </div>
   );

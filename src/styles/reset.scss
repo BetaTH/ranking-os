@@ -4,7 +4,6 @@
   box-sizing: border-box;
 }
 
-
 html,
 body {
   width: 100vw;
@@ -28,36 +27,39 @@ button {
   font-family: "Poppins", sans-serif;
 }
 
-select{
+select {
   outline: none;
   border: none;
   display: inline-block;
   font-family: "Poppins", sans-serif;
 }
 
-input{
+input {
   outline: none;
   border: none;
   display: inline-block;
   font-family: "Poppins", sans-serif;
 }
 
-.noScroll{
+.noScroll {
+  overflow-y: hidden;
+}
+.noScrollMobileCeck {
+  overflow-x: hidden;
   overflow-y: hidden;
 }
 
-
-::-webkit-input-placeholder{
+::-webkit-input-placeholder {
   color: #6b6b6b70;
   font-size: 1.5rem;
   font-weight: 400;
 }
-::-moz-placeholder{
+::-moz-placeholder {
   color: #6b6b6b70;
   font-size: 1.5rem;
   font-weight: 400;
 }
-::-ms-placeholder{
+::-ms-placeholder {
   color: #6b6b6b70;
   font-size: 1.5rem;
   font-weight: 400;
@@ -69,7 +71,7 @@ input{
 }
 
 *::-webkit-scrollbar {
-  width: .8rem;
+  width: 0.8rem;
   height: 1.3rem;
 }
 
@@ -84,28 +86,29 @@ input{
 }
 
 
-
-@media only screen  and (max-width: 450px) {
+@media only screen and (max-width: 1280px) {
   html {
-    width:100%;
+    font-size: calc(1280px / 1920 * 10);
+  }
+  body {
+    overflow-x: scroll;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  html {
+    width: 100%;
     font-size: calc(100vw / 450 * 10);
   }
-  body{
-    width:100%;
+  body {
+    width: 100%;
     min-width: 300px;
     overflow-x: hidden;
   }
 }
-@media only screen and (min-width: 450px) and (max-width: 1280px) {
-  html {
-    font-size: calc(1280px / 1920 * 10);
-  }
-  body{
-    overflow-x: scroll;
-  }  
-}
+
 @media only screen and (min-width: 1280px) {
-html {
-  font-size: calc(100vw / 1920 * 10);
-}
+  html {
+    font-size: calc(100vw / 1920 * 10);
+  }
 }

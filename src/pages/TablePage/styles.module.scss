@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   background: var(--backgroundAll);
 
   .rankingsContainer {
@@ -9,10 +9,7 @@
     display: flex;
     padding: 1rem;
     flex-direction: column;
-    //padding-top: 2.5rem;
     align-items: center;
-    //background: var(--backgroundAll);
-
     .addOSContainer {
       width: 170rem;
       height: 6rem;
@@ -20,7 +17,6 @@
       align-items: center;
       justify-content: end;
       gap: 2rem;
-
       .addOSSpanConteiner {
         display: flex;
         align-items: center;
@@ -30,7 +26,6 @@
           color: #2c3639;
         }
       }
-
       .addOS {
         width: 4rem;
         height: 4rem;
@@ -45,7 +40,6 @@
         box-shadow:  5px 5px 22px -6px rgba(0,0,0,0.2);
 
         &:hover {
-          //background: rgba(12, 242, 93, 0.3);
           transform: scale(1.03);
         }
       }

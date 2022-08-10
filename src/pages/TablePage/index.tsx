@@ -7,6 +7,7 @@ import { ModalEditAddOS } from "../../components/ModalEditAddOS";
 import { api } from "../../api/api";
 import { SocketContext } from "../../contexts/SocketContext/SocketContext";
 import { TablePageContext } from "../../contexts/TablePageContext/TablePageContext";
+import { MobileCheck } from "../../components/MobileCheck";
 
 export function TablePage() {
   const {
@@ -67,6 +68,7 @@ export function TablePage() {
       {isModalVisible ? (
         <ModalEditAddOS setIsModalVisible={setIsModalVisible} typeModal="add" />
       ) : null}
+      <MobileCheck />
     </div>
   );
 }

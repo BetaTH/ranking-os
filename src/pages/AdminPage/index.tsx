@@ -4,10 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./styles.module.scss";
 import * as functions from "./functions";
 import { api } from "../../api/api";
-import { CrudLoadingModal } from "../../components/crudLoadingModal";
+import { LoadingModal } from "../../components/LoadingModal";
 import { Headers } from "../../components/Headers";
 import AuthService from "../../services/AuthService";
 import { useNavigate } from "react-router-dom";
+import { MobileCheck } from "../../components/MobileCheck";
 
 export function AdminPage() {
   const navigate = useNavigate();
@@ -300,10 +301,11 @@ export function AdminPage() {
               size={32}
               onClick={() => setIsModalVisible(false)}
             />
-            {isCrudLoading ? <CrudLoadingModal /> : null}
+            {isCrudLoading ? <LoadingModal /> : null}
           </div>
         </div>
       ) : null}
+      <MobileCheck />
     </div>
   );
 }

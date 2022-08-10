@@ -1,7 +1,7 @@
 import { ReactNode, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext/AuthContex";
-import { CrudLoadingModal } from "../crudLoadingModal";
+import { LoadingModal } from "../LoadingModal";
 
 enum Rules {
   admin = "adminexterno.g3@gmail.com",
@@ -18,7 +18,7 @@ export function ProtectedRoute({ children }: IProtectedRouteProps) {
   const { user, isLoadingUser, setUser } = useContext(AuthContext);
   const { pathname } = useLocation();
 
-  if (isLoadingUser) return <CrudLoadingModal />;
+  if (isLoadingUser) return <LoadingModal />;
   if (!user && pathname !== "/") {
     navigate("/");
     return null;

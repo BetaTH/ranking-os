@@ -1,8 +1,9 @@
 import styles from "./styles.module.scss";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/AuthService";
 import { AuthContext } from "../../contexts/AuthContext/AuthContex";
+import { LoadingModal } from "../../components/LoadingModal";
 
 export function LoginPage() {
   const { setUser } = useContext(AuthContext);
@@ -10,12 +11,15 @@ export function LoginPage() {
   const navigate = useNavigate();
   const userRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
+  const [isLoadingLogin, setIsLoadingLogin] = useState(false);
 
   const login = () => {
+    setIsLoadingLogin(true);
     userRef.current && passRef.current
       ? authService
           .login(userRef.current.value, passRef.current.value)
           .then((user) => {
+            setIsLoadingLogin(false);
             setUser(user.user);
             if (user.user.email == "tecnicosuporte.g3@gmail.com") {
               navigate("/dashboard");
@@ -25,6 +29,7 @@ export function LoginPage() {
               navigate("/tabela");
             }
           })
+          .catch(() => setIsLoadingLogin(false))
       : null;
   };
 
@@ -47,6 +52,7 @@ export function LoginPage() {
           Login
         </button>
       </div>
+      {isLoadingLogin ? <LoadingModal /> : null}
     </div>
   );
 }

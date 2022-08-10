@@ -1,11 +1,5 @@
-import { useState, useEffect, useContext } from "react";
 import { TablePage } from "./pages/TablePage";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Dashboard } from "./pages/Dashboard";
 import "./styles/index.scss";
 import StateContextComponent from "./Teste/Context/StateContextComponent";
@@ -26,7 +20,7 @@ function App() {
               path="/"
               element={
                 <ProtectedRoute>
-                  <LoginPage />;
+                  <LoginPage />
                 </ProtectedRoute>
               }
             />

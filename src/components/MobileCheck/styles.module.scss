@@ -1,0 +1,68 @@
+@import "../../styles/animations.scss";
+.desktopCheck {
+  display: none;
+  .spanWarning {
+    display: none;
+    animation: showOpacity .8s  ;
+  }
+  .dash {
+    display: none;
+    animation: showOpacity .8s  ;
+  }
+  .logoutButton {
+    display: none;
+    animation: showOpacity .8s  ;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .desktopCheck {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    z-index: 10000;
+
+    align-items: center;
+    justify-content: center;
+    background: var(--backgroundAll);
+    .spanWarning {
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 500;
+      color: #2c3639;
+      margin-bottom: 1rem;
+      
+    }
+
+    .dash {
+      display: block;
+      color: #0c708f;
+      font-size: 2.5rem;
+      font-weight: 500;
+      text-align: center;
+      transition: 0.5s;
+      animation: showOpacity 0.8s;
+    }
+
+    .logoutButton {
+      display: block;
+      position: fixed;
+      top: 0;
+      right: 0;
+      margin: 0 1.5rem;
+      width: 6rem;
+      height: 6rem;
+      color: #0c708f;
+      font-size: 2.5rem;
+      font-weight: 500;
+      text-align: center;
+      transition: 0.5s;
+      animation: showOpacity 0.8s;
+    }
+  }
+}
