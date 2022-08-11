@@ -21,14 +21,11 @@ export const SocketContextProvider = ({ children }: ISocketContextProps) => {
   const effecOnlyRun = useRef(false);
   const [socket, setSocket] = useState<Socket>();
 
-  const socketCliente = useSocket(
-    "https://ranking-os-backend-production.up.railway.app",
-    {
-      reconnectionAttempts: 5,
-      reconnectionDelay: 1000,
-      autoConnect: false,
-    }
-  );
+  const socketCliente = useSocket(import.meta.env.VITE_REACT_APP_AUTH_API_URL, {
+    reconnectionAttempts: 5,
+    reconnectionDelay: 1000,
+    autoConnect: false,
+  });
   useEffect(() => {
     if (effecOnlyRun.current === false) {
       socketCliente.connect();
