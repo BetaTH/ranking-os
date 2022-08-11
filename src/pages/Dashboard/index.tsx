@@ -4,12 +4,9 @@ import { Podio } from "../../components/Podio";
 import { RankingGeral } from "../../components/RankingGeral";
 import { RankingMotos } from "../../components/RankingMotos";
 import { SearchDataDashPage } from "../../components/SearchDataDashPage";
-import { useContext } from "react";
-import { AuthContext } from "../../contexts/AuthContext/AuthContex";
 import { MobileCheck } from "../../components/MobileCheck";
 
 export function Dashboard() {
-  const { user } = useContext(AuthContext);
   return (
     <div className={styles.container}>
       <Headers titlePage={"dash"} />
