@@ -185,7 +185,7 @@ export function getDataToAddOrEdit(props: {
     if (props.typeModal == "add") {
       api
         .post(
-          "https://ranking-os-backend-production.up.railway.app/postNewOS", //https://ranking-os-backend-production.up.railway.app
+          "/postNewOS", //https://ranking-os-backend-production.up.railway.app
           formDataValues
         )
         .then(() => {
@@ -204,16 +204,11 @@ export function getDataToAddOrEdit(props: {
           alert("OS Já Cadastrada");
         });
     } else {
-      api
-        .put(
-          "https://ranking-os-backend-production.up.railway.app/updateOS",
-          formDataValues
-        )
-        .then(() => {
-          props.socket?.emit("dbAttServer");
-          props.setIsCrudLoading(false);
-          props.hideModal ? props.hideModal(false) : null;
-        }); // com localhost
+      api.put("/updateOS", formDataValues).then(() => {
+        props.socket?.emit("dbAttServer");
+        props.setIsCrudLoading(false);
+        props.hideModal ? props.hideModal(false) : null;
+      }); // com localhost
     }
   }
 }
@@ -225,7 +220,7 @@ export function deleteData(props: {
 }) {
   const idToDelete = formValues.idOS();
   api
-    .delete("https://ranking-os-backend-production.up.railway.app/deleteOS", {
+    .delete("/deleteOS", {
       data: { idOS: idToDelete },
     })
     .then(() => {
