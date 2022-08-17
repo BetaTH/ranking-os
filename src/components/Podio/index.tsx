@@ -50,11 +50,10 @@ export function Podio() {
                 })}
               >
                 <div className={styles.photo}>
-                  {}
                   <img
                     src={
-                      dashGeralData[prop - 1].fotoLink
-                        ? dashGeralData[prop - 1].fotoLink
+                      dashGeralData[prop - 1].linkFoto
+                        ? dashGeralData[prop - 1].linkFoto
                         : equipeSemFoto
                     }
                     alt=""

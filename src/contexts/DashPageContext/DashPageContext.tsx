@@ -11,13 +11,13 @@ interface IDashPageContext {
       equipe: string;
       pontos: number;
       classTransporte: string;
-      fotoLink: string;
+      linkFoto: string;
     }[];
     rankingGeral: {
       equipe: string;
       pontos: number;
       classTransporte: string;
-      fotoLink: string;
+      linkFoto: string;
     }[];
   };
   setDashData: (newState: { rankingMoto: []; rankingGeral: [] }) => void;
