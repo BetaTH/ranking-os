@@ -184,10 +184,7 @@ export function getDataToAddOrEdit(props: {
 
     if (props.typeModal == "add") {
       api
-        .post(
-          "/postNewOS", //https://ranking-os-backend-production.up.railway.app
-          formDataValues
-        )
+        .post("/os", formDataValues)
         .then(() => {
           props.socket?.emit("dbAttServer");
           props.setIsCrudLoading(false);
@@ -204,7 +201,7 @@ export function getDataToAddOrEdit(props: {
           alert("OS Já Cadastrada");
         });
     } else {
-      api.put("/updateOS", formDataValues).then(() => {
+      api.put("/os", formDataValues).then(() => {
         props.socket?.emit("dbAttServer");
         props.setIsCrudLoading(false);
         props.hideModal ? props.hideModal(false) : null;
@@ -220,9 +217,7 @@ export function deleteData(props: {
 }) {
   const idToDelete = formValues.idOS();
   api
-    .delete("/deleteOS", {
-      data: { idOS: idToDelete },
-    })
+    .delete(`/os/${idToDelete}`)
     .then(() => {
       props.socket?.emit("dbAttServer");
       props.setIsCrudLoading(false);

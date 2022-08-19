@@ -45,7 +45,7 @@ export function SearchDataDashPage() {
         dateMin: new Date(yearValue, monthValue, 1),
         dateMax: new Date(yearValue, monthValue + 1, 0, 23, 59, 59),
       };
-      api.get("/getDashData", { params: queryParams }).then((res) => {
+      api.get("/os/ranking", { params: queryParams }).then((res) => {
         setDashData(res.data);
         setLoadingDashData(false);
         sessionStorage.setItem(
@@ -98,7 +98,7 @@ export function SearchDataDashPage() {
       dateMax: new Date(yearValue, monthValue + 1, 0, 23, 59, 59),
     };
     api
-      .get("/getDashData", {
+      .get("/os/ranking", {
         params: queryParams,
       })
       .then((res) => {

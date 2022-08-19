@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import { MobileCheck } from "../../components/MobileCheck";
 
 export function AdminPage() {
-  const navigate = useNavigate();
   const [campo, setCampo] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [rowtoEdit, setRowToEdit] = useState<{
@@ -27,11 +26,10 @@ export function AdminPage() {
   const input2Ref = useRef<HTMLInputElement>(null);
   const input3Ref = useRef<HTMLInputElement>(null);
   const effecOnlyRun = useRef(false);
-  const authService = new AuthService();
 
   useEffect(() => {
     if (effecOnlyRun.current === false) {
-      api.get("/getTablesOptions").then((res) => {
+      api.get("/list-options/admin").then((res) => {
         setData(res.data);
       });
     }

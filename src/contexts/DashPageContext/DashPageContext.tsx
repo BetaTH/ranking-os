@@ -50,7 +50,7 @@ export const DashPageContextProvider = ({
         dateMin: new Date(todayYear, todayMonth, 1),
         dateMax: new Date(todayYear, todayMonth + 1, 0, 23, 59, 59),
       };
-      api.get("/getDashData", { params: queryParams }).then((res) => {
+      api.get("/os/ranking", { params: queryParams }).then((res) => {
         setDashData(res.data);
         setLoadingDashData(false);
         // sessionStorage.setItem(

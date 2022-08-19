@@ -63,8 +63,8 @@ export const TablePageContextProvider = ({
 
   useEffect(() => {
     if (effecOnlyRun.current === false) {
-      api.get("/getListOptions").then((res) => setListOptions(res.data));
-      api.get("/getTableData").then((res) => {
+      api.get("/list-options").then((res) => setListOptions(res.data));
+      api.get("/os").then((res) => {
         setTableData(res.data);
         setIsLoadingData(false);
       });

@@ -24,9 +24,9 @@ export function TablePage() {
 
   useEffect(() => {
     const getNewData = () => {
-      api.get("/getListOptions").then((res) => setListOptions(res.data));
+      api.get("/list-options").then((res) => setListOptions(res.data));
       api
-        .get("/getTableData", {
+        .get("/os", {
           params: { numPage: numPage, justAtt: "True" },
         })
         .then((res) => setTableData(res.data));
@@ -40,9 +40,9 @@ export function TablePage() {
   }, [numPage, setTableData, socket]);
 
   function loadMoreData() {
-    api.get("/getListOptions").then((res) => setListOptions(res.data));
+    api.get("/options").then((res) => setListOptions(res.data));
     api
-      .get("/getTableData", {
+      .get("/os", {
         params: { numPage: numPage },
       })
       .then((res) => {

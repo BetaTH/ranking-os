@@ -1,6 +1,6 @@
 import { api } from "../../api/api";
 
-export function teste() {}
+export function teste() { }
 
 export function deleteData(props: {
   setData: Function;
@@ -10,15 +10,13 @@ export function deleteData(props: {
   setIsModalVisible: Function;
   setIsCrudLoading: Function;
 }) {
-  
+
   if (props.equipeid != null) {
     api
-      .delete("/deleteOption", {
-        data: { typeOption: props.campo, id: props.equipeid },
-      })
+      .delete(`/list-options/admin/${props.campo}/${props.equipeid}`)
       .then(() => {
         api
-          .get("/getTablesOptions")
+          .get("/list-options/admin")
           .then((res) => {
             props.setData(res.data);
           })
@@ -34,12 +32,10 @@ export function deleteData(props: {
       });
   } else {
     api
-      .delete("/deleteOption", {
-        data: { typeOption: props.campo, id: props.id },
-      })
+      .delete(`/list-options/admin/${props.campo}/${props.id}`)
       .then(() => {
         api
-          .get("/getTablesOptions")
+          .get("/list-options/admin")
           .then((res) => {
             props.setData(res.data);
           })
@@ -70,19 +66,19 @@ export function getDataToAddOrEdit(props: {
   let data: { [key: string]: string } = {};
 
   if (props.typeModal == "edit") {
-    data.id = props.id as string;
+    data.id = String(props.id as string);
     data[props.campo] = props.input1Ref?.value as string;
     props.campo == "equipe"
       ? ((data.transportePadrao = props.input2Ref?.value as string),
         (data.linkFoto = props.input3Ref?.value as string))
       : props.campo == "tipoOS"
-      ? (data.pontos = props.input2Ref?.value as string)
-      : null;
+        ? (data.pontos = props.input2Ref?.value as string)
+        : null;
     api
-      .post("/postNewOption", { typeOption: props.campo, dataOption: data })
+      .put(`/list-options/admin/${props.campo}`, data)
       .then(() => {
         api
-          .get("/getTablesOptions")
+          .get("/list-options/admin")
           .then((res) => {
             props.setData(res.data);
           })
@@ -102,13 +98,13 @@ export function getDataToAddOrEdit(props: {
       ? ((data.transportePadrao = props.input2Ref?.value as string),
         (data.linkFoto = props.input3Ref?.value as string))
       : props.campo == "tipoOS"
-      ? (data.pontos = props.input2Ref?.value as string)
-      : null;
+        ? (data.pontos = props.input2Ref?.value as string)
+        : null;
     api
-      .post("/postNewOption", { typeOption: props.campo, dataOption: data })
+      .post(`/list-options/admin/${props.campo}`, data)
       .then(() => {
         api
-          .get("/getTablesOptions")
+          .get("/list-options/admin")
           .then((res) => {
             props.setData(res.data);
           })
