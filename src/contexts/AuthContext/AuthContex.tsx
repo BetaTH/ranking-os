@@ -35,11 +35,6 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
     initialValues.isLoadingUser
   );
   useEffect(() => {
-    // setSocket(
-    //   io("https://ranking-os-backend-production.up.railway.app") //, {
-    //   // withCredentials: true,
-    //   //})
-    // );
     authService
       .getLoggedUser()
       .then((user) => {

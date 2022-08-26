@@ -21,6 +21,7 @@ export function LoginPage() {
           .then((user) => {
             setIsLoadingLogin(false);
             setUser(user.user);
+            console.log(user);
             if (user.user.email == "tecnicosuporte.g3@gmail.com") {
               navigate("/dashboard");
             } else if (user.user.email == "adminexterno.g3@gmail.com") {
