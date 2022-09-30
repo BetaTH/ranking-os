@@ -2,7 +2,7 @@ import * as firebaseAuth from 'firebase/auth';
 import { fireAuth } from '../api/authapi';
 
 export default class AuthService {
-    getLoggedUser(){
+    getLoggedUser() {
         return new Promise(resolve => {
             firebaseAuth.onAuthStateChanged(fireAuth, (user: any) => {
                 resolve(user);
@@ -14,6 +14,7 @@ export default class AuthService {
         return firebaseAuth.signInWithEmailAndPassword(
             fireAuth, email, password
         )
+<<<<<<< HEAD
         .then(user => {
             return user;
         })
@@ -21,9 +22,18 @@ export default class AuthService {
             //console.log('error', error);
             return Promise.reject(error);
         });
+=======
+            .then(user => {
+                return user;
+            })
+            .catch(error => {
+                console.log('error', error);
+                return Promise.reject(error);
+            });
+>>>>>>> 3bef88da1c1793d99ca93f24ccd197deb58c4967
     }
 
-    signOut(){
+    signOut() {
         return firebaseAuth.signOut(fireAuth)
     }
 }
